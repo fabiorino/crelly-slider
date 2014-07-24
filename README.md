@@ -1,4 +1,4 @@
-Official plugin website:
+Official plugin website (with live demo):
 http://fabiorino1.altervista.org/projects/crellyslider/
 
 Documentation:
