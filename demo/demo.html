@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />		
+		<meta name="viewport" content="width=device-width" />
+	
+		<title>Crelly Slider - Free jQuery Slider</title>
+		<meta name="description" content="The first Free Wordpress Slider that supports animations" />
+		
+		<link rel="stylesheet" type="text/css" href="../css/crellyslider.css" />
+		
+		<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+		<style type="text/css">
+			@font-face {font-family:"Bender";src:url("fonts/Bender.eot?") format("eot"),url("fonts/Bender.woff") format("woff"),url("fonts/Bender.ttf") format("truetype"),url("fonts/Bender.svg#Bender") format("svg");font-weight:normal;font-style:normal;}
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: arial;
+				font-size: 14px;
+				line-height: 1.5em;
+				vertical-align: baseline;
+			}
+		</style>
+		
+		<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.crellyslider.min.js"></script>		
+		
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('.demo-1').crellySlider({
+					layout 		  : 'fixed',
+					slidesTime	  : 5000,
+					slidesEaseIn  : 400,
+					slidesEaseOut : 400,
+				});
+			});
+		</script>
+	</head>
+	
+	<body>		
+		<br />
+		
+		<div class="demo-1">		
+			<ul>
+				<li style="background: url('images/bg1.png'); background-size: cover;" data-in="fade" data-out="slideLeft">
+					<p style="font-size: 48px; color: #fff; font-family: 'Rokkitt', serif;" data-top="190" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="800" data-time="all">Crelly Slider</p>
+					<p style="font-size: 22px; line-height: 26px; color: #fff; font-family: 'Rokkitt', serif;" data-top="245" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="1100" data-time="all">Is the first FREE Wordpress slider<br />with layers animations!</p>
+					<img alt="" src="images/house.png" data-top="149" data-left="837" data-in="slideLeft" data-out="slideRight" data-ease-in="200" data-ease-out="200" data-delay="400" data-time="all" />
+					<img alt="" src="images/hill.png" data-top="254" data-left="0" data-in="slideUp" data-out="slideDown" data-ease-in="200" data-ease-out="200" data-delay="0" data-time="all" />
+					<img alt="" src="images/airplane.png" data-top="44" data-left="1170" data-in="slideRight" data-out="slideUp" data-ease-in="10800" data-ease-out="200" data-delay="0" data-time="all" />
+				</li>
+				<li style="background: url('images/bg2.png');" data-in="slideLeft" data-out="slideLeft" data-time="5000">
+					<p style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="385" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all">IT'S FREE</p>
+					<img alt="" src="images/and.png" data-top="82" data-left="505" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all" />
+					<p style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="578" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all">IT'S OPEN - SOURCE</p>
+					<img alt="" src="images/code.png" data-top="216" data-left="60" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="800" data-time="all" />
+					<img alt="" src="images/magic.png" data-top="323" data-left="705" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="1100" data-time="all" />
+					<img alt="" src="images/arrow-UpRight.png" data-top="249" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="1400" data-time="all" />
+					<img alt="" src="images/arrow-right.png" data-top="349" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="1700" data-time="all" />
+					<img alt="" src="images/arrow-downRight.png" data-top="409" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="2000" data-time="all" />
+					<img alt="" src="images/document.png" data-top="259" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
+					<p style="font-size: 14px; color: #fff;" data-top="258" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Well Documented</p>
+					<img alt="" src="images/tick.png" data-top="349" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
+					<p style="font-size: 14px; color: #fff;" data-top="348" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Clear Code</p>
+					<img alt="" src="images/heart.png" data-top="439" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
+					<p style="font-size: 14px; color: #fff;" data-top="438" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Done with Love</p>
+				</li>
+			</ul>			
+		</div>
+		
+	</body>
+
+</html>

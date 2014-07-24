@@ -1,0 +1,132 @@
+.crellyslider {
+	margin: 0 auto;
+	position: relative;
+	background-color: #f8f8f8;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.crellyslider > .cs-preloader {
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+}
+
+.crellyslider > .cs-preloader > .cs-loader {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -10px;
+	margin-left: -10px;
+	border: solid 2px #fff;
+}
+
+.crellyslider > .cs-controls,
+.crellyslider > .cs-navigation {
+	z-index: 999;
+	-webkit-transition: all 0.2s;
+	opacity: 0;
+}
+
+.crellyslider:hover > .cs-controls,
+.crellyslider:hover > .cs-navigation {
+	opacity: 1;
+}
+
+.crellyslider > .cs-slides {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.crellyslider > .cs-slides > .cs-slide {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	overflow: hidden;
+}
+
+.crellyslider > .cs-slides > .cs-slide > * {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	display: block;
+}
+
+.crellyslider > .cs-slides > .cs-slide > img {
+	max-width: none !important;
+}
+
+.crellyslider > .cs-controls {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	margin-top: -9px;
+	z-index: 999;
+}
+
+.crellyslider > .cs-controls > .cs-previous,
+.crellyslider > .cs-controls > .cs-next {
+	display: block;
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	cursor: pointer;
+	background-image: url('../images/controls.png');
+}
+
+.crellyslider > .cs-controls > .cs-previous {
+	background-position: 0 0;
+	left: 30px;
+}
+
+.crellyslider > .cs-controls > .cs-next {
+	background-position: 18px 0;
+	right: 30px;
+}
+
+.crellyslider > .cs-navigation {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	text-align: center;
+}
+
+.crellyslider > .cs-navigation > .cs-slide-link {
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	margin: 5px;
+	cursor: pointer;
+	border: solid 1px rgba(20, 20, 20, .5);
+	background-color: rgba(20, 20, 20, .5);
+}
+
+.crellyslider > .cs-navigation > .cs-slide-link.cs-active {
+	border: solid 1px #fff;
+	background-color: rgba(255, 255, 255, .5);
+}
+
+.crellyslider > .cs-progress-bar {
+	width: 0%;
+	height: 4px;
+	position: absolute;
+	top: 0;
+	background-color: rgba(255, 255, 255, .5);
+	z-index: 999;
+}
+
+.crellyslider > .cs-progress-bar.cs-progress-bar-hidden {
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.cs-caption {	
+	background-color: #333;
+	color: white;
+	font-weight: bold;
+	padding: 10px 20px;
+	border-radius: 3px;
+}
