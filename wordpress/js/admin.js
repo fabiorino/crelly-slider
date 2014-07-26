@@ -305,7 +305,6 @@ jQuery(document).ready(function($) {
 			
 			// Upload
 			var file_frame;
-			event.preventDefault();
 
 			// If the media frame already exists, reopen it.
 			if ( file_frame ) {
@@ -513,6 +512,13 @@ jQuery(document).ready(function($) {
 			crellyslider_deselectElements();
 			crellyslider_selectElement(element.parent().find('.cs-element').last());
 			
+			// Clone fixes (Google "jQuery clone() bug")
+			var cloned_options = element.parent().find('.cs-element').last().closest('.cs-slide').find('.cs-elements-list .cs-element-settings.active');
+			
+			cloned_options.find('.cs-element-data_in').val(element_options.find('.cs-element-data_in').val());
+			cloned_options.find('.cs-element-data_out').val(element_options.find('.cs-element-data_out').val());
+			cloned_options.find('.cs-element-custom_css').val(element_options.find('.cs-element-custom_css').val());
+			
 			// Make draggable
 			crellyslider_draggableElements();
 		}
@@ -615,7 +621,7 @@ jQuery(document).ready(function($) {
 			
 			// Temporarily insert an element with no src and alt
 			// Add the image into the editing area.
-			  area.append('<img class="cs-element cs-image-element" style="z-index: 1;" />');
+			  area.append('<img class="cs-element cs-image-element" src="nothing_now.jpg" style="z-index: 1;" />');
 			  
 			// Insert the options
 			settings_div.before(settings);
@@ -636,7 +642,6 @@ jQuery(document).ready(function($) {
 			var settings = '<div class="cs-element-settings cs-image-element-settings">' + $('.cs-admin .cs-slide .cs-elements .cs-void-image-element-settings').html() + '</div>';
 			
 			var file_frame;
-			event.preventDefault();
 
 			// If the media frame already exists, reopen it.
 			if ( file_frame ) {
@@ -663,7 +668,7 @@ jQuery(document).ready(function($) {
 			  var image_alt = attachment.alt;
 			  
 			  // Set attributes
-			  var image = area.find('.cs-element').last();
+			  var image = area.find('.cs-image-element.active').last();
 			  image.attr('src', image_src);
 			  image.attr('alt', image_alt);
 			  
