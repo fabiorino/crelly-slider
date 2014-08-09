@@ -4,7 +4,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.6.7
+ * Version: 0.6.8
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: GPL2
@@ -14,7 +14,7 @@
 /** GLOBALS **/
 /*************/ 
 
-define('CS_VERSION', '0.6.7');
+define('CS_VERSION', '0.6.8');
 define('CS_PATH', plugin_dir_path(__FILE__));
 define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider');
 

@@ -219,6 +219,31 @@
 					<?php _e('Pause the current slide when hovered.', 'crellyslider'); ?>
 				</td>
 			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Callbacks', 'crellyslider'); ?></td>
+				<td class="cs-content">
+					<?php
+					if(!$edit || ($edit && stripslashes($slider->callbacks) == '')) {
+					// Sorry for this ugly indentation, ajax compatibility problems...
+					?>
+<textarea id="cs-slider-callbacks">
+beforeStart : function() {},
+beforeSetResponsive : function() {},
+afterSetResponsive : function() {},
+beforeSlideStart : function() {},
+afterSlideEnd : function() {},
+beforePause : function() {},
+afterPause : function() {},
+beforeResume : function() {},</textarea>
+					<?php
+					}
+					else echo '<textarea id="cs-slider-callbacks">' . stripslashes($slider->callbacks) . '</textarea>';
+					?>
+				</td>
+				<td class="cs-description">
+					<?php _e('Some jQuery functions that you can fire during the slider execution.', 'crellyslider'); ?>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>

@@ -24,7 +24,8 @@ function crellyslider_addSlider_callback() {
 			'showControls' => $options['showControls'],
 			'showNavigation' => $options['showNavigation'],
 			'showProgressBar' => $options['showProgressBar'],
-			'pauseOnHover' => $options['pauseOnHover']
+			'pauseOnHover' => $options['pauseOnHover'],
+			'callbacks' => $options['callbacks'],
 		),
 		array(
 			'%s',
@@ -37,7 +38,8 @@ function crellyslider_addSlider_callback() {
 			'%d',
 			'%d',
 			'%d',
-			'%d'
+			'%d',
+			'%s',
 		)
 	);
 	
@@ -70,6 +72,7 @@ function crellyslider_editSlider_callback() {
 			'showNavigation' => $options['showNavigation'],
 			'showProgressBar' => $options['showProgressBar'],
 			'pauseOnHover' => $options['pauseOnHover'],
+			'callbacks' => $options['callbacks'],
 		),
 		array('id' => $options['id']), 
 		array(
@@ -84,6 +87,7 @@ function crellyslider_editSlider_callback() {
 			'%d',
 			'%d',
 			'%d',
+			'%s',
 		),
 		array('%d')
 	);

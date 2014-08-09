@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.6.7
+ * Version: 0.6.8
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: GPL2
@@ -35,7 +35,8 @@
 		var slide_progress = 0;
 		
 		var scale = 1;
-		
+		var window_width_before_setResponsive = 0; // This variable is useful ONLY to prevent that window.resize fires on vertical resizing
+				
 		/********************/
 		/** INITIALIZATION **/
 		/********************/
@@ -119,10 +120,12 @@
 				});
 			}
 			
-			// Make responsive
-			if(settings.responsive) {
+			// Make responsive. Run if resizing horizontally and the slider is not at the right dimension
+			if(settings.responsive) {				
 				$(window).resize(function() {
+					if(window_width_before_setResponsive != $(window).width() && ((settings.layout == 'full-width' && getWidth() != $(SLIDER).width()) || ($(SLIDER).width() < getWidth() || (($(SLIDER).width() > getWidth()) && getWidth() < settings.startWidth)))) {
 						setResponsive();
+					}
 				});
 			}
 			
@@ -147,6 +150,8 @@
 			// Hide preloader
 			unsetPreloader();
 			
+			window_width_before_setResponsive = $(window).width();
+			
 			// Store original elements values then hide all the slides and elements
 			SLIDER.find(CRELLY).find(SLIDES).find(SLIDE).each(function(){
 				$(this).find(ELEMENTS).each(function() {
@@ -166,6 +171,8 @@
 					'display' : 'none',
 				});
 			});
+			
+			settings.beforeStart();
 			
 			// Positions and responsive dimensions then run.
 			if(settings.responsive) {
@@ -255,6 +262,8 @@
 		
 		// Scale every element to make it responsive. It automatically stops and plays the slider
 		function setResponsive() {
+			settings.beforeSetResponsive();
+			
 			var slides = SLIDER.find(CRELLY).find(SLIDES).find(SLIDE);
 			
 			stop();
@@ -297,6 +306,10 @@
 					}					
 				});
 			});
+			
+			window_width_before_setResponsive = $(window).width();
+			
+			settings.afterSetResponsive();
 			
 			play();
 		}
@@ -360,12 +373,16 @@
 			
 			// If can be paused, pause
 			if(! paused /*&& slide_ease_in_completed*/) {
+				settings.beforePause();
+				
 				var slide = SLIDER.find(CRELLY).find(SLIDES).find(SLIDE + ':eq(' + current_slide + ')');
 				var elements = slide.children();
 				
 				slide.finish();
 				
 				paused = true;
+				
+				settings.afterPause();
 			}
 			// Else try until you can pause
 			else {
@@ -385,6 +402,8 @@
 		}
 		
 		function resume() {
+			settings.beforeResume();
+			
 			wants_to_pause = false;
 			
 			var slide = SLIDER.find(CRELLY).find(SLIDES).find(SLIDE + ':eq(' + current_slide + ')');
@@ -602,6 +621,8 @@
 		
 		// Execute a slide
 		function executeSlide(slide_index) {
+			settings.beforeSlideStart();
+			
 			var slide = SLIDER.find(CRELLY).find(SLIDES).find(SLIDE + ':eq(' + slide_index +')');
 			
 			var def = new $.Deferred();
@@ -613,6 +634,7 @@
 				slide_ease_in_completed = true;				
 			});			
 			finishSlide(slide_index, true).done(function() {					
+				settings.afterSlideEnd();
 				def.resolve();					
 			});
 			
@@ -1235,24 +1257,33 @@
 	// Plugin
 	$.fn.crellySlider = function(options) {	
         var settings = $.extend({
-			layout			: 'fixed',
-			responsive		: true,
-			startWidth		: 1170,
-			startHeight		: 500,
-			pauseOnHover	: true,
+			layout				: 'fixed',
+			responsive			: true,
+			startWidth			: 1170,
+			startHeight			: 500,
+			pauseOnHover		: true,
 			
-			automaticSlide	: true,
-			showControls 	: true,
-			showNavigation	: true,
-			showProgressBar	: true,
+			automaticSlide		: true,
+			showControls 		: true,
+			showNavigation		: true,
+			showProgressBar		: true,
 			
-			slidesTime		: 3000,
-			elementsDelay	: 0,
-			elementsTime	: 'all',
-			slidesEaseIn	: 300,
-			elementsEaseIn	: 300,
-			slidesEaseOut	: 300,
-			elementsEaseOut	: 300,
+			slidesTime			: 3000,
+			elementsDelay		: 0,
+			elementsTime		: 'all',
+			slidesEaseIn		: 300,
+			elementsEaseIn		: 300,
+			slidesEaseOut		: 300,
+			elementsEaseOut		: 300,
+			
+			beforeStart			: function() {},
+			beforeSetResponsive	: function() {},
+			afterSetResponsive	: function() {},
+			beforeSlideStart	: function() {},
+			afterSlideEnd		: function() {},
+			beforePause			: function() {},
+			afterPause			: function() {},
+			beforeResume		: function() {},
         }, options);
 
         return this.each(function() {

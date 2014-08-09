@@ -132,6 +132,7 @@ class CrellySliderFrontend {
 		$output .= 'showNavigation: ' . $slider->showNavigation . ',' . "\n";
 		$output .= 'showProgressBar: ' . $slider->showProgressBar . ',' . "\n";
 		$output .= 'pauseOnHover: ' . $slider->pauseOnHover . ',' . "\n";
+		$output .= $slider->callbacks . "\n";
 		$output .= '});' . "\n";
 		$output .= '});' . "\n";
 		$output .= '</script>' . "\n";

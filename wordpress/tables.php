@@ -35,6 +35,7 @@ class CrellySliderTables {
 		showNavigation INT,
 		showProgressBar INT,
 		pauseOnHover INT,
+		callbacks TEXT CHARACTER SET utf8,
 		UNIQUE KEY id (id)
 		);";
 		

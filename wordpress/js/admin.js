@@ -822,6 +822,7 @@ jQuery(document).ready(function($) {
 				showNavigation : parseInt(content.find('#cs-slider-showNavigation').val()),
 				showProgressBar : parseInt(content.find('#cs-slider-showProgressBar').val()),
 				pauseOnHover : parseInt(content.find('#cs-slider-pauseOnHover').val()),
+				callbacks : content.find('#cs-slider-callbacks').val(),
 			};
 			
 			// Do the ajax call
