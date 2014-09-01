@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+(function($) {
 	$(window).load(function() {
 		
 		// Run tabs
@@ -442,6 +442,9 @@ jQuery(document).ready(function($) {
 			// Do not click the editing-area
 			e.stopPropagation();
 			
+			// Do not open links
+			e.preventDefault();
+			
 			crellyslider_selectElement($(this));
 		});
 		function crellyslider_selectElement(element) {
@@ -482,7 +485,7 @@ jQuery(document).ready(function($) {
 		
 		// Delete element. Remember that the button should be enabled / disabled somewhere else
 		function crellyslider_deleteElement(element) {
-			var index = element.index('.cs-element');
+			var index = element.index();
 			var slide_parent = element.closest('.cs-slide');
 			
 			element.remove();
@@ -502,11 +505,11 @@ jQuery(document).ready(function($) {
 		});
 		
 		function crellyslider_duplicateElement(element) {
-			var index = element.index('.cs-element');
+			var index = element.index();
 			var slide_parent = element.closest('.cs-slide');
 			
 			element.clone().appendTo(element.parent());
-			var element_options = slide_parent.find('.cs-elements-list .cs-element-settings:eq(' + index + ')');
+			var element_options = slide_parent.find('.cs-elements-list .cs-element-settings').eq(index);
 			element_options.clone().insertBefore(element_options.parent().find('.cs-void-text-element-settings'));
 			
 			crellyslider_deselectElements();
@@ -517,7 +520,11 @@ jQuery(document).ready(function($) {
 			
 			cloned_options.find('.cs-element-data_in').val(element_options.find('.cs-element-data_in').val());
 			cloned_options.find('.cs-element-data_out').val(element_options.find('.cs-element-data_out').val());
-			cloned_options.find('.cs-element-custom_css').val(element_options.find('.cs-element-custom_css').val());
+			cloned_options.find('.cs-element-custom_css').val(element_options.find('.cs-element-custom_css').val());			
+			if(element_options.hasClass('cs-image-element-settings')) {
+				cloned_options.find('.cs-image-element-upload-button').data('src', element_options.find('.cs-image-element-upload-button').data('src'));	
+				cloned_options.find('.cs-image-element-upload-button').data('alt', element_options.find('.cs-image-element-upload-button').data('alt'));	
+			}
 			
 			// Make draggable
 			crellyslider_draggableElements();
@@ -551,20 +558,95 @@ jQuery(document).ready(function($) {
 			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index', parseFloat($(this).val()));
 		});
 		
+		// Add / remove link wrapper (fire on textbox edit or on checkbox _target:"blank" edit)
+		$('.cs-admin').on('keyup', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-link', function() {
+			crellyslider_editElementsLink($(this));
+		});
+		$('.cs-admin').on('change', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-link_new_tab', function() {
+			var textbox = $(this).parent().find('.cs-element-link');
+			crellyslider_editElementsLink(textbox);
+		});
+		
+		// Wrap - unwrap elements with an <a href="" target="">
+		function crellyslider_editElementsLink(textbox_link) {
+			var index = textbox_link.closest('.cs-element-settings').index();
+			var copy_attributes = false;
+			var reapply_css = false;
+			
+			if(textbox_link.val() != '' && !textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').hasClass('cs-element')) {
+				var link_new_tab = textbox_link.parent().find('.cs-element-link_new_tab').prop('checked') ? 'target="_blank"' : '';
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').wrap('<a href="' + textbox_link.val() + '"' + link_new_tab + ' />');
+				copy_attributes = true;
+				reapply_css = true;
+			}
+			else if(textbox_link.val() != '' && textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').hasClass('cs-element')) {
+				var link_new_tab = textbox_link.parent().find('.cs-element-link_new_tab').prop('checked') ? true : false;
+				
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').attr('href', textbox_link.val());
+				
+				if(link_new_tab) {
+					textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').attr('target', '_blank');
+				}
+				else {
+					textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').removeAttr('target');
+				}
+				
+				copy_attributes = false;
+			}
+			else if(textbox_link.val() == '' && textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').hasClass('cs-element')) {
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').attr('class', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').attr('class')).removeClass('ui-draggable');
+				
+				// Reapply CSS and custom CSS
+				applyCustomCss(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css'));
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').css('top', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').css('top'));
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').css('left', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').css('left'));
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').css('z-index', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').css('z-index'));
+				
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').unwrap();
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').draggable('destroy');
+				copy_attributes = false;
+			}
+			
+			if(copy_attributes) {
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').parent().attr('style', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').attr('style'));
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').parent().attr('class', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').attr('class')).removeClass('ui-draggable');
+				
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').removeAttr('style');
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').removeAttr('class');
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').draggable('destroy');
+			}
+			
+			crellyslider_draggableElements();
+			
+			if(reapply_css) {
+				applyCustomCss(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css'));
+			}
+		}
+		
 		// Apply custom CSS
 		$('.cs-admin').on('keyup', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-custom_css', function() {
-			var index = $(this).closest('.cs-element-settings').index();
+			applyCustomCss($(this));
+		});
+		
+		function applyCustomCss(textarea) {
+			var index = textarea.closest('.cs-element-settings').index();
 			// Save current positions
-			var left = $(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left');
-			var top = $(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top');
-			var z_index = $(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index');
+			var left = textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left');
+			var top = textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top');
+			var z_index = textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index');
 			
 			// Apply CSS
-			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').attr('style', $(this).val());
-			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top', top);
-			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left', left);
-			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index', z_index);
-		});
+			if(! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').is('a')) {
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').attr('style', textarea.val());
+			}
+			else {
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').attr('style', textarea.val());
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').removeAttr('style');
+			}
+			textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top', top);
+			textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left', left);
+			textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index', z_index);			
+		}
 		
 		// TEXT ELEMENTS
 		
@@ -581,7 +663,7 @@ jQuery(document).ready(function($) {
 			var settings = '<div class="cs-element-settings cs-text-element-settings">' + $('.cs-admin .cs-slide .cs-elements .cs-void-text-element-settings').html() + '</div>';
 			
 			// Insert in editing area
-			area.append('<p class="cs-element cs-text-element" style="z-index: 1;">' + crellyslider_translations.text_element_default_html + '</p>');
+			area.append('<div class="cs-element cs-text-element" style="z-index: 1;">' + crellyslider_translations.text_element_default_html + '</div>');
 			
 			// Insert the options
 			settings_div.before(settings);
@@ -596,7 +678,14 @@ jQuery(document).ready(function($) {
 		// Modify text
 		$('.cs-admin').on('keyup', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-inner_html', function() {
 			var index = $(this).closest('.cs-element-settings').index();
-			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').html($(this).val());
+			var text_element = $(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')');
+			
+			if(! text_element.is('a')) {
+				text_element.html($(this).val());
+			}
+			else {
+				text_element.find('> div').html($(this).val());
+			}
 		});
 		
 		// IMAGE ELEMENTS
@@ -667,12 +756,19 @@ jQuery(document).ready(function($) {
 			  var image_src = attachment.url;
 			  var image_alt = attachment.alt;
 			  
-			  // Set attributes
+			  // Set attributes. If is a link, do the right thing
 			  var image = area.find('.cs-image-element.active').last();
-			  image.attr('src', image_src);
-			  image.attr('alt', image_alt);
 			  
-			  // Set data (will be used in tha ajax call)
+			  if(! image.is('a')) {
+				  image.attr('src', image_src);
+				  image.attr('alt', image_alt);
+			  }
+			  else {
+				image.find('> img').attr('src', image_src);
+                image.find('> img').attr('alt', image_alt);
+			  }
+			  
+			  // Set data (will be used in the ajax call)
 			  settings_div.parent().find('.cs-element-settings.active .cs-image-element-upload-button').data('src', image_src);
 			  settings_div.parent().find('.cs-element-settings.active .cs-image-element-upload-button').data('alt', image_alt);
 			});
@@ -803,6 +899,11 @@ jQuery(document).ready(function($) {
 		
 		// Delete slider
 		$('.cs-admin .cs-home .cs-sliders-list .cs-delete-slider').click(function() {
+			var confirm = window.confirm(crellyslider_translations.slider_delete_confirm);
+			if(!confirm) {
+				return;
+			}
+			
 			crellyslider_deleteSlider($(this));
 		});
 		
@@ -853,7 +954,9 @@ jQuery(document).ready(function($) {
 				},
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
-					alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+					alert('Error saving slider');
+					alert("Status: " + textStatus);
+					alert("Error: " + errorThrown); 
 					crellyslider_showError();
 				}
 			});
@@ -912,7 +1015,9 @@ jQuery(document).ready(function($) {
 				},
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
-					alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+					alert('Error saving slides');
+					alert("Status: " + textStatus);
+					alert("Error: " + errorThrown); 
 					crellyslider_showError();
 				}
 			});
@@ -955,6 +1060,8 @@ jQuery(document).ready(function($) {
 						data_easeIn : parseInt(element.find('.cs-element-data_easeIn').val()),
 						data_easeOut : parseInt(element.find('.cs-element-data_easeOut').val()),
 						custom_css : element.find('.cs-element-custom_css').val(),
+						link : element.find('.cs-element-link').val(),
+						link_new_tab : element.find('.cs-element-link_new_tab').prop('checked') ? 1 : 0,
 					};
 					
 					final_options[j] = options;
@@ -987,7 +1094,9 @@ jQuery(document).ready(function($) {
 				},
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
-					alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+					alert('Error saving elements');
+					alert("Status: " + textStatus);
+					alert("Error: " + errorThrown); 
 					crellyslider_showError();
 				}
 			});
@@ -1020,11 +1129,13 @@ jQuery(document).ready(function($) {
 				},
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
-					alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+					alert('Error deleting slider');
+					alert("Status: " + textStatus);
+					alert("Error: " + errorThrown); 
 					crellyslider_showError();
 				},
 			});
 		}
 
 	});
-});
+})(jQuery);

@@ -94,6 +94,8 @@ class CrellySliderTables {
 		inner_html TEXT CHARACTER SET utf8,
 		image_src TEXT CHARACTER SET utf8,
 		image_alt TEXT CHARACTER SET utf8,
+		link VARCHAR(100) CHARACTER SET utf8 DEFAULT '',
+		link_new_tab INT DEFAULT 0,
 		UNIQUE KEY id (id)
 		);";
 		

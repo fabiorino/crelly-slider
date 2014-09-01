@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.6.8
+ * Version: 0.6.9
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: GPL2
@@ -35,7 +35,7 @@
 		var slide_progress = 0;
 		
 		var scale = 1;
-		var window_width_before_setResponsive = 0; // This variable is useful ONLY to prevent that window.resize fires on vertical resizing
+		var window_width_before_setResponsive = 0; // This variable is useful ONLY to prevent that window.resize fires on vertical resizing or on a right window width
 				
 		/********************/
 		/** INITIALIZATION **/
@@ -89,6 +89,99 @@
 				SLIDER.find(CRELLY).append('<div class="cs-progress-bar cs-progress-bar-hidden"></div>');
 			}
 			
+			// Set layout for the first time
+			if(settings.responsive) {
+				setScale();
+			}			
+			setLayout();
+			
+			setPreloader();
+			
+			// In WP window.load does not fire. Need to add that variable
+			if(! crellyslider_is_wordpress_admin || typeof crellyslider_is_wordpress_admin == 'undefined') {
+				loadWindow();
+			}
+			else {
+				loadedWindow();
+			}
+		}
+		
+		// Wait until the window loads
+		function loadWindow() {
+			$(window).load(function() {
+				loadedWindow();
+			});
+		}
+		
+		// Do operations after window.load is complete. Need to do it as a function for back-end compatibility
+		function loadedWindow() {
+			unsetPreloader();
+			
+			// Set layout for the second time
+			if(settings.responsive) {
+				setScale();
+			}
+			setLayout();
+			
+			window_width_before_setResponsive = $(window).width();
+			
+			// Store original elements and elements contents values then hide all the slides and elements. Display none only if is an element, not an element content
+			SLIDER.find(CRELLY).find(SLIDES).find(SLIDE).each(function(){
+				$(this).find(ELEMENTS).each(function() {
+					var element = $(this);
+					
+					element.find('*').each(function() {
+						var element_content = $(this);
+						setElementDatas(element_content, true);
+					});
+					
+					setElementDatas(element, false);
+				});
+				$(this).css({
+					'display' : 'none',
+				});
+			});
+			
+			addListeners();
+			
+			settings.beforeStart();
+			
+			// Positions and responsive dimensions then run.
+			if(settings.responsive) {
+				setResponsive();
+			}
+			else {
+				play();
+			}
+		}
+		
+		// Init the element with original values
+		function setElementDatas(element, is_element_content) {
+			element.data('width', parseFloat(element.width()));
+			element.data('height', parseFloat(element.height()));
+			element.data('line-height', parseFloat(element.css('line-height')));
+			element.data('letter-spacing', parseFloat(element.css('letter-spacing')));
+			element.data('font-size', parseFloat(element.css('font-size')));
+			element.data('padding-top', parseFloat(element.css('padding-top')));
+			element.data('padding-right', parseFloat(element.css('padding-right')));
+			element.data('padding-bottom', parseFloat(element.css('padding-bottom')));
+			element.data('padding-left', parseFloat(element.css('padding-left')));
+			if(! is_element_content) {
+				element.css('display', 'none');
+			}
+		}
+		
+		// Sets all listeners for user interaction
+		function addListeners() {
+			// Make responsive. Run if resizing horizontally and the slider is not at the right dimension
+			if(settings.responsive) {				
+				$(window).resize(function() {
+					if(window_width_before_setResponsive != $(window).width() && ((settings.layout == 'full-width' && getWidth() != $(SLIDER).width()) || ($(SLIDER).width() < getWidth() || (($(SLIDER).width() > getWidth()) && getWidth() < settings.startWidth)))) {
+						setResponsive();
+					}
+				});
+			}
+			
 			// Previous control click		
 			SLIDER.find(CRELLY).find('.cs-controls > .cs-previous').click(function() {
 				paused = false;
@@ -118,68 +211,6 @@
 				SLIDER.find(CRELLY).find(SLIDES).mouseleave(function() {
 					resume();
 				});
-			}
-			
-			// Make responsive. Run if resizing horizontally and the slider is not at the right dimension
-			if(settings.responsive) {				
-				$(window).resize(function() {
-					if(window_width_before_setResponsive != $(window).width() && ((settings.layout == 'full-width' && getWidth() != $(SLIDER).width()) || ($(SLIDER).width() < getWidth() || (($(SLIDER).width() > getWidth()) && getWidth() < settings.startWidth)))) {
-						setResponsive();
-					}
-				});
-			}
-			
-			// Set layout
-			setLayout();
-			
-			// Set preloader
-			setPreloader();
-			
-			if(document.readyState != 'complete') {
-				$(window).load(function() {
-					loadedWindow();
-				});
-			}
-			else {
-				loadedWindow();
-			}
-		}
-		
-		// Do operations after window.load is complete. Need to do it as a function for back-end compatibility
-		function loadedWindow() {
-			// Hide preloader
-			unsetPreloader();
-			
-			window_width_before_setResponsive = $(window).width();
-			
-			// Store original elements values then hide all the slides and elements
-			SLIDER.find(CRELLY).find(SLIDES).find(SLIDE).each(function(){
-				$(this).find(ELEMENTS).each(function() {
-					var element = $(this);
-					element.data('width', parseFloat(element.width()));
-					element.data('height', parseFloat(element.height()));
-					element.data('line-height', parseFloat(element.css('line-height')));
-					element.data('letter-spacing', parseFloat(element.css('letter-spacing')));
-					element.data('font-size', parseFloat(element.css('font-size')));
-					element.data('padding-top', parseFloat(element.css('padding-top')));
-					element.data('padding-right', parseFloat(element.css('padding-right')));
-					element.data('padding-bottom', parseFloat(element.css('padding-bottom')));
-					element.data('padding-left', parseFloat(element.css('padding-left')));
-					element.css('display', 'none');
-				});
-				$(this).css({
-					'display' : 'none',
-				});
-			});
-			
-			settings.beforeStart();
-			
-			// Positions and responsive dimensions then run.
-			if(settings.responsive) {
-				setResponsive();
-			}
-			else {
-				play();
 			}
 		}
 		
@@ -276,34 +307,12 @@
 				elements.each(function() {
 					var element = $(this);
 					
-					// Standard element
-					element.css({
-						'width' 		 : getScaled(getItemData(element, 'width')),
-						'height' 		 : getScaled(getItemData(element, 'height')),
-						'top' 			 : getScaled(getItemData(element, 'top') + getLayoutGaps(element).top),
-						'left' 			 : getScaled(getItemData(element, 'left') + getLayoutGaps(element).left),
-						'padding-top'	 : getScaled(getItemData(element, 'padding-top')),
-						'padding-right'	 : getScaled(getItemData(element, 'padding-right')),
-						'padding-bottom' : getScaled(getItemData(element, 'padding-bottom')),
-						'padding-left'	 : getScaled(getItemData(element, 'padding-left')),
+					element.find('*').each(function() {
+						var element_content = $(this);
+						scaleElement(element_content);
 					});
 					
-					// Element contains text
-					if(element.text() != '') {
-						element.css({
-							'width' 		 : 'auto',
-							'height' 		 : 'auto',							
-							'line-height'	 : getScaled(getItemData(element, 'line-height')) + 'px',
-							'letter-spacing' : getScaled(getItemData(element, 'letter-spacing')),
-							'font-size'		 : getScaled(getItemData(element, 'font-size')),
-						});
-						if(element.width() > 0) {
-							element.css('width', element.width());
-						}
-						if(element.height() > 0) {
-							element.css('height', element.height());
-						}
-					}					
+					scaleElement(element);
 				});
 			});
 			
@@ -314,12 +323,54 @@
 			play();
 		}
 		
+		// Scales a text or an image
+		function scaleElement(element) {
+			// Standard element
+			element.css({
+				'width' 		 : getScaled(getItemData(element, 'width')),
+				'height' 		 : getScaled(getItemData(element, 'height')),
+				'top' 			 : getScaled(getItemData(element, 'top') + getLayoutGaps(element).top),
+				'left' 			 : getScaled(getItemData(element, 'left') + getLayoutGaps(element).left),
+				'padding-top'	 : getScaled(getItemData(element, 'padding-top')),
+				'padding-right'	 : getScaled(getItemData(element, 'padding-right')),
+				'padding-bottom' : getScaled(getItemData(element, 'padding-bottom')),
+				'padding-left'	 : getScaled(getItemData(element, 'padding-left')),
+			});
+			
+			// Element contains text
+			if(element.text() != '') {
+				element.css({
+					'width' 		 : 'auto',
+					'height' 		 : 'auto',							
+					'line-height'	 : getScaled(getItemData(element, 'line-height')) + 'px',
+					'letter-spacing' : getScaled(getItemData(element, 'letter-spacing')),
+					'font-size'		 : getScaled(getItemData(element, 'font-size')),
+				});
+				
+				/*				
+				Warning: these lines were here because, in text elements, the width and the height depends on font-size, line height etc..
+				Because of that, the we didn't really have to set the width and the height manually because the browser calculated them based on font-size, line-height etc.
+				But, because I hate to see "width: auto", I wanted to set them.
+				The problem appears when we have other HTML inside the text layer. It is scaled correctly but the width and the height aren't.
+				This is not a big problem because, without specifying the dimensions, the slider works with "auto" parameter (wich is correct).
+				If, in a future, I will have to specify a width and a height, I will have to try to fix the width() jQuery function that returns 0 when the element is in "display: none"
+				
+				if(element.width() > 0) {
+					element.css('width', element.width());
+				}
+				if(element.height() > 0) {
+					element.css('height', element.height());
+				}
+				*/
+			}
+		}
+		
 		// Using the start dimensions, sets how the slider and it's elements should be scaled
 		function setScale() {
 			var slider_width = SLIDER.width();
 			var start_width = settings.startWidth;
 			
-			if(slider_width >= start_width) {
+			if(slider_width >= start_width || ! settings.responsive) {
 				scale = 1;
 			}
 			else {

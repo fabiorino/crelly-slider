@@ -63,7 +63,7 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 	<table class="cs-slide-settings-list cs-table">
 		<thead>
 			<tr class="odd-row">
-				<th colspan="3"><?php _e('Slides General Options', 'crellyslider'); ?></th>
+				<th colspan="3"><?php _e('Slide Options', 'crellyslider'); ?></th>
 			</tr>
 		</thead>
 		

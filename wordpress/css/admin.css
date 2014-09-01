@@ -357,6 +357,16 @@
 	border-right: none;
 }
 
+.cs-admin .cs-slide-tabs .ui-tabs-nav li,
+.cs-admin .cs-slide-tabs .ui-tabs-nav li a {
+	cursor: move;
+}
+
+.cs-admin .cs-slide-tabs .ui-tabs-nav li.ui-state-disabled,
+.cs-admin .cs-slide-tabs .ui-tabs-nav li.ui-state-disabled a {
+	cursor: pointer;
+}
+
 .cs-admin .cs-icon {
 	display: inline-block;
 	width: 13px;

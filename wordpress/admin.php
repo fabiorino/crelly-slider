@@ -8,7 +8,7 @@ class CrellySliderAdmin {
 	}
 	
 	public static function pluginMenus() {
-		add_menu_page('Crelly Slider', 'Crelly Slider', 'manage_options', 'crellyslider', 'CrellySliderAdmin::displayPage');
+		add_menu_page('Crelly Slider', 'Crelly Slider', 'manage_options', 'crellyslider', 'CrellySliderAdmin::displayPage', 'div');
 		//add_submenu_page('crellyslider', 'View Sliders', 'View Sliders', 'manage_options', 'crellyslider', 'CrellySliderAdmin::displayHome');
 		//add_submenu_page('crellyslider', 'Add Slider', 'Add Slider', 'manage_options', 'cs_slider', 'CrellySliderAdmin::displaySlider');
 	}
@@ -146,6 +146,19 @@ class CrellySliderAdmin {
 		<?php
 	}
 	
+	// Avoid incompatibility issues
+	public static function isAdminJs() {	
+		?>
+		<script type="text/javascript">
+			var crellyslider_is_wordpress_admin = true;
+		</script>
+		<?php
+	}
+	
+	public static function setIsAdminJs() {
+		add_action('admin_enqueue_scripts', 'CrellySliderAdmin::isAdminJs');
+	}
+	
 	// Include CSS and JavaScript
 	public static function enqueues() {	
 		wp_enqueue_script('jquery-ui-draggable');
@@ -160,6 +173,62 @@ class CrellySliderAdmin {
 		
 		wp_enqueue_style('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/css/admin.css', array(), CS_VERSION);
 		wp_enqueue_script('crellyslider-admin');
+		
+		$wp_version = get_bloginfo('version');
+		$menu_icon_url = CS_PLUGIN_URL . '/wordpress/images/menu-icon.png';
+		if($wp_version < 3.8) {
+			?>
+			<style type="text/css">
+				#adminmenu .toplevel_page_crellyslider div.wp-menu-image {
+					background-image: url('<?php echo $menu_icon_url; ?>');
+					background-repeat: no-repeat;
+					background-position: -20px center;
+				}
+
+				#adminmenu .toplevel_page_crellyslider:hover div.wp-menu-image {
+					background-position: -20px center;
+				}
+
+				#adminmenu .toplevel_page_crellyslider.current div.wp-menu-image {
+					background-position: 8px center;
+				}
+
+				#adminmenu .current.toplevel_page_crellyslider:hover div.wp-menu-image {
+					background-position: 8px center;
+				}
+			</style>
+			<?php
+		}
+		else {
+			?>
+			<style type="text/css">
+				#adminmenu .toplevel_page_crellyslider div.wp-menu-image {
+					background-image: url('<?php echo $menu_icon_url; ?>');
+					background-repeat: no-repeat;
+					background-position: 8px center;
+					opacity: .6;
+					filter: alpha(opacity=60);
+				}
+
+				#adminmenu .toplevel_page_crellyslider:hover div.wp-menu-image {
+					background-position: -20px center;
+					opacity: 1;
+					filter: alpha(opacity=100);
+				}
+
+				#adminmenu .toplevel_page_crellyslider.current div.wp-menu-image {
+					opacity: 1;
+					filter: alpha(opacity=100);
+				}
+
+				#adminmenu .current.toplevel_page_crellyslider:hover div.wp-menu-image {
+					background-position: 8px center;
+					opacity: 1;
+					filter: alpha(opacity=100);
+				}
+			</style>
+			<?php
+		}
 	}
 			
 	public static function setEnqueues() {
@@ -171,6 +240,7 @@ class CrellySliderAdmin {
 		$crellyslider_translations = array(
 			'slide' => __('Slide', 'crellyslider'),
 			'slide_delete_confirm' => __('The slide will be deleted. Are you sure?', 'crellyslider'),
+			'slider_delete_confirm' => __('The slider will be deleted. Are you sure?', 'crellyslider'),
 			'text_element_default_html' => __('Text element', 'crellyslider'),
 			'slide_live_preview' => __('Live preview', 'crellyslider'),
 			'slide_stop_preview' => __('Stop preview', 'crellyslider'),

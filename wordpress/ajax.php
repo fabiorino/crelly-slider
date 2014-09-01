@@ -195,6 +195,8 @@ function crellyslider_editElements_callback() {
 				'data_easeIn' => $option['data_easeIn'],
 				'data_easeOut' => $option['data_easeOut'],
 				'custom_css' => $option['custom_css'],
+				'link' => $option['link'],
+				'link_new_tab' => $option['link_new_tab'],
 			),
 			array(
 				'%d',
@@ -214,6 +216,8 @@ function crellyslider_editElements_callback() {
 				'%d',
 				'%d',
 				'%s',
+				'%s',
+				'%d',
 			)
 		);
 		

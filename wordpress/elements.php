@@ -27,56 +27,73 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 			<?php
 			if($edit && $elements != NULL) {
 				foreach($elements as $element) {
+					if($element->link != '') {
+						$target = $element->link_new_tab == 1 ? 'target="_blank"' : '';
+						
+						$link_output = '<a' . "\n" .
+						'class="cs-element cs-' . $element->type . '-element"' . "\n" .
+						'href="' . stripslashes($element->link) . '"' . "\n" .
+						$target . "\n" .
+						'style="' .
+						'z-index: ' . $element->z_index . ';' . "\n" .
+						'top: ' . $element->data_top . 'px;' . "\n" .
+						'left: ' . $element->data_left . 'px;' . "\n" .
+						'">' .  "\n";
+						
+						echo $link_output;
+					}
+					
 					switch($element->type) {
 						case 'text':
 							?>
-							<p
-							class="cs-element cs-text-element"
+							<div
 							style="
 							<?php
-							echo 'z-index: ' . $element->z_index . ';';
-							echo 'left: ' . $element->data_left . 'px;';
-							echo 'top: ' . $element->data_top . 'px;';
+							if($element->link == '') {
+								echo 'z-index: ' . $element->z_index . ';';
+								echo 'left: ' . $element->data_left . 'px;';
+								echo 'top: ' . $element->data_top . 'px;';
+							}
 							echo stripslashes($element->custom_css);
 							?>
 							"
-							data-delay="<?php echo $element->data_delay; ?>"
-							data-easeIn="<?php echo $element->data_easeIn; ?>"
-							data-easeOut="<?php echo $element->data_easeOut; ?>"
-							data-in="<?php echo $element->data_in; ?>"
-							data-out="<?php echo $element->data_out; ?>"
-							data-top="<?php echo $element->data_top; ?>"
-							data-left="<?php echo $element->data_left; ?>"
-							data-time="<?php echo $element->data_time; ?>"
+							<?php
+							if($element->link == '') {
+								echo 'class="cs-element cs-text-element"';
+							}
+							?>
 							>
 							<?php echo stripslashes($element->inner_html); ?>
-							</p>
+							</div>
 							<?php
 						break;
 						case 'image':
 							?>
 							<img
-							class="cs-element cs-image-element"
 							src="<?php echo $element->image_src; ?>"
+							alt="<?php echo $element->image_alt; ?>"
 							style="
 							<?php
-							echo 'z-index: ' . $element->z_index . ';';
-							echo 'left: ' . $element->data_left . 'px;';
-							echo 'top: ' . $element->data_top . 'px;';
+							if($element->link == '') {
+								echo 'z-index: ' . $element->z_index . ';';
+								echo 'left: ' . $element->data_left . 'px;';
+								echo 'top: ' . $element->data_top . 'px;';
+							}
 							echo stripslashes($element->custom_css);
 							?>
 							"
-							data-delay="<?php echo $element->data_delay; ?>"
-							data-easeIn="<?php echo $element->data_easeIn; ?>"
-							data-easeOut="<?php echo $element->data_easeOut; ?>"
-							data-in="<?php echo $element->data_in; ?>"
-							data-out="<?php echo $element->data_out; ?>"
-							data-top="<?php echo $element->data_top; ?>"
-							data-left="<?php echo $element->data_left; ?>"
-							data-time="<?php echo $element->data_time; ?>"
+							<?php
+							if($element->link == '') {
+								echo 'class="cs-element cs-image-element"';
+							}
+							?>
 							/>
 							<?php
 						break;
+					}
+					
+					if($element->link != '') {
+						echo '</a>' . "\n";
 					}
 				}
 			}
@@ -170,8 +187,9 @@ function crellyslider_printTextElement($element) {
 				<td class="cs-name"><?php _e('Text', 'crellyslider'); ?></td>
 				<td class="cs-content">
 					<?php
-					if($void) echo '<input class="cs-element-inner_html" type="text" value="' . __('Text element', 'crellyslider') . '" />';
-					else echo '<input class="cs-element-inner_html" type="text" value="' . stripslashes($element->inner_html) .'" />';
+					// Here I use ' ' to delimit the value attribute. Should reduce conflict possibilities.
+					if($void) echo '<input class="cs-element-inner_html" type="text" value=\'' . __('Text element', 'crellyslider') . '\' />';
+					else echo '<input class="cs-element-inner_html" type="text" value=\'' . stripslashes($element->inner_html) .'\' />';
 					?>
 				</td>
 				<td class="cs-description">
@@ -307,6 +325,30 @@ function crellyslider_printTextElement($element) {
 				</td>
 			</tr>
 			<tr>
+				<td class="cs-name"><?php _e('Link', 'crellyslider'); ?></td>
+				<td class="cs-content">
+					<?php
+					if($void) echo '<input class="cs-element-link" type="text" value="" />';
+					else echo '<input class="cs-element-link" type="text" value="' . stripslashes($element->link) .'" />';
+					?>
+					<br />
+					<?php
+					if($void) echo '<input class="cs-element-link_new_tab" type="checkbox" />' . __('Open link in a new tab', 'crellyslider');
+					else {
+						if($element->link_new_tab) {
+							echo '<input class="cs-element-link_new_tab" type="checkbox" checked />' . __('Open link in a new tab', 'crellyslider');
+						}
+						else {
+							echo '<input class="cs-element-link_new_tab" type="checkbox" />' . __('Open link in a new tab', 'crellyslider');
+						}
+					}
+					?>
+				</td>
+				<td class="cs-description">
+					<?php _e('Open the link (e.g.: http://www.google.it) on click. Leave it empty if you don\'t want it.', 'crellyslider'); ?>
+				</td>
+			</tr>
+			<tr>
 				<td class="cs-name"><?php _e('Custom CSS', 'crellyslider'); ?></td>
 				<td class="cs-content">
 					<?php
@@ -356,15 +398,15 @@ function crellyslider_printImageElement($element) {
 				<td><?php _e('Description', 'crellyslider'); ?></td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Upload image', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Modify image', 'crellyslider'); ?></td>
 				<td class="cs-content">
 					<?php
-					if($void) echo '<input class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Select image', 'crellyslider') . '" />';
-					else echo '<input data-src="' . $element->image_src . '" data-alt="' . $element->image_alt . '" class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Select image', 'crellyslider') . '" />';
+					if($void) echo '<input class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Open gallery', 'crellyslider') . '" />';
+					else echo '<input data-src="' . $element->image_src . '" data-alt="' . $element->image_alt . '" class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Open gallery', 'crellyslider') . '" />';
 					?>
 				</td>
 				<td class="cs-description">
-					<?php _e('Upload the image you want to insert.', 'crellyslider'); ?>
+					<?php _e('Change the image source or the alt text.', 'crellyslider'); ?>
 				</td>
 			</tr>
 			<tr>
@@ -493,6 +535,30 @@ function crellyslider_printImageElement($element) {
 				</td>
 				<td class="cs-description">
 					<?php _e('How long will the out animation take.', 'crellyslider'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Link', 'crellyslider'); ?></td>
+				<td class="cs-content">
+					<?php
+					if($void) echo '<input class="cs-element-link" type="text" value="" />';
+					else echo '<input class="cs-element-link" type="text" value="' . stripslashes($element->link) .'" />';
+					?>
+					<br />
+					<?php
+					if($void) echo '<input class="cs-element-link_new_tab" type="checkbox" />' . __('Open link in a new tab', 'crellyslider');
+					else {
+						if($element->link_new_tab) {
+							echo '<input class="cs-element-link_new_tab" type="checkbox" checked />' . __('Open link in a new tab', 'crellyslider');
+						}
+						else {
+							echo '<input class="cs-element-link_new_tab" type="checkbox" />' . __('Open link in a new tab', 'crellyslider');
+						}
+					}
+					?>
+				</td>
+				<td class="cs-description">
+					<?php _e('Open the link (e.g.: http://www.google.it) on click. Leave it empty if you don\'t want it.', 'crellyslider'); ?>
 				</td>
 			</tr>
 			<tr>

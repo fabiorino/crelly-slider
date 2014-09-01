@@ -10,7 +10,20 @@ function getCrellySlider($alias) {
 }
 
 class CrellySliderFrontend {
-
+	
+	// Avoid incompatibility issues
+	public static function notAdminJs() {	
+		?>
+		<script type="text/javascript">
+			var crellyslider_is_wordpress_admin = false;
+		</script>
+		<?php
+	}
+	
+	public static function setNotAdminJs() {
+		add_action('wp_enqueue_scripts', 'CrellySliderFrontend::notAdminJs');
+	}
+	
 	// Shortcode
 	public static function shortcode($atts) {
 		$a = shortcode_atts( array(
@@ -75,43 +88,74 @@ class CrellySliderFrontend {
 			$elements = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = ' . $slider_id . ' AND slide_parent = ' . $slide_parent);	
 			
 			foreach($elements as $element) {
+				if($element->link != '') {
+					$target = $element->link_new_tab == 1 ? 'target="_blank"' : '';
+					
+					$output .= '<a' . "\n" .
+					'data-delay="' . $element->data_delay . '"' . "\n" .
+					'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
+					'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
+					'data-in="' . $element->data_in . '"' . "\n" .
+					'data-out="' . $element->data_out . '"' . "\n" .
+					'data-top="' . $element->data_top . '"' . "\n" .
+					'data-left="' . $element->data_left . '"' . "\n" .
+					'data-time="' . $element->data_time . '"' . "\n" .
+					'href="' . stripslashes($element->link) . '"' . "\n" .
+					$target . "\n" .
+					'style="' .
+					'z-index: ' . $element->z_index . ';' . "\n" .
+					'">' .  "\n";
+				}
+				
 				switch($element->type) {
 					case 'text':
-						$output .= '<p' . "\n" .
-						'style="' .
-						'z-index: ' . $element->z_index . ';' . "\n" .
-						stripslashes($element->custom_css) . "\n" .
-						'"' .  "\n" .
-						'data-delay="' . $element->data_delay . '"' . "\n" .
-						'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
-						'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
-						'data-in="' . $element->data_in . '"' . "\n" .
-						'data-out="' . $element->data_out . '"' . "\n" .
-						'data-top="' . $element->data_top . '"' . "\n" .
-						'data-left="' . $element->data_left . '"' . "\n" .
-						'data-time="' . $element->data_time . '"' . "\n" .
-						'>' . "\n" .
+						$output .= '<div' . "\n" .
+						'style="';
+						if($element->link == '') {
+							$output .= 'z-index: ' . $element->z_index . ';' . "\n";
+						}
+						$output .= stripslashes($element->custom_css) . "\n" .
+						'"' .  "\n";
+						if($element->link == '') {
+							$output .= 'data-delay="' . $element->data_delay . '"' . "\n" .
+							'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
+							'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
+							'data-in="' . $element->data_in . '"' . "\n" .
+							'data-out="' . $element->data_out . '"' . "\n" .
+							'data-top="' . $element->data_top . '"' . "\n" .
+							'data-left="' . $element->data_left . '"' . "\n" .
+							'data-time="' . $element->data_time . '"' . "\n";
+						}
+						$output .= '>' . "\n" .
 						stripslashes($element->inner_html) . "\n" .
-						'</p>' . "\n";
+						'</div>' . "\n";
 					break;
 					case 'image':
 						$output .= '<img' . "\n" .
 						'src="' . $element->image_src . '"' . "\n" .
 						'alt="' . $element->image_alt . '"' . "\n" .
-						'style="' . "\n" .
-						'z-index: ' . $element->z_index . ';' . "\n" .
-						stripslashes($element->custom_css) . "\n" .
-						'"' . "\n" .
-						'data-delay="' . $element->data_delay . '"' . "\n" .
-						'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
-						'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
-						'data-in="' . $element->data_in . '"' . "\n" .
-						'data-out="' . $element->data_out . '"' . "\n" .
-						'data-top="' . $element->data_top . '"' . "\n" .
-						'data-left="' . $element->data_left . '"' . "\n" .
-						'data-time="' . $element->data_time . '"' . "\n" .
-						'/>' . "\n";
+						'style="' . "\n";
+						if($element->link == '') {
+							$output .= 'z-index: ' . $element->z_index . ';' . "\n";
+						}
+						$output .= stripslashes($element->custom_css) . "\n" .
+						'"' . "\n";
+						if($element->link == '') {
+							$output .= 'data-delay="' . $element->data_delay . '"' . "\n" .
+							'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
+							'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
+							'data-in="' . $element->data_in . '"' . "\n" .
+							'data-out="' . $element->data_out . '"' . "\n" .
+							'data-top="' . $element->data_top . '"' . "\n" .
+							'data-left="' . $element->data_left . '"' . "\n" .
+							'data-time="' . $element->data_time . '"' . "\n";
+						}
+						$output .= '/>' . "\n";
 					break;
+				}
+				
+				if($element->link != '') {
+					$output .= '</a>' . "\n";
 				}
 			}
 			
@@ -121,7 +165,8 @@ class CrellySliderFrontend {
 		$output .= '</div>' . "\n";
 		
 		$output .= '<script type="text/javascript">' . "\n";
-		$output .= 'jQuery(document).ready(function($) {' . "\n";
+		$output .= '(function($) {' . "\n";
+		$output .= '$(document).ready(function() {' . "\n";
 		$output .= '$("#crellyslider-' . $slider_id  . '").crellySlider({' . "\n";
 		$output .= 'layout: \'' . $slider->layout . '\',' . "\n";
 		$output .= 'responsive: ' . $slider->responsive . ',' . "\n";
@@ -135,6 +180,7 @@ class CrellySliderFrontend {
 		$output .= $slider->callbacks . "\n";
 		$output .= '});' . "\n";
 		$output .= '});' . "\n";
+		$output .= '})(jQuery);' . "\n";
 		$output .= '</script>' . "\n";
 		
 		if($echo) {
