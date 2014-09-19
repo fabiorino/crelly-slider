@@ -196,6 +196,11 @@
 		
 		// Delete
 		$('.cs-admin #cs-slides .cs-slide-tabs ul li .cs-close').live('click', function() {
+			if($('.cs-admin #cs-slides .cs-slide-tabs ul li').length <= 2) {
+				alert(crellyslider_translations.slide_delete_just_one);
+				return;
+			}
+		
 			var confirm = window.confirm(crellyslider_translations.slide_delete_confirm);
 			if(!confirm) {
 				return;
@@ -1027,8 +1032,9 @@
 		function crellyslider_saveElements() {
 			var slides = $('.cs-admin .cs-slider #cs-slides .cs-slide');
 			var i = 0, j = 0;
-			var final_options = new Array();
+			var final_options = {};
 			
+			final_options['options'] = new Array();
 			slides.each(function() {
 				var slide = $(this);
 				var elements = slide.find('.cs-elements .cs-element-settings');
@@ -1042,7 +1048,6 @@
 					}
 					
 					var options = {
-						slider_parent : parseInt($('.cs-admin .cs-save-settings').data('id')),
 						slide_parent : i,	
 						position : element.index(),
 						type : element.hasClass('cs-text-element-settings') ? 'text' : element.hasClass('cs-image-element-settings') ? 'image' : '',
@@ -1064,15 +1069,21 @@
 						link_new_tab : element.find('.cs-element-link_new_tab').prop('checked') ? 1 : 0,
 					};
 					
-					final_options[j] = options;
-					
-					//console.log(final_options[j]);
+					final_options['options'][j] = options;
 					
 					j++;
 				});
 				
 				i++;
 			});
+			
+			// Proceed?
+			final_options['elements'] = 1;
+			if(final_options['options'].length == 0) {
+				final_options['elements'] = 0;
+			}
+			
+			final_options['slider_parent'] = parseInt($('.cs-admin .cs-save-settings').data('id'));
 			
 			// Do the ajax call
 			jQuery.ajax({

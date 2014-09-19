@@ -240,6 +240,7 @@ class CrellySliderAdmin {
 		$crellyslider_translations = array(
 			'slide' => __('Slide', 'crellyslider'),
 			'slide_delete_confirm' => __('The slide will be deleted. Are you sure?', 'crellyslider'),
+			'slide_delete_just_one' => __('You can delete this. You must have at least one slide', 'crellyslider'),
 			'slider_delete_confirm' => __('The slider will be deleted. Are you sure?', 'crellyslider'),
 			'text_element_default_html' => __('Text element', 'crellyslider'),
 			'slide_live_preview' => __('Live preview', 'crellyslider'),

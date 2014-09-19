@@ -169,67 +169,78 @@ function crellyslider_editElements_callback() {
 	$options = $_POST['datas'];
 	$table_name = $wpdb->prefix . 'crellyslider_elements';
 	
-	// Remove all the old elements
-	$wpdb->delete($table_name, array('slider_parent' => $options[0]['slider_parent']), array('%d'));
-	
-	// Insert row per row
 	$output = true;	
-	foreach($options as $option) {	
-		$output = $wpdb->insert(
-			$table_name,
-			array(	
-				'slider_parent' => $option['slider_parent'],
-				'slide_parent' => $option['slide_parent'],	
-				'position' => $option['position'],
-				'type' => $option['type'],				
-				'inner_html' => $option['inner_html'],
-				'image_src' => $option['image_src'],
-				'image_alt' => $option['image_alt'],
-				'data_left' => $option['data_left'],
-				'data_top' => $option['data_top'],
-				'z_index' => $option['z_index'],
-				'data_delay' => $option['data_delay'],
-				'data_time' => $option['data_time'],
-				'data_in' => $option['data_in'],
-				'data_out' => $option['data_out'],
-				'data_easeIn' => $option['data_easeIn'],
-				'data_easeOut' => $option['data_easeOut'],
-				'custom_css' => $option['custom_css'],
-				'link' => $option['link'],
-				'link_new_tab' => $option['link_new_tab'],
-			),
-			array(
-				'%d',
-				'%d',
-				'%d',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%d',
-				'%d',
-				'%d',
-				'%d',
-				'%s',
-				'%s',
-				'%s',
-				'%d',
-				'%d',
-				'%s',
-				'%s',
-				'%d',
-			)
-		);
-		
-		if($output === false) {
-			break;
+	
+	// Remove all the old elements
+	$output = $wpdb->delete($table_name, array('slider_parent' => $options['slider_parent']), array('%d'));
+	if($output === false) {
+		echo json_encode(false);
+	}
+	else {	
+		// No elements
+		if($options['elements'] == 0) {
+			echo json_encode(true);
+		}
+		else {	
+			// Insert row per row
+			foreach($options['options'] as $option) {	
+				$output = $wpdb->insert(
+					$table_name,
+					array(	
+						'slider_parent' => $options['slider_parent'],
+						'slide_parent' => $option['slide_parent'],	
+						'position' => $option['position'],
+						'type' => $option['type'],				
+						'inner_html' => $option['inner_html'],
+						'image_src' => $option['image_src'],
+						'image_alt' => $option['image_alt'],
+						'data_left' => $option['data_left'],
+						'data_top' => $option['data_top'],
+						'z_index' => $option['z_index'],
+						'data_delay' => $option['data_delay'],
+						'data_time' => $option['data_time'],
+						'data_in' => $option['data_in'],
+						'data_out' => $option['data_out'],
+						'data_easeIn' => $option['data_easeIn'],
+						'data_easeOut' => $option['data_easeOut'],
+						'custom_css' => $option['custom_css'],
+						'link' => $option['link'],
+						'link_new_tab' => $option['link_new_tab'],
+					),
+					array(
+						'%d',
+						'%d',
+						'%d',
+						'%s',
+						'%s',
+						'%s',
+						'%s',
+						'%d',
+						'%d',
+						'%d',
+						'%d',
+						'%s',
+						'%s',
+						'%s',
+						'%d',
+						'%d',
+						'%s',
+						'%s',
+						'%d',
+					)
+				);
+				
+				if($output === false) {
+					break;
+				}
+			}
+			
+			// Returning
+			$output = json_encode($output);
+			if(is_array($output)) print_r($output);
+			else echo $output;
 		}
 	}
-	
-	// Returning
-	$output = json_encode($output);
-	if(is_array($output)) print_r($output);
-	else echo $output;
 	
 	die();
 }
