@@ -1,4 +1,4 @@
-See Crelly Slider in the WordPress plugins reposity:
+Crelly Slider in the WordPress plugins reposity:
 https://wordpress.org/plugins/crelly-slider/
 
 Official plugin website (with live demo):
