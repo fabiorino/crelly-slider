@@ -1,3 +1,5 @@
+<!-- in this file I do all the tests of the jQuery version -->
+
 <!doctype html>
 <html>
 
@@ -8,6 +10,7 @@
 		<title>Crelly Slider - Free jQuery Slider</title>
 		<meta name="description" content="The first Free Wordpress Slider that supports animations" />
 		
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" href="../css/crellyslider.css" />
 		
 		<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
@@ -21,18 +24,29 @@
 				line-height: 1.5em;
 				vertical-align: baseline;
 			}
+			
+			img {
+				max-width: 100%;
+				height: auto;
+			}
 		</style>
 		
-		<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.crellyslider.min.js"></script>		
 		
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
-				$('.demo-1').crellySlider({
-					layout 		  : 'fixed',
-					slidesTime	  : 5000,
-					slidesEaseIn  : 400,
-					slidesEaseOut : 400,
+				$('#demo-1').crellySlider({
+					layout 		  				: 'full-width',
+					automaticSlide 				: false,
+					ignoreElementsEaseOut		: false,
+					responsive					: true,
+					beforeStart					: function() {console.log('before start')},
+					beforeSetResponsive			: function() {console.log('before set responsive')},
+					beforeSlideStart			: function() {console.log(new Date())},
+					beforePause					: function() {console.log('before pause')},
+					beforeResume				: function() {console.log('before resume')},
 				});
 			});
 		</script>
@@ -41,38 +55,219 @@
 	<body>		
 		<br />
 		
-		<div class="demo-1">		
+		<div id="demo-1" style="display: none;">		
 			<ul>
-				<li style="background: url('images/bg1.png'); background-size: cover;" data-in="fade" data-out="slideLeft">
-					<p style="font-size: 48px; color: #fff; font-family: 'Rokkitt', serif;" data-top="190" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="800" data-time="all">Crelly Slider</p>
-					<p style="font-size: 22px; line-height: 26px; color: #fff; font-family: 'Rokkitt', serif;" data-top="245" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="1100" data-time="all">Is the first FREE Wordpress slider<br />with layers animations!</p>
-					<a data-top="149" data-left="837" data-in="slideLeft" data-out="slideRight" data-ease-in="200" data-ease-out="200" data-delay="400" data-time="all" href="http://www.google.it" target="_blank">
+				<li style="background: url('images/bg1.png'); background-size: cover;" data-in="slideLeft" data-ease-in="1500" data-ease-out="1500" data-out="slideLeft">
+					<div style="opacity: 0.5; font-size: 48px; color: #fff; font-family: 'Rokkitt', serif;" data-top="190" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="3000" data-ease-out="2000" data-delay="0" data-time="all"><h1><span>Crelly Slider</span></h1></div>
+					<div style="font-size: 22px; line-height: 26px; color: #fff; font-family: 'Rokkitt', serif;" data-top="245" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="3000" data-ease-out="2000" data-delay="0" data-time="3000">Is the first FREE Wordpress slider<br />with layers animations!</div>
+					<div style="font-size: 22px; line-height: 26px; color: #fff; font-family: 'Rokkitt', serif;" data-top="300" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="3000" data-ease-out="2000" data-delay="0" data-time="3000">Another simple text</div>
+					<a data-top="149" data-left="837" data-in="slideLeft" data-out="slideRight" data-ease-in="200" data-ease-out="200" data-delay="0" data-time="all" href="http://www.google.it" target="_blank">
 						<img alt="" src="images/house.png" />
 					</a>
-					<a data-top="254" data-left="0" data-in="slideUp" data-out="slideDown" data-ease-in="200" data-ease-out="200" data-delay="0" data-time="all" href="http://www.google.it" target="_blank">
+					<img alt="" src="images/airplane.png" style="height:auto" data-top="44" data-left="1170" data-in="slideRight" data-out="slideRight" data-ease-in="10800" data-ease-out="0" data-delay="0" data-time="0" data-wait-me-out="1" />
+					<a data-top="254" data-left="0" data-in="slideUp" data-out="slideDown" data-ease-in="1080" data-ease-out="200" data-delay="0" data-time="all" href="http://www.google.it" target="_blank">
 						<img alt="" src="images/hill.png" />
 					</a>
-					<img alt="" src="images/airplane.png" data-top="44" data-left="1170" data-in="slideRight" data-out="slideUp" data-ease-in="10800" data-ease-out="200" data-delay="0" data-time="all" />
 				</li>
-				<li style="background: url('images/bg2.png');" data-in="slideLeft" data-out="slideLeft" data-time="5000">
-					<p style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="385" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all">IT'S FREE</p>
+				
+				<li
+				style="
+				background-color: transparent;
+				background-image: url('images/bg1.png');
+				background-position-x: auto;
+				background-position-y: auto;
+				background-repeat: repeat;
+				background-size: cover;
+
+				"
+				data-in="slideLeft"
+				data-ease-in="1500"
+				data-out="slideLeft"
+				data-ease-out="400"
+				data-time="10000"
+				>
+				<div
+				style="z-index: 1;
+				font-size: 48px;
+				color: #fff;
+				font-family: 'Rokkitt', serif;
+				"
+				data-delay="2500"
+				data-ease-in="30000"
+				data-ease-out="200"
+				data-in="slideRight"
+				data-out="slideLeft"
+				data-top="190"
+				data-left="60"
+				data-time="all"
+				data-ignore-ease-out="0"
+				>
+				<h2>Create Slides</h2>
+				</div>
+				<img
+				src="images/airplane.png"
+				alt=""
+				style="
+				z-index: 1;
+
+				"
+				data-delay="0"
+				data-ease-in="0"
+				data-ease-out="10800"
+				data-in="none"
+				data-out="slideRight"
+				data-top="44"
+				data-left="-2414"
+				data-time="0"
+				data-ignore-ease-out="1"
+				/>
+				<img
+				src="images/hill.png"
+				alt=""
+				style="
+				z-index: 1;
+
+				"
+				data-delay="0"
+				data-ease-in="200"
+				data-ease-out="200"
+				data-in="slideUp"
+				data-out="slideDown"
+				data-top="254"
+				data-left="0"
+				data-time="all"
+				/>
+				<img
+				src="images/house.png"
+				alt=""
+				style="
+				z-index: 0;
+
+				"
+				data-delay="400"
+				data-ease-in="200"
+				data-ease-out="200"
+				data-in="slideLeft"
+				data-out="slideRight"
+				data-top="149"
+				data-left="837"
+				data-time="all"
+				/>
+				<div
+				style="z-index: 1;
+				font-size: 22px;
+				line-height: 26px;
+				color: #fff;
+				font-family: 'Rokkitt', serif;
+				"
+				data-delay="1100"
+				data-ease-in="300"
+				data-ease-out="200"
+				data-in="slideRight"
+				data-out="slideLeft"
+				data-top="245"
+				data-left="60"
+				data-time="3100"
+				>
+				1 They are colored, animated, creative.<br/>Make your WebSite more awesome
+				</div>
+				<div
+				style="z-index: 1;
+				font-size: 22px;
+				line-height: 26px;
+				color: #fff;
+				font-family: 'Rokkitt', serif;
+				"
+				data-delay="5100"
+				data-ease-in="300"
+				data-ease-out="200"
+				data-in="slideRight"
+				data-out="slideLeft"
+				data-top="245"
+				data-left="60"
+				data-time="7100"
+				>
+				2 They are colored, animated, creative.<br/>Make your WebSite more awesome
+				</div>
+				</li>
+				
+				<li
+				style="
+				background-color: #000;
+				background-position-x: center;
+				background-position-y: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+
+				"
+				data-in="fade"
+				data-ease-in="6000"
+				data-out="fade"
+				data-ease-out="300"
+				data-time="2000"
+				>
+				<div
+				style="z-index: 1;
+				font-size: 48px;
+				color: #fff;
+				font-family: 'Lato';
+				opacity: .5;
+				letter-spacing: 10px;
+				"
+				data-delay="0"
+				data-ease-in="600"
+				data-ease-out="600"
+				data-in="fadeDown"
+				data-out="fadeSmallDown"
+				data-top="195"
+				data-left="386"
+				data-time="all"
+				data-ignore-ease-out="1"
+				>
+				CRELLY SLIDER
+				</div>
+				<div
+				style="z-index: 1;
+				font-size: 18px;
+				color: #fff;
+				font-family: 'Lato';
+				"
+				data-delay="600"
+				data-ease-in="400"
+				data-ease-out="400"
+				data-in="fadeSmallDown"
+				data-out="fadeSmallDown"
+				data-top="273"
+				data-left="337"
+				data-time="all"
+				data-ignore-ease-out="1"
+				>
+				the first FREE WordPress slider with elements animations
+				</div>
+				</li>
+				
+				<li style="background: url('images/bg2.png');" data-in="slideLeft" data-out="slideUp" data-ease-out="2500" data-time="10000">
+					<div style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="385" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="300" data-delay="600" data-time="15000" data-ignore-ease-out="1">IT'S FREE</div>
 					<img alt="" src="images/and.png" data-top="82" data-left="505" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all" />
-					<p style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="578" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all">IT'S OPEN - SOURCE</p>
+					<div style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="578" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all">IT'S OPEN - SOURCE</div>
 					<img alt="" src="images/code.png" data-top="216" data-left="60" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="800" data-time="all" />
 					<img alt="" src="images/magic.png" data-top="323" data-left="705" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="1100" data-time="all" />
 					<img alt="" src="images/arrow-UpRight.png" data-top="249" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="1400" data-time="all" />
 					<img alt="" src="images/arrow-right.png" data-top="349" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="1700" data-time="all" />
 					<img alt="" src="images/arrow-downRight.png" data-top="409" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="2000" data-time="all" />
 					<img alt="" src="images/document.png" data-top="259" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
-					<p style="font-size: 14px; color: #fff;" data-top="258" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Well Documented</p>
+					<div style="font-size: 14px; color: #fff;" data-top="258" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Well Documented</div>
 					<img alt="" src="images/tick.png" data-top="349" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
-					<p style="font-size: 14px; color: #fff;" data-top="348" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Clear Code</p>
+					<div style="font-size: 14px; color: #fff;" data-top="348" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Clear Code</div>
 					<img alt="" src="images/heart.png" data-top="439" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
-					<p style="font-size: 14px; color: #fff;" data-top="438" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Done with Love</p>
+					<div style="font-size: 14px; color: #fff;" data-top="438" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Done with Love</div>
 				</li>
 			</ul>			
 		</div>
-		
+	
+		<br />
+		<br />
+	
 	</body>
 
 </html>

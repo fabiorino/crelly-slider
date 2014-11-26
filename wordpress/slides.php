@@ -23,10 +23,6 @@
 			<li class="ui-state-default ui-state-disabled"><a class="cs-add-new"><?php _e('Add Slide', 'crellyslider'); ?></a></li>
 		</ul>
 		
-		<br />
-		<br />
-		<br />
-		
 		<div class="cs-slides-list">
 			<?php
 				if($edit) {

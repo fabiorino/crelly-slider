@@ -26,6 +26,7 @@ function crellyslider_addSlider_callback() {
 			'showProgressBar' => $options['showProgressBar'],
 			'pauseOnHover' => $options['pauseOnHover'],
 			'callbacks' => $options['callbacks'],
+			'enableSwipe' => $options['enableSwipe'],
 		),
 		array(
 			'%s',
@@ -40,6 +41,7 @@ function crellyslider_addSlider_callback() {
 			'%d',
 			'%d',
 			'%s',
+			'%d',
 		)
 	);
 	
@@ -73,6 +75,7 @@ function crellyslider_editSlider_callback() {
 			'showProgressBar' => $options['showProgressBar'],
 			'pauseOnHover' => $options['pauseOnHover'],
 			'callbacks' => $options['callbacks'],
+			'enableSwipe' => $options['enableSwipe'],
 		),
 		array('id' => $options['id']), 
 		array(
@@ -88,6 +91,7 @@ function crellyslider_editSlider_callback() {
 			'%d',
 			'%d',
 			'%s',
+			'%d',
 		),
 		array('%d')
 	);
@@ -107,57 +111,63 @@ function crellyslider_editSlides_callback() {
 	$options = $_POST['datas'];
 	$table_name = $wpdb->prefix . 'crellyslider_slides';
 	
+	$output = true;
+	
 	// Remove all the old slides
-	$wpdb->delete($table_name, array('slider_parent' => $options[0]['slider_parent']), array('%d'));
-	
-	// Insert row per row
-	$output = true;	
-	foreach($options as $option) {	
-		$output = $wpdb->insert(
-			$table_name,
-			array(
-				'slider_parent' => $option['slider_parent'],
-				'position' => $option['position'],
-				'background_type_image' => $option['background_type_image'],
-				'background_type_color' => $option['background_type_color'],
-				'background_propriety_position_x' => $option['background_propriety_position_x'],
-				'background_propriety_position_y' => $option['background_propriety_position_y'],
-				'background_repeat' => $option['background_repeat'],
-				'background_propriety_size' => $option['background_propriety_size'],
-				'data_in' => $option['data_in'],
-				'data_out' => $option['data_out'],
-				'data_time' => $option['data_time'],
-				'data_easeIn' => $option['data_easeIn'],
-				'data_easeOut' => $option['data_easeOut'],
-				'custom_css' => stripslashes_deep($option['custom_css']),
-			),
-			array(
-				'%d',
-				'%d',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%d',
-				'%d',
-				'%d',
-				'%s',
-			)
-		);
-		
-		if($output === false) {
-			break;
-		}
+	$output = $wpdb->delete($table_name, array('slider_parent' => $options['slider_parent']), array('%d'));
+	if($output === false) {
+		echo json_encode(false);
 	}
-	
-	// Returning
-	$output = json_encode($output);
-	if(is_array($output)) print_r($output);
-	else echo $output;
+	else {
+		// It's impossible to have 0 slides (jQuery checks it)
+		// Insert row per row
+		foreach($options['options'] as $option) {	
+			$output = $wpdb->insert(
+				$table_name,
+				array(
+					'slider_parent' => $options['slider_parent'],
+					'position' => $option['position'],
+					'background_type_image' => $option['background_type_image'],
+					'background_type_color' => $option['background_type_color'],
+					'background_propriety_position_x' => $option['background_propriety_position_x'],
+					'background_propriety_position_y' => $option['background_propriety_position_y'],
+					'background_repeat' => $option['background_repeat'],
+					'background_propriety_size' => $option['background_propriety_size'],
+					'data_in' => $option['data_in'],
+					'data_out' => $option['data_out'],
+					'data_time' => $option['data_time'],
+					'data_easeIn' => $option['data_easeIn'],
+					'data_easeOut' => $option['data_easeOut'],
+					'custom_css' => stripslashes_deep($option['custom_css']),
+				),
+				array(
+					'%d',
+					'%d',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%d',
+					'%d',
+					'%d',
+					'%s',
+				)
+			);
+			
+			if($output === false) {
+				break;
+			}
+		}
+		
+		// Returning
+		$output = json_encode($output);
+		if(is_array($output)) print_r($output);
+		else echo $output;
+	}
 	
 	die();
 }
@@ -206,6 +216,7 @@ function crellyslider_editElements_callback() {
 						'custom_css' => $option['custom_css'],
 						'link' => $option['link'],
 						'link_new_tab' => $option['link_new_tab'],
+						'data_ignoreEaseOut' => $option['data_ignoreEaseOut'],
 					),
 					array(
 						'%d',
@@ -226,6 +237,7 @@ function crellyslider_editElements_callback() {
 						'%d',
 						'%s',
 						'%s',
+						'%d',
 						'%d',
 					)
 				);

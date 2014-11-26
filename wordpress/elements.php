@@ -186,10 +186,9 @@ function crellyslider_printTextElement($element) {
 			<tr>
 				<td class="cs-name"><?php _e('Text', 'crellyslider'); ?></td>
 				<td class="cs-content">
-					<?php
-					// Here I use ' ' to delimit the value attribute. Should reduce conflict possibilities.
-					if($void) echo '<input class="cs-element-inner_html" type="text" value=\'' . __('Text element', 'crellyslider') . '\' />';
-					else echo '<input class="cs-element-inner_html" type="text" value=\'' . stripslashes($element->inner_html) .'\' />';
+					<?php					
+					if($void) echo '<textarea class="cs-element-inner_html">' . __('Text element', 'crellyslider') . '</textarea>';
+					else echo '<textarea class="cs-element-inner_html">' . stripslashes($element->inner_html) . '</textarea>';
 					?>
 				</td>
 				<td class="cs-description">
@@ -293,9 +292,21 @@ function crellyslider_printTextElement($element) {
 						}
 						?>
 					</select>
+					<br />
+					<?php
+					if($void) echo '<input class="cs-element-data_ignoreEaseOut" type="checkbox" />' . __('Disable synchronization with slide out animation', 'crellyslider');
+					else {
+						if($element->data_ignoreEaseOut) {
+							echo '<input class="cs-element-data_ignoreEaseOut" type="checkbox" checked />' . __('Disable synchronization with slide out animation', 'crellyslider');
+						}
+						else {
+							echo '<input class="cs-element-data_ignoreEaseOut" type="checkbox" />' . __('Disable synchronization with slide out animation', 'crellyslider');
+						}
+					}
+					?>
 				</td>
 				<td class="cs-description">
-					<?php _e('The out animation of the element.', 'crellyslider'); ?>
+					<?php _e('The out animation of the element.<br /><br />Disable synchronization with slide out animation: if not checked, the slide out animation won\'t start until all the elements that have this option unchecked are animated out.', 'crellyslider'); ?>
 				</td>
 			</tr>
 			<tr>
@@ -506,9 +517,21 @@ function crellyslider_printImageElement($element) {
 						}
 						?>
 					</select>
+					<br />
+					<?php
+					if($void) echo '<input class="cs-element-data_ignoreEaseOut" type="checkbox" />' . __('Disable synchronization with slide out animation', 'crellyslider');
+					else {
+						if($element->data_ignoreEaseOut) {
+							echo '<input class="cs-element-data_ignoreEaseOut" type="checkbox" checked />' . __('Disable synchronization with slide out animation', 'crellyslider');
+						}
+						else {
+							echo '<input class="cs-element-data_ignoreEaseOut" type="checkbox" />' . __('Disable synchronization with slide out animation', 'crellyslider');
+						}
+					}
+					?>
 				</td>
 				<td class="cs-description">
-					<?php _e('The out animation of the element.', 'crellyslider'); ?>
+					<?php _e('The out animation of the element.<br /><br />Disable synchronization with slide out animation: if not checked, the slide out animation won\'t start until all the elements that have this option unchecked are animated out.', 'crellyslider'); ?>
 				</td>
 			</tr>
 			<tr>

@@ -11,15 +11,6 @@ function getCrellySlider($alias) {
 
 class CrellySliderFrontend {
 	
-	// Avoid incompatibility issues
-	public static function notAdminJs() {	
-		?>
-		<script type="text/javascript">
-			var crellyslider_is_wordpress_admin = false;
-		</script>
-		<?php
-	}
-	
 	public static function setNotAdminJs() {
 		add_action('wp_enqueue_scripts', 'CrellySliderFrontend::notAdminJs');
 	}
@@ -62,7 +53,7 @@ class CrellySliderFrontend {
 		
 		$output = '';
 		
-		$output .= '<div class="crellyslider-slider crellyslider-slider-' . $slider->layout . ' crellyslider-slider-' . $alias . '" id="crellyslider-' . $slider_id . '">' . "\n";
+		$output .= '<div style="display: none;" class="crellyslider-slider crellyslider-slider-' . $slider->layout . ' crellyslider-slider-' . $alias . '" id="crellyslider-' . $slider_id . '">' . "\n";
 		$output .= '<ul>' . "\n";
 		foreach($slides as $slide) {
 			$background_type_image = $slide->background_type_image == 'undefined' || $slide->background_type_image == 'none' ? 'none;' : 'url(\'' . $slide->background_type_image . '\');';
@@ -97,6 +88,7 @@ class CrellySliderFrontend {
 					'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
 					'data-in="' . $element->data_in . '"' . "\n" .
 					'data-out="' . $element->data_out . '"' . "\n" .
+					'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
 					'data-top="' . $element->data_top . '"' . "\n" .
 					'data-left="' . $element->data_left . '"' . "\n" .
 					'data-time="' . $element->data_time . '"' . "\n" .
@@ -122,6 +114,7 @@ class CrellySliderFrontend {
 							'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
 							'data-in="' . $element->data_in . '"' . "\n" .
 							'data-out="' . $element->data_out . '"' . "\n" .
+							'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
 							'data-top="' . $element->data_top . '"' . "\n" .
 							'data-left="' . $element->data_left . '"' . "\n" .
 							'data-time="' . $element->data_time . '"' . "\n";
@@ -146,6 +139,7 @@ class CrellySliderFrontend {
 							'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
 							'data-in="' . $element->data_in . '"' . "\n" .
 							'data-out="' . $element->data_out . '"' . "\n" .
+							'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
 							'data-top="' . $element->data_top . '"' . "\n" .
 							'data-left="' . $element->data_left . '"' . "\n" .
 							'data-time="' . $element->data_time . '"' . "\n";
@@ -175,6 +169,7 @@ class CrellySliderFrontend {
 		$output .= 'automaticSlide: ' . $slider->automaticSlide . ',' . "\n";
 		$output .= 'showControls: ' . $slider->showControls . ',' . "\n";
 		$output .= 'showNavigation: ' . $slider->showNavigation . ',' . "\n";
+		$output .= 'enableSwipe: ' . $slider->enableSwipe . ',' . "\n";
 		$output .= 'showProgressBar: ' . $slider->showProgressBar . ',' . "\n";
 		$output .= 'pauseOnHover: ' . $slider->pauseOnHover . ',' . "\n";
 		$output .= $slider->callbacks . "\n";

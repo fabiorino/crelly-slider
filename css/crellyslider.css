@@ -3,6 +3,7 @@
 	position: relative;
 	white-space: nowrap;
 	overflow: hidden;
+	line-height: 1.5;
 }
 
 .crellyslider > .cs-preloader {
@@ -60,17 +61,16 @@
 	position: absolute;
 }
 
-.crellyslider > .cs-slides > .cs-slide > img {
+.crellyslider > .cs-slides > .cs-slide > img,
+.crellyslider > .cs-slides > .cs-slide > a > img {
 	max-width: none !important;
 }
 
-.crellyslider > .cs-slides > .cs-slide a {
+.crellyslider > .cs-slides > .cs-slide a,
+.crellyslider > .cs-slides > .cs-slide > a > img {
 	text-decoration: none;
-}
-
-.crellyslider > .cs-slides > .cs-slide > a img {
-	max-width: 100% !important;
-	height: auto;
+	outline: none;
+	border: none;
 }
 
 .crellyslider > .cs-controls {

@@ -178,7 +178,26 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Show the circular links.', 'crellyslider'); ?>
+					<?php _e('Show the links buttons to change slide.', 'crellyslider'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Enable swipe and drag', 'crellyslider'); ?></td>
+				<td class="cs-content">
+					<select id="cs-slider-enableSwipe">
+						<?php
+						foreach($slider_select_options['boolean'] as $key => $value) {
+							echo '<option value="' . $key . '"';
+							if((!$edit && $value[1]) || ($edit && $slider->enableSwipe == $key)) {
+								echo ' selected';
+							}
+							echo '>' . $value[0] . '</option>';
+						}
+						?>
+					</select>
+				</td>
+				<td class="cs-description">
+					<?php _e('Enable swipe left, swipe right, drag left, drag right commands.', 'crellyslider'); ?>
 				</td>
 			</tr>
 			<tr>
@@ -229,11 +248,8 @@
 <textarea id="cs-slider-callbacks">
 beforeStart : function() {},
 beforeSetResponsive : function() {},
-afterSetResponsive : function() {},
 beforeSlideStart : function() {},
-afterSlideEnd : function() {},
-beforePause : function() {},
-afterPause : function() {},
+beforePause	: function() {},
 beforeResume : function() {},</textarea>
 					<?php
 					}

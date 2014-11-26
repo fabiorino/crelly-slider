@@ -50,8 +50,11 @@ class CrellySliderAdmin {
 				<div class="cs-message cs-message-error" style="display: block;"><?php _e('JavaScript must be enabled to view this page correctly.', 'crellyslider'); ?></div>
 			</noscript>
 			
-			<div class="cs-message cs-message-ok"><?php _e('Operation completed successfully.', 'crellyslider'); ?></div>
-			<div class="cs-message cs-message-error"><?php _e('Something went wrong.', 'crellyslider'); ?></div>
+			<div class="cs-message cs-message-ok" style="display: none;"><?php _e('Operation completed successfully.', 'crellyslider'); ?></div>
+			<div class="cs-message cs-message-error" style="display: none;"><?php _e('Something went wrong.', 'crellyslider'); ?></div>
+			<?php if(! $edit): ?>
+				<div class="cs-message cs-message-warning"><?php _e('When you\'ll click "Save Settings", you\'ll be able to add slides and elements.', 'crellyslider'); ?></div>
+			<?php endif; ?>
 			
 			<h2 class="cs-logo" title="Crelly Slider">
 				<a href="?page=crellyslider">
@@ -125,7 +128,7 @@ class CrellySliderAdmin {
 					
 					<br />
 					<br />
-					<br />
+					<br />					
 				<?php endif; ?>
 				
 				<?php require_once CS_PATH . 'wordpress/slider.php'; ?>
@@ -240,7 +243,7 @@ class CrellySliderAdmin {
 		$crellyslider_translations = array(
 			'slide' => __('Slide', 'crellyslider'),
 			'slide_delete_confirm' => __('The slide will be deleted. Are you sure?', 'crellyslider'),
-			'slide_delete_just_one' => __('You can delete this. You must have at least one slide', 'crellyslider'),
+			'slide_delete_just_one' => __('You can delete this. You must have at least one slide.', 'crellyslider'),
 			'slider_delete_confirm' => __('The slider will be deleted. Are you sure?', 'crellyslider'),
 			'text_element_default_html' => __('Text element', 'crellyslider'),
 			'slide_live_preview' => __('Live preview', 'crellyslider'),

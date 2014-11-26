@@ -827,6 +827,7 @@
 					'data-time' : original_elements.eq(i).find('.cs-element-data_time').val(),
 					'data-in' : original_elements.eq(i).find('.cs-element-data_in').val(),
 					'data-out' : original_elements.eq(i).find('.cs-element-data_out').val(),
+					'data-ignore-ease-out' : original_elements.eq(i).find('.cs-element-data_out').prop('checked') ? 1 : 0,
 					'data-ease-in' : parseInt(original_elements.eq(i).find('.cs-element-data_easeIn').val()),
 					'data-ease-out' : parseInt(original_elements.eq(i).find('.cs-element-data_easeOut').val()),
 				});
@@ -880,6 +881,7 @@
 				'automaticSlide' : true,
 				'showControls' : false,
 				'showNavigation' : false,
+				'enableSwipe' : false,
 				'showProgressBar' : false,
 				'pauseOnHover' : false,
 			});
@@ -926,6 +928,7 @@
 				automaticSlide : parseInt(content.find('#cs-slider-automaticSlide').val()),
 				showControls : parseInt(content.find('#cs-slider-showControls').val()),
 				showNavigation : parseInt(content.find('#cs-slider-showNavigation').val()),
+				enableSwipe : parseInt(content.find('#cs-slider-enableSwipe').val()),
 				showProgressBar : parseInt(content.find('#cs-slider-showProgressBar').val()),
 				pauseOnHover : parseInt(content.find('#cs-slider-pauseOnHover').val()),
 				callbacks : content.find('#cs-slider-callbacks').val(),
@@ -971,14 +974,14 @@
 		function crellyslider_saveSlides() {
 			var slides = $('.cs-admin .cs-slider #cs-slides .cs-slide');
 			var i = 0;
-			var final_options = new Array();
+			var final_options = {};
 			
+			final_options['options'] = new Array();			
 			slides.each(function() {
 				var slide = $(this);
 				var content = slide.find('.cs-slide-settings-list');
 				
-				var options = {
-					slider_parent : parseInt($('.cs-admin .cs-save-settings').data('id')),
+				var options = {					
 					position : i,
 					
 					background_type_image : slide.find('.cs-slide-editing-area').css('background-image') == 'none' ? 'none' : slide.find('.cs-slide-editing-area').data('background-image-src') + "",
@@ -995,10 +998,12 @@
 					custom_css : content.find('.cs-slide-custom_css').val(),
 				};
 				
-				final_options[i] = options;
+				final_options['options'][i] = options;
 				
 				i++;
 			});
+			
+			final_options['slider_parent'] = parseInt($('.cs-admin .cs-save-settings').data('id')),
 			
 			// Do the ajax call
 			jQuery.ajax({
@@ -1062,6 +1067,7 @@
 						data_time : element.find('.cs-element-data_time').val(),
 						data_in : element.find('.cs-element-data_in').val(),
 						data_out : element.find('.cs-element-data_out').val(),
+						data_ignoreEaseOut : element.find('.cs-element-data_ignoreEaseOut').prop('checked') ? 1 : 0,
 						data_easeIn : parseInt(element.find('.cs-element-data_easeIn').val()),
 						data_easeOut : parseInt(element.find('.cs-element-data_easeOut').val()),
 						custom_css : element.find('.cs-element-custom_css').val(),
