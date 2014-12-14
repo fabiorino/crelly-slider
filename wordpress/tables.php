@@ -53,7 +53,7 @@ class CrellySliderTables {
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		slider_parent mediumint(9),
 		position INT,
-		background_type_image VARCHAR(100) CHARACTER SET utf8,
+		background_type_image VARCHAR(255) CHARACTER SET utf8,
 		background_type_color VARCHAR(100) CHARACTER SET utf8,
 		background_propriety_position_x VARCHAR(100) CHARACTER SET utf8,
 		background_propriety_position_y VARCHAR(100) CHARACTER SET utf8,
