@@ -3,8 +3,8 @@ Contributors:  fabiorino
 Donate link: http://fabiorino1.altervista.org/projects/crellyslider/contribute-and-support/
 Tags: slider, slides, animations, drag & drop, drag and drop, layers, elements
 Requires at least: 3.6.0
-Tested up to: 4.0
-Stable tag: 0.7.0
+Tested up to: 4.1
+Stable tag: 0.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,8 @@ The first FREE WP Slider with elements animations.
 
 == Description ==
 
+= Crelly Slider has Layers Animations, a Drag and Drop Builder, is Free, Responsive and Easy to Use =
+<br />
 Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Drop Builder. You can add Texts and Images using animations and transitions. It's perfect to display your creative content in posts and pages. With it's tons of features, Crelly Slider is the best free solution for your online WebSite.
 <br />
 <br />
@@ -31,7 +33,7 @@ How can you position all the elements in to the slider area? You just simply dra
 = Transitions & Animations =
 Foreach element and slide you can choose an in animation and an out animation using a simple selection menu. You can set the transition speeds and how long the element will take to get in and out.
 
-= Completly Responsive =
+= Completely Responsive =
 Responsive means that the Slider will be displayed correctly in every resolution that the user will use. If the display is small (like in a smartphone), the slides and the elements will be scaled to be adapted.
 
 = Full & Fixed Width Modes =
@@ -54,6 +56,21 @@ You can find the documentation <a href="http://fabiorino1.altervista.org/project
 3. Unlimited sliders
 
 == Changelog ==
+
+= 0.8.0 =
+* Changed: by default, elements out animations start before the slide out animation. In this way, they result more visible, therefore better than before. The option is customizable for each element
+* Added: support for touch, swipe and drag
+* Improved progress bar animation: now has a cool swing effect
+* The current editing slide tab is now highlighted
+* Fixed: before preloader, for about a second, the slider was displayed as an unordered list
+* Fixed: now if you specify the opacity in custom CSS, that value won't be overwritten
+* Changed: by default, line-height is now 1.5. Please, if you want to change it, specify a pure number to avoid compatibility issues
+* Fixed: blue border around linked images in IE
+* The text / HTML of a text element is now wrapped in a textarea (no more in an input)
+* Fixed: apostrophes in text elements are now displayed correctly
+* Removed useless file from the package.
+* Removed afterSlideEnd(), afterSetResponsive(), afterPause(). They were useless
+* Other minor bug fixes and changes
 
 = 0.7.0 =
 * Fixed "Error saving elements" if there are no elements
