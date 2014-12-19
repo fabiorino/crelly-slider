@@ -59,7 +59,7 @@ You can find the documentation <a href="http://fabiorino1.altervista.org/project
 
 = 0.8.1 =
 * Fixed: padding broken in IE8
-* Fixed: background images with a long name were not stored correctly into the database
+* Fixed: background images with a long name weren't stored correctly into the database
 
 = 0.8.0 =
 * Changed: by default, elements out animations start before the slide out animation. In this way, they result more visible, therefore better than before. The option is customizable for each element
