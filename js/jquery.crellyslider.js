@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.8.0
+ * Version: 0.8.1
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: GPL2
@@ -180,15 +180,23 @@
 		// Initializes the element with original values
 		function setElementDatas(element, is_element_content) {
 			element.data('width', parseFloat(element.width()));
-			element.data('height', parseFloat(element.height()));
-			element.data('line-height', parseFloat(element.css('line-height')));
+			element.data('height', parseFloat(element.height()));			
 			element.data('letter-spacing', parseFloat(element.css('letter-spacing')));
 			element.data('font-size', parseFloat(element.css('font-size')));
+			
+			if(element.css('line-height').slice(-2).toLowerCase() == 'px') {
+				element.data('line-height', parseFloat(element.css('line-height')));
+			}
+			else {
+				element.data('line-height', parseFloat(element.css('line-height')) * getItemData(element, 'font-size'));
+			}
+			
 			element.data('padding-top', parseFloat(element.css('padding-top')));
 			element.data('padding-right', parseFloat(element.css('padding-right')));
 			element.data('padding-bottom', parseFloat(element.css('padding-bottom')));
 			element.data('padding-left', parseFloat(element.css('padding-left')));
 			element.data('opacity', parseFloat(element.css('opacity')));
+			
 			if(! is_element_content) {
 				element.css('display', 'none');
 			}

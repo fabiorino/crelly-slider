@@ -18,15 +18,15 @@ class CrellySliderTables {
 		self::setElementsTable();
 	}
 
-	public static function setSlidersTable(){
+	public static function setSlidersTable() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'crellyslider_sliders';
 		
 		$sql = "CREATE TABLE $table_name (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		name VARCHAR(100) CHARACTER SET utf8,
-		alias VARCHAR(100) CHARACTER SET utf8,
-		layout VARCHAR(100) CHARACTER SET utf8,
+		name TEXT CHARACTER SET utf8,
+		alias TEXT CHARACTER SET utf8,
+		layout TEXT CHARACTER SET utf8,
 		responsive INT,
 		startWidth INT,
 		startHeight INT,
@@ -44,8 +44,8 @@ class CrellySliderTables {
 		dbDelta($sql);
 	}
 
-	// Warning: the time variable is a varchar because it could contain the 'all' word
-	public static function setSlidesTable(){
+	// Warning: the time variable is a string because it could contain the 'all' word
+	public static function setSlidesTable() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'crellyslider_slides';
 		
@@ -53,14 +53,14 @@ class CrellySliderTables {
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		slider_parent mediumint(9),
 		position INT,
-		background_type_image VARCHAR(100) CHARACTER SET utf8,
-		background_type_color VARCHAR(100) CHARACTER SET utf8,
-		background_propriety_position_x VARCHAR(100) CHARACTER SET utf8,
-		background_propriety_position_y VARCHAR(100) CHARACTER SET utf8,
-		background_repeat VARCHAR(100) CHARACTER SET utf8,
-		background_propriety_size VARCHAR(100) CHARACTER SET utf8,
-		data_in VARCHAR(100) CHARACTER SET utf8,
-		data_out VARCHAR(100) CHARACTER SET utf8,
+		background_type_image TEXT CHARACTER SET utf8,
+		background_type_color TEXT CHARACTER SET utf8,
+		background_propriety_position_x TEXT CHARACTER SET utf8,
+		background_propriety_position_y TEXT CHARACTER SET utf8,
+		background_repeat TEXT CHARACTER SET utf8,
+		background_propriety_size TEXT CHARACTER SET utf8,
+		data_in TEXT CHARACTER SET utf8,
+		data_out TEXT CHARACTER SET utf8,
 		data_time INT,
 		data_easeIn INT,
 		data_easeOut INT,
@@ -72,7 +72,7 @@ class CrellySliderTables {
 		dbDelta($sql);
 	}
 
-	public static function setElementsTable(){
+	public static function setElementsTable() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'crellyslider_elements';
 		
@@ -81,22 +81,22 @@ class CrellySliderTables {
 		slider_parent mediumint(9),
 		slide_parent mediumint(9),
 		position INT,
-		type VARCHAR(100) CHARACTER SET utf8,
+		type TEXT CHARACTER SET utf8,
 		data_easeIn INT,
 		data_easeOut INT,
 		data_ignoreEaseOut INT DEFAULT 0,
 		data_delay INT,
-		data_time VARCHAR(100) CHARACTER SET utf8,
+		data_time TEXT CHARACTER SET utf8,
 		data_top FLOAT,
 		data_left FLOAT,
 		z_index INT,
-		data_in VARCHAR(100) CHARACTER SET utf8,
-		data_out VARCHAR(100) CHARACTER SET utf8,
-		custom_css VARCHAR(100) CHARACTER SET utf8,
+		data_in TEXT CHARACTER SET utf8,
+		data_out TEXT CHARACTER SET utf8,
+		custom_css TEXT CHARACTER SET utf8,
 		inner_html TEXT CHARACTER SET utf8,
 		image_src TEXT CHARACTER SET utf8,
 		image_alt TEXT CHARACTER SET utf8,
-		link VARCHAR(100) CHARACTER SET utf8 DEFAULT '',
+		link TEXT CHARACTER SET utf8 DEFAULT '',
 		link_new_tab INT DEFAULT 0,
 		UNIQUE KEY id (id)
 		);";
