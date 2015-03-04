@@ -120,7 +120,7 @@ class CrellySliderFrontend {
 							'data-time="' . $element->data_time . '"' . "\n";
 						}
 						$output .= '>' . "\n" .
-						stripslashes($element->inner_html) . "\n" .
+						stripslashes(__($element->inner_html)) . "\n" .
 						'</div>' . "\n";
 					break;
 					case 'image':
