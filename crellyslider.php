@@ -28,8 +28,12 @@ register_activation_hook(__FILE__, array('CrellySliderTables', 'setTables'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'removeVersion'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'dropTables'));
 
-// Languages
-load_plugin_textdomain('crellyslider', false, basename(dirname(__FILE__)) . 'wordpress/languages');
+
+function load_language_files(){
+	load_plugin_textdomain('crellyslider', false, basename(dirname(__FILE__)) . '/languages');
+}
+// Load language files on init
+add_action('init', 'load_language_files');
 
 // This is a variable that should be included first to prevent backend issues.
 if(is_admin()) {

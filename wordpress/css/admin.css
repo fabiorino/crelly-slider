@@ -206,6 +206,7 @@
 	width: 100%;
 	border-spacing: 0px;
     border-collapse: separate;
+    clear:left;
 }
 
 .cs-admin .cs-table th,
