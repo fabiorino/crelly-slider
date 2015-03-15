@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.8.1
+ * Version: 0.8.2
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: GPL2
@@ -14,7 +13,7 @@
 /** GLOBALS **/
 /*************/ 
 
-define('CS_VERSION', '0.8.1');
+define('CS_VERSION', '0.8.2');
 define('CS_PATH', plugin_dir_path(__FILE__));
 define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider');
 
@@ -28,12 +27,8 @@ register_activation_hook(__FILE__, array('CrellySliderTables', 'setTables'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'removeVersion'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'dropTables'));
 
-
-function load_language_files(){
-	load_plugin_textdomain('crellyslider', false, basename(dirname(__FILE__)) . '/languages');
-}
-// Load language files on init
-add_action('init', 'load_language_files');
+// Languages
+CrellySliderCommon::loadPluginTextDomain();
 
 // This is a variable that should be included first to prevent backend issues.
 if(is_admin()) {

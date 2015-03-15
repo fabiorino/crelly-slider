@@ -1,0 +1,544 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Crelly Slider 0.8.2\n"
+"POT-Creation-Date: 2015-03-15 13:30+0100\n"
+"PO-Revision-Date: 2015-03-15 13:30+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin.php:50
+msgid "JavaScript must be enabled to view this page correctly."
+msgstr ""
+
+#: ../admin.php:53
+msgid "Operation completed successfully."
+msgstr ""
+
+#: ../admin.php:54
+msgid "Something went wrong."
+msgstr ""
+
+#: ../admin.php:56
+msgid ""
+"When you'll click \"Save Settings\", you'll be able to add slides and "
+"elements."
+msgstr ""
+
+#: ../admin.php:121
+msgid "Slider Settings"
+msgstr ""
+
+#: ../admin.php:125
+msgid "Edit Slides"
+msgstr ""
+
+#: ../admin.php:145
+msgid "Save Settings"
+msgstr ""
+
+#: ../admin.php:244 ../slides.php:15
+msgid "Slide"
+msgstr ""
+
+#: ../admin.php:245
+msgid "The slide will be deleted. Are you sure?"
+msgstr ""
+
+#: ../admin.php:246
+msgid "You can't delete this. You must have at least one slide."
+msgstr ""
+
+#: ../admin.php:247
+msgid "The slider will be deleted. Are you sure?"
+msgstr ""
+
+#: ../admin.php:248 ../elements.php:190
+msgid "Text element"
+msgstr ""
+
+#: ../admin.php:249 ../elements.php:112
+msgid "Live preview"
+msgstr ""
+
+#: ../admin.php:250
+msgid "Stop preview"
+msgstr ""
+
+#: ../elements.php:108
+msgid "Add text"
+msgstr ""
+
+#: ../elements.php:109
+msgid "Add image"
+msgstr ""
+
+#: ../elements.php:113
+msgid "Delete element"
+msgstr ""
+
+#: ../elements.php:114
+msgid "Duplicate element"
+msgstr ""
+
+#: ../elements.php:157 ../elements.php:383 ../slides.php:55
+msgid "Slide down"
+msgstr ""
+
+#: ../elements.php:158 ../elements.php:384 ../slides.php:54
+msgid "Slide up"
+msgstr ""
+
+#: ../elements.php:159 ../elements.php:385 ../slides.php:52
+msgid "Slide left"
+msgstr ""
+
+#: ../elements.php:160 ../elements.php:386 ../slides.php:53
+msgid "Slide right"
+msgstr ""
+
+#: ../elements.php:161 ../elements.php:387 ../slides.php:49
+msgid "Fade"
+msgstr ""
+
+#: ../elements.php:162 ../elements.php:388
+msgid "Fade down"
+msgstr ""
+
+#: ../elements.php:163 ../elements.php:389
+msgid "Fade up"
+msgstr ""
+
+#: ../elements.php:164 ../elements.php:390 ../slides.php:50
+msgid "Fade left"
+msgstr ""
+
+#: ../elements.php:165 ../elements.php:391 ../slides.php:51
+msgid "Fade right"
+msgstr ""
+
+#: ../elements.php:166 ../elements.php:392
+msgid "Fade small down"
+msgstr ""
+
+#: ../elements.php:167 ../elements.php:393
+msgid "Fade small up"
+msgstr ""
+
+#: ../elements.php:168 ../elements.php:394
+msgid "Fade small left"
+msgstr ""
+
+#: ../elements.php:169 ../elements.php:395
+msgid "Fade small right"
+msgstr ""
+
+#: ../elements.php:176 ../elements.php:402
+msgid "Element Options"
+msgstr ""
+
+#: ../elements.php:182 ../elements.php:407 ../slider.php:59 ../slides.php:68
+msgid "Option"
+msgstr ""
+
+#: ../elements.php:183 ../elements.php:408 ../slider.php:60 ../slides.php:69
+msgid "Parameter"
+msgstr ""
+
+#: ../elements.php:184 ../elements.php:409 ../slider.php:61 ../slides.php:70
+msgid "Description"
+msgstr ""
+
+#: ../elements.php:187
+msgid "Text"
+msgstr ""
+
+#: ../elements.php:195
+msgid "Write the text or the HTML."
+msgstr ""
+
+#: ../elements.php:199 ../elements.php:424
+msgid "Left"
+msgstr ""
+
+#: ../elements.php:208 ../elements.php:433
+msgid "Left distance in px from the start width."
+msgstr ""
+
+#: ../elements.php:212 ../elements.php:437
+msgid "Top"
+msgstr ""
+
+#: ../elements.php:221 ../elements.php:446
+msgid "Top distance in px from the start height."
+msgstr ""
+
+#: ../elements.php:225 ../elements.php:450
+msgid "Z - index"
+msgstr ""
+
+#: ../elements.php:233 ../elements.php:458
+msgid ""
+"An element with an high z-index will cover an element with a lower z-index "
+"if they overlap."
+msgstr ""
+
+#: ../elements.php:237 ../elements.php:462
+msgid "Delay"
+msgstr ""
+
+#: ../elements.php:246 ../elements.php:471
+msgid "How long will the element wait before the entrance."
+msgstr ""
+
+#: ../elements.php:250 ../elements.php:475 ../slides.php:214
+msgid "Time"
+msgstr ""
+
+#: ../elements.php:259 ../elements.php:484
+msgid ""
+"How long will the element be displayed during the slide execution. Write "
+"\"all\" to set the entire time."
+msgstr ""
+
+#: ../elements.php:263 ../elements.php:488 ../slides.php:176
+msgid "In animation"
+msgstr ""
+
+#: ../elements.php:278 ../elements.php:503
+msgid "The in animation of the element."
+msgstr ""
+
+#: ../elements.php:282 ../elements.php:507 ../slides.php:195
+msgid "Out animation"
+msgstr ""
+
+#: ../elements.php:297 ../elements.php:300 ../elements.php:303
+#: ../elements.php:522 ../elements.php:525 ../elements.php:528
+msgid "Disable synchronization with slide out animation"
+msgstr ""
+
+#: ../elements.php:309 ../elements.php:534
+msgid ""
+"The out animation of the element.<br /><br />Disable synchronization with "
+"slide out animation: if not checked, the slide out animation won't start "
+"until all the elements that have this option unchecked are animated out."
+msgstr ""
+
+#: ../elements.php:313 ../elements.php:538
+msgid "Ease in"
+msgstr ""
+
+#: ../elements.php:322 ../elements.php:547
+msgid "How long will the in animation take."
+msgstr ""
+
+#: ../elements.php:326 ../elements.php:551
+msgid "Ease out"
+msgstr ""
+
+#: ../elements.php:335 ../elements.php:560
+msgid "How long will the out animation take."
+msgstr ""
+
+#: ../elements.php:339 ../elements.php:564
+msgid "Link"
+msgstr ""
+
+#: ../elements.php:347 ../elements.php:350 ../elements.php:353
+#: ../elements.php:572 ../elements.php:575 ../elements.php:578
+msgid "Open link in a new tab"
+msgstr ""
+
+#: ../elements.php:359 ../elements.php:584
+msgid ""
+"Open the link (e.g.: http://www.google.it) on click. Leave it empty if you "
+"don't want it."
+msgstr ""
+
+#: ../elements.php:363 ../elements.php:588 ../slides.php:253
+msgid "Custom CSS"
+msgstr ""
+
+#: ../elements.php:371 ../elements.php:596
+msgid "Style the element."
+msgstr ""
+
+#: ../elements.php:412
+msgid "Modify image"
+msgstr ""
+
+#: ../elements.php:415 ../elements.php:416
+msgid "Open gallery"
+msgstr ""
+
+#: ../elements.php:420
+msgid "Change the image source or the alt text."
+msgstr ""
+
+#: ../frontend.php:25
+msgid "You have to insert a valid alias in the shortcode"
+msgstr ""
+
+#: ../frontend.php:43 ../frontend.php:47
+msgid "The slider hasn't been found"
+msgstr ""
+
+#: ../home.php:7
+msgid "No Sliders found. Please add a new one."
+msgstr ""
+
+#: ../home.php:17
+msgid "Sliders List"
+msgstr ""
+
+#: ../home.php:22
+msgid "ID"
+msgstr ""
+
+#: ../home.php:23
+msgid "Name"
+msgstr ""
+
+#: ../home.php:24
+msgid "Alias"
+msgstr ""
+
+#: ../home.php:25
+msgid "Shortcode"
+msgstr ""
+
+#: ../home.php:26
+msgid "Actions"
+msgstr ""
+
+#: ../home.php:36
+msgid "Edit Slider"
+msgstr ""
+
+#: ../home.php:37
+msgid "Delete Slider"
+msgstr ""
+
+#: ../home.php:49
+msgid "Add Slider"
+msgstr ""
+
+#: ../slider.php:6
+msgid "Full Width"
+msgstr ""
+
+#: ../slider.php:7
+msgid "Fixed"
+msgstr ""
+
+#: ../slider.php:10
+msgid "Yes"
+msgstr ""
+
+#: ../slider.php:11
+msgid "No"
+msgstr ""
+
+#: ../slider.php:17 ../slider.php:21
+msgid "Slider Name"
+msgstr ""
+
+#: ../slider.php:27
+msgid "Alias:"
+msgstr ""
+
+#: ../slider.php:39
+msgid "Shortcode:"
+msgstr ""
+
+#: ../slider.php:54
+msgid "Slider General Options"
+msgstr ""
+
+#: ../slider.php:64
+msgid "Layout"
+msgstr ""
+
+#: ../slider.php:79
+msgid "Modify the layout type of the slider."
+msgstr ""
+
+#: ../slider.php:83
+msgid "Responsive"
+msgstr ""
+
+#: ../slider.php:98
+msgid "The slider will be adapted to the screen size."
+msgstr ""
+
+#: ../slider.php:102
+msgid "Start Width"
+msgstr ""
+
+#: ../slider.php:111
+msgid "The content initial width of the slider."
+msgstr ""
+
+#: ../slider.php:115
+msgid "Start Height"
+msgstr ""
+
+#: ../slider.php:124
+msgid "The content initial height of the slider."
+msgstr ""
+
+#: ../slider.php:128
+msgid "Automatic Slide"
+msgstr ""
+
+#: ../slider.php:143
+msgid "The slides loop is automatic."
+msgstr ""
+
+#: ../slider.php:147
+msgid "Show Controls"
+msgstr ""
+
+#: ../slider.php:162
+msgid "Show the previous and next arrows."
+msgstr ""
+
+#: ../slider.php:166
+msgid "Show Navigation"
+msgstr ""
+
+#: ../slider.php:181
+msgid "Show the links buttons to change slide."
+msgstr ""
+
+#: ../slider.php:185
+msgid "Enable swipe and drag"
+msgstr ""
+
+#: ../slider.php:200
+msgid "Enable swipe left, swipe right, drag left, drag right commands."
+msgstr ""
+
+#: ../slider.php:204
+msgid "Show Progress Bar"
+msgstr ""
+
+#: ../slider.php:219
+msgid "Draw the progress bar during the slide execution."
+msgstr ""
+
+#: ../slider.php:223
+msgid "Pause on Hover"
+msgstr ""
+
+#: ../slider.php:238
+msgid "Pause the current slide when hovered."
+msgstr ""
+
+#: ../slider.php:242
+msgid "Callbacks"
+msgstr ""
+
+#: ../slider.php:260
+msgid "Some jQuery functions that you can fire during the slider execution."
+msgstr ""
+
+#: ../slides.php:23
+msgid "Add Slide"
+msgstr ""
+
+#: ../slides.php:62
+msgid "Slide Options"
+msgstr ""
+
+#: ../slides.php:73
+msgid "Background"
+msgstr ""
+
+#: ../slides.php:77 ../slides.php:116
+msgid "Background image:"
+msgstr ""
+
+#: ../slides.php:79 ../slides.php:119 ../slides.php:122
+msgid "None"
+msgstr ""
+
+#: ../slides.php:80 ../slides.php:120 ../slides.php:123
+msgid "Select image"
+msgstr ""
+
+#: ../slides.php:86 ../slides.php:130
+msgid "Background color:"
+msgstr ""
+
+#: ../slides.php:88 ../slides.php:133 ../slides.php:136
+msgid "Transparent"
+msgstr ""
+
+#: ../slides.php:95 ../slides.php:144
+msgid "Background position-x:"
+msgstr ""
+
+#: ../slides.php:98 ../slides.php:147
+msgid "Background position-y:"
+msgstr ""
+
+#: ../slides.php:104 ../slides.php:153
+msgid "Background repeat:"
+msgstr ""
+
+#: ../slides.php:106 ../slides.php:156 ../slides.php:159
+msgid "Repeat"
+msgstr ""
+
+#: ../slides.php:107 ../slides.php:157 ../slides.php:160
+msgid "No repeat"
+msgstr ""
+
+#: ../slides.php:113 ../slides.php:167
+msgid "Background size:"
+msgstr ""
+
+#: ../slides.php:172
+msgid "The background of the slide and its proprieties."
+msgstr ""
+
+#: ../slides.php:191
+msgid "The in animation of the slide."
+msgstr ""
+
+#: ../slides.php:210
+msgid "The out animation of the slide."
+msgstr ""
+
+#: ../slides.php:223
+msgid "The time that the slide will remain on the screen."
+msgstr ""
+
+#: ../slides.php:227
+msgid "Ease In"
+msgstr ""
+
+#: ../slides.php:236
+msgid "The time that the slide will take to get in."
+msgstr ""
+
+#: ../slides.php:240
+msgid "Ease Out"
+msgstr ""
+
+#: ../slides.php:249
+msgid "The time that the slide will take to get out."
+msgstr ""
+
+#: ../slides.php:261
+msgid "Apply CSS to the slide."
+msgstr ""
