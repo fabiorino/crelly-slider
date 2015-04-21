@@ -5,8 +5,8 @@ Tags: slider, slides, animations, drag & drop, drag and drop, layers, elements
 Requires at least: 3.6.0
 Tested up to: 4.1
 Stable tag: 0.8.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: MIT
+License URI: http://opensource.org/licenses/MIT
 
 The first FREE WP Slider with elements animations.
 
