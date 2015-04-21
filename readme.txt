@@ -19,8 +19,6 @@ Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Dr
 <br />
 <a href="http://fabiorino1.altervista.org/projects/crellyslider/">Official WebSite (with live demo)</a>
 <br />
-<a href="http://fabiorino1.altervista.org/projects/crellyslider/documentation">Documentation</a>
-<br />
 = User Friendly Admin Panel =
 Crelly Slider does not require any Coding Knowledge. With the simple admin panel you will be able to create the sliders in the easiest way. Upload images with the default WordPress interface or choose colors using the picker.
 
