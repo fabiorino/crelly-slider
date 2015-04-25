@@ -6,7 +6,7 @@
  * Version: 0.8.2
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
- * License: GPL2
+ * License: MIT
  */
 
 /*************/
