@@ -1,0 +1,561 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Crelly Slider 0.8.2\n"
+"POT-Creation-Date: 2015-03-15 13:30+0100\n"
+"PO-Revision-Date: 2015-05-02 11:01+0100\n"
+"Last-Translator: WebMan - Oliver Juhas <webmandesigneu@gmail.com>\n"
+"Language-Team: WebMan Design <webmandesigneu@gmail.com>\n"
+"Language: sk_SK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin.php:50
+msgid "JavaScript must be enabled to view this page correctly."
+msgstr "Pre správne zobrazenie stránky je nutné povoliť JavaScript."
+
+#: ../admin.php:53
+msgid "Operation completed successfully."
+msgstr "Operácia bola úspešne dokončená."
+
+#: ../admin.php:54
+msgid "Something went wrong."
+msgstr "Došlo k chybe."
+
+#: ../admin.php:56
+msgid ""
+"When you'll click \"Save Settings\", you'll be able to add slides and "
+"elements."
+msgstr ""
+"Pridávať snímky a elementy budete môcť až po klinutí na tlačidlo \"Uložiť "
+"nastavenia\"."
+
+#: ../admin.php:121
+msgid "Slider Settings"
+msgstr "Nastavenia slideru"
+
+#: ../admin.php:125
+msgid "Edit Slides"
+msgstr "Upraviť snímky"
+
+#: ../admin.php:145
+msgid "Save Settings"
+msgstr "Uložiť nastavenia"
+
+#: ../admin.php:244 ../slides.php:15
+msgid "Slide"
+msgstr "Snímok"
+
+#: ../admin.php:245
+msgid "The slide will be deleted. Are you sure?"
+msgstr "Snímok bude odstránený. Chcete pokračovať?"
+
+#: ../admin.php:246
+msgid "You can't delete this. You must have at least one slide."
+msgstr ""
+"Tento snímok nie je možné odstrániť. Slider musí obsahovať aspoň jeden "
+"snímok."
+
+#: ../admin.php:247
+msgid "The slider will be deleted. Are you sure?"
+msgstr "Slider bude odstránený. Chcete pokračovať?"
+
+#: ../admin.php:248 ../elements.php:190
+msgid "Text element"
+msgstr "Textový element"
+
+#: ../admin.php:249 ../elements.php:112
+msgid "Live preview"
+msgstr "Živý náhľad"
+
+#: ../admin.php:250
+msgid "Stop preview"
+msgstr "Zastaviť náhľad"
+
+#: ../elements.php:108
+msgid "Add text"
+msgstr "Pridať text"
+
+#: ../elements.php:109
+msgid "Add image"
+msgstr "Pridať obrázok"
+
+#: ../elements.php:113
+msgid "Delete element"
+msgstr "Odstrániť element"
+
+#: ../elements.php:114
+msgid "Duplicate element"
+msgstr "Duplikovať element"
+
+#: ../elements.php:157 ../elements.php:383 ../slides.php:55
+msgid "Slide down"
+msgstr "Vkĺznuť nadol"
+
+#: ../elements.php:158 ../elements.php:384 ../slides.php:54
+msgid "Slide up"
+msgstr "Vkĺznuť nahor"
+
+#: ../elements.php:159 ../elements.php:385 ../slides.php:52
+msgid "Slide left"
+msgstr "Vkĺznuť vľavo"
+
+#: ../elements.php:160 ../elements.php:386 ../slides.php:53
+msgid "Slide right"
+msgstr "Vkĺznuť vpravo"
+
+#: ../elements.php:161 ../elements.php:387 ../slides.php:49
+msgid "Fade"
+msgstr "Pozvoľna zobraziť"
+
+#: ../elements.php:162 ../elements.php:388
+msgid "Fade down"
+msgstr "Pozvoľna zobraziť nadol"
+
+#: ../elements.php:163 ../elements.php:389
+msgid "Fade up"
+msgstr "Pozvoľna zobraziť nahor"
+
+#: ../elements.php:164 ../elements.php:390 ../slides.php:50
+msgid "Fade left"
+msgstr "Pozvoľna zobraziť vľavo"
+
+#: ../elements.php:165 ../elements.php:391 ../slides.php:51
+msgid "Fade right"
+msgstr "Pozvoľna zobraziť vpravo"
+
+#: ../elements.php:166 ../elements.php:392
+msgid "Fade small down"
+msgstr "Pozvoľna zobraziť jemne nadol"
+
+#: ../elements.php:167 ../elements.php:393
+msgid "Fade small up"
+msgstr "Pozvoľna zobraziť jemne nahor"
+
+#: ../elements.php:168 ../elements.php:394
+msgid "Fade small left"
+msgstr "Pozvoľna zobraziť jemne vľavo"
+
+#: ../elements.php:169 ../elements.php:395
+msgid "Fade small right"
+msgstr "Pozvoľna zobraziť jemne vpravo"
+
+#: ../elements.php:176 ../elements.php:402
+msgid "Element Options"
+msgstr "Nastavenie elementu"
+
+#: ../elements.php:182 ../elements.php:407 ../slider.php:59 ../slides.php:68
+msgid "Option"
+msgstr "Nastavenie"
+
+#: ../elements.php:183 ../elements.php:408 ../slider.php:60 ../slides.php:69
+msgid "Parameter"
+msgstr "Parameter"
+
+#: ../elements.php:184 ../elements.php:409 ../slider.php:61 ../slides.php:70
+msgid "Description"
+msgstr "Popis"
+
+#: ../elements.php:187
+msgid "Text"
+msgstr "Text"
+
+#: ../elements.php:195
+msgid "Write the text or the HTML."
+msgstr "Zadajte text alebo HTML."
+
+#: ../elements.php:199 ../elements.php:424
+msgid "Left"
+msgstr "Zľava"
+
+#: ../elements.php:208 ../elements.php:433
+msgid "Left distance in px from the start width."
+msgstr "Vzdialenosť od ľavého okraja slideru v px."
+
+#: ../elements.php:212 ../elements.php:437
+msgid "Top"
+msgstr "Zhora"
+
+#: ../elements.php:221 ../elements.php:446
+msgid "Top distance in px from the start height."
+msgstr "Vzdialenosť od horného okraja slideru v px."
+
+#: ../elements.php:225 ../elements.php:450
+msgid "Z - index"
+msgstr "Z-index"
+
+#: ../elements.php:233 ../elements.php:458
+msgid ""
+"An element with an high z-index will cover an element with a lower z-index "
+"if they overlap."
+msgstr ""
+"Element s vyššou hodnotou z-indexu prekryje element s nižšou hodnotou z-"
+"indexu."
+
+#: ../elements.php:237 ../elements.php:462
+msgid "Delay"
+msgstr "Oneskorenie"
+
+#: ../elements.php:246 ../elements.php:471
+msgid "How long will the element wait before the entrance."
+msgstr "Oneskorenie zobrazenia elementu v snímku."
+
+#: ../elements.php:250 ../elements.php:475 ../slides.php:214
+msgid "Time"
+msgstr "Čas"
+
+#: ../elements.php:259 ../elements.php:484
+msgid ""
+"How long will the element be displayed during the slide execution. Write "
+"\"all\" to set the entire time."
+msgstr ""
+"Ako dlho bude element zobrazený v snímku. Zadajte \"all\" pre nastavenie "
+"celej časovej dĺžky snímku."
+
+#: ../elements.php:263 ../elements.php:488 ../slides.php:176
+msgid "In animation"
+msgstr "Animácia príchodu"
+
+#: ../elements.php:278 ../elements.php:503
+msgid "The in animation of the element."
+msgstr ""
+"Animácia použitá pri zobrazení elementu (pri jeho príchode na scénu)."
+
+#: ../elements.php:282 ../elements.php:507 ../slides.php:195
+msgid "Out animation"
+msgstr "Animácia odchodu"
+
+#: ../elements.php:297 ../elements.php:300 ../elements.php:303
+#: ../elements.php:522 ../elements.php:525 ../elements.php:528
+msgid "Disable synchronization with slide out animation"
+msgstr "Vypnúť synchronizáciu s animáciou odchodu snímku"
+
+#: ../elements.php:309 ../elements.php:534
+msgid ""
+"The out animation of the element.<br /><br />Disable synchronization with "
+"slide out animation: if not checked, the slide out animation won't start "
+"until all the elements that have this option unchecked are animated out."
+msgstr ""
+"Animácia použitá pri odchode elemenu zo scény.<br /><br />Vypnutie "
+"synchronizácie s animáciou odchodu snímku: ak nie je zaškrtnuté, animácia "
+"odchodu snímku sa nespustí, kým neodídu zo scény všetky elementy s týmto "
+"nastavením nezaškrtnutým."
+
+#: ../elements.php:313 ../elements.php:538
+msgid "Ease in"
+msgstr "Trvanie príchodu"
+
+#: ../elements.php:322 ../elements.php:547
+msgid "How long will the in animation take."
+msgstr "Ako dlho bude trvať animácia príchodu."
+
+#: ../elements.php:326 ../elements.php:551
+msgid "Ease out"
+msgstr "Trvanie odchodu"
+
+#: ../elements.php:335 ../elements.php:560
+msgid "How long will the out animation take."
+msgstr "Ako dlho bude trvať animácia odchodu."
+
+#: ../elements.php:339 ../elements.php:564
+msgid "Link"
+msgstr "Odkaz"
+
+#: ../elements.php:347 ../elements.php:350 ../elements.php:353
+#: ../elements.php:572 ../elements.php:575 ../elements.php:578
+msgid "Open link in a new tab"
+msgstr "Otvoriť v novom okne / záložke"
+
+#: ../elements.php:359 ../elements.php:584
+msgid ""
+"Open the link (e.g.: http://www.google.it) on click. Leave it empty if you "
+"don't want it."
+msgstr ""
+"Otvoriť odkaz (napr.: http://www.google.sk) po kliknutí. Ponechajte "
+"prázdne, ak žiaden odkaz aplikovať nechcete."
+
+#: ../elements.php:363 ../elements.php:588 ../slides.php:253
+msgid "Custom CSS"
+msgstr "Vlastné CSS"
+
+#: ../elements.php:371 ../elements.php:596
+msgid "Style the element."
+msgstr "CSS štýl elementu."
+
+#: ../elements.php:412
+msgid "Modify image"
+msgstr "Zmeniť obrázok"
+
+#: ../elements.php:415 ../elements.php:416
+msgid "Open gallery"
+msgstr "Otvoriť galériu"
+
+#: ../elements.php:420
+msgid "Change the image source or the alt text."
+msgstr "Zmeniť zdroj obrázku alebo jeho alternatívny text."
+
+#: ../frontend.php:25
+msgid "You have to insert a valid alias in the shortcode"
+msgstr "Do shortcodu musíte vložiť platný alias"
+
+#: ../frontend.php:43 ../frontend.php:47
+msgid "The slider hasn't been found"
+msgstr "Slider nebol nájdený"
+
+#: ../home.php:7
+msgid "No Sliders found. Please add a new one."
+msgstr "Nenašiel sa žiaden slider. Prosíme, vytvorte nový."
+
+#: ../home.php:17
+msgid "Sliders List"
+msgstr "Zoznam sliderov"
+
+#: ../home.php:22
+msgid "ID"
+msgstr "ID"
+
+#: ../home.php:23
+msgid "Name"
+msgstr "Názov"
+
+#: ../home.php:24
+msgid "Alias"
+msgstr "Alias"
+
+#: ../home.php:25
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: ../home.php:26
+msgid "Actions"
+msgstr "Akcie"
+
+#: ../home.php:36
+msgid "Edit Slider"
+msgstr "Upraviť slider"
+
+#: ../home.php:37
+msgid "Delete Slider"
+msgstr "Odstrániť slider"
+
+#: ../home.php:49
+msgid "Add Slider"
+msgstr "Pridať slider"
+
+#: ../slider.php:6
+msgid "Full Width"
+msgstr "Celá šírka"
+
+#: ../slider.php:7
+msgid "Fixed"
+msgstr "Pevná šírka"
+
+#: ../slider.php:10
+msgid "Yes"
+msgstr "Áno"
+
+#: ../slider.php:11
+msgid "No"
+msgstr "Nie"
+
+#: ../slider.php:17 ../slider.php:21
+msgid "Slider Name"
+msgstr "Názov slideru"
+
+#: ../slider.php:27
+msgid "Alias:"
+msgstr "Alias:"
+
+#: ../slider.php:39
+msgid "Shortcode:"
+msgstr "Shortcode:"
+
+#: ../slider.php:54
+msgid "Slider General Options"
+msgstr "Základné nastavenia slideru"
+
+#: ../slider.php:64
+msgid "Layout"
+msgstr "Rozloženie"
+
+#: ../slider.php:79
+msgid "Modify the layout type of the slider."
+msgstr "Nastaví rozloženie slideru."
+
+#: ../slider.php:83
+msgid "Responsive"
+msgstr "Responzívne"
+
+#: ../slider.php:98
+msgid "The slider will be adapted to the screen size."
+msgstr "Slider sa adaptuje veľkosti obrazovky."
+
+#: ../slider.php:102
+msgid "Start Width"
+msgstr "Počiatočná šírka"
+
+#: ../slider.php:111
+msgid "The content initial width of the slider."
+msgstr "Počiatočná šírka obsahu slideru."
+
+#: ../slider.php:115
+msgid "Start Height"
+msgstr "Počiatočná výška"
+
+#: ../slider.php:124
+msgid "The content initial height of the slider."
+msgstr "Počiatočná výška obsahu slideru."
+
+#: ../slider.php:128
+msgid "Automatic Slide"
+msgstr "Automatický slider"
+
+#: ../slider.php:143
+msgid "The slides loop is automatic."
+msgstr "Snímky budú automaticky kolovať v slučke."
+
+#: ../slider.php:147
+msgid "Show Controls"
+msgstr "Zobraziť ovládanie"
+
+#: ../slider.php:162
+msgid "Show the previous and next arrows."
+msgstr "Zobrazí šípku pre nasledujúci / predchádzajúci snímok."
+
+#: ../slider.php:166
+msgid "Show Navigation"
+msgstr "Zobraziť navigáciu"
+
+#: ../slider.php:181
+msgid "Show the links buttons to change slide."
+msgstr "Zobrazí tlačidlá pre každý snímok zvlášť."
+
+#: ../slider.php:185
+msgid "Enable swipe and drag"
+msgstr "Povoliť dotykové ťahanie"
+
+#: ../slider.php:200
+msgid "Enable swipe left, swipe right, drag left, drag right commands."
+msgstr "Povolí dotykové ťahanie vľavo alebo vpravo."
+
+#: ../slider.php:204
+msgid "Show Progress Bar"
+msgstr "Zobraziť indikátor priebehu"
+
+#: ../slider.php:219
+msgid "Draw the progress bar during the slide execution."
+msgstr "Vykreslí indikátor časového tvrvania snímku."
+
+#: ../slider.php:223
+msgid "Pause on Hover"
+msgstr "Pauza pri prechode myšou"
+
+#: ../slider.php:238
+msgid "Pause the current slide when hovered."
+msgstr "Zastaví aktuálny snímok ak sa kurzor myši nachádza nad sliderom."
+
+#: ../slider.php:242
+msgid "Callbacks"
+msgstr "Spätné volania"
+
+#: ../slider.php:260
+msgid "Some jQuery functions that you can fire during the slider execution."
+msgstr ""
+"jQuery funkcie, ktoré môžete použiť počas zobrazenia a animácie slideru."
+
+#: ../slides.php:23
+msgid "Add Slide"
+msgstr "Pridať snímok"
+
+#: ../slides.php:62
+msgid "Slide Options"
+msgstr "Nastavenie snímku"
+
+#: ../slides.php:73
+msgid "Background"
+msgstr "Pozadie"
+
+#: ../slides.php:77 ../slides.php:116
+msgid "Background image:"
+msgstr "Obrázok pozadia:"
+
+#: ../slides.php:79 ../slides.php:119 ../slides.php:122
+msgid "None"
+msgstr "Žiaden"
+
+#: ../slides.php:80 ../slides.php:120 ../slides.php:123
+msgid "Select image"
+msgstr "Zvoliť obrázok"
+
+#: ../slides.php:86 ../slides.php:130
+msgid "Background color:"
+msgstr "Farba pozadia:"
+
+#: ../slides.php:88 ../slides.php:133 ../slides.php:136
+msgid "Transparent"
+msgstr "Priehľadná"
+
+#: ../slides.php:95 ../slides.php:144
+msgid "Background position-x:"
+msgstr "Horizontálna pozícia pozadia:"
+
+#: ../slides.php:98 ../slides.php:147
+msgid "Background position-y:"
+msgstr "Vertikálna pozícia pozadia:"
+
+#: ../slides.php:104 ../slides.php:153
+msgid "Background repeat:"
+msgstr "Opakovanie pozadia:"
+
+#: ../slides.php:106 ../slides.php:156 ../slides.php:159
+msgid "Repeat"
+msgstr "Opakovať"
+
+#: ../slides.php:107 ../slides.php:157 ../slides.php:160
+msgid "No repeat"
+msgstr "Neopakovať"
+
+#: ../slides.php:113 ../slides.php:167
+msgid "Background size:"
+msgstr "Veľkosť pozadia:"
+
+#: ../slides.php:172
+msgid "The background of the slide and its proprieties."
+msgstr "Pozadie snímku a jeho nastavenie."
+
+#: ../slides.php:191
+msgid "The in animation of the slide."
+msgstr "Animácia príchodu snímku"
+
+#: ../slides.php:210
+msgid "The out animation of the slide."
+msgstr "Animácia odchodu snímku"
+
+#: ../slides.php:223
+msgid "The time that the slide will remain on the screen."
+msgstr "Časová dĺžka zobrazenia snímku"
+
+#: ../slides.php:227
+msgid "Ease In"
+msgstr "Trvanie príchodu"
+
+#: ../slides.php:236
+msgid "The time that the slide will take to get in."
+msgstr "Časová dĺžka animácie príchodu snímku."
+
+#: ../slides.php:240
+msgid "Ease Out"
+msgstr "Trvanie odchodu"
+
+#: ../slides.php:249
+msgid "The time that the slide will take to get out."
+msgstr "Časová dĺžka animácie odchodu snímku."
+
+#: ../slides.php:261
+msgid "Apply CSS to the slide."
+msgstr "Použiť CSS na snímok."
