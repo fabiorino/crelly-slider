@@ -48,6 +48,8 @@ if(is_admin()) {
 		CrellySliderTables::setTables();
 	}
 
+	CrellySliderAdmin::setEnqueues();
+
 	CrellySliderAdmin::showSettings();
 
 	// Ajax functions
