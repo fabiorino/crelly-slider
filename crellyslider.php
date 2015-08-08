@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Crelly Slider
+ * Plugin Name: Crelly Slider (GA MOD)
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.8.2
+ * Version: 0.8.2-GAMOD
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: MIT
