@@ -15,7 +15,7 @@
 
 define('CS_VERSION', '0.8.2');
 define('CS_PATH', plugin_dir_path(__FILE__));
-define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider');
+define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider-GAMOD');
 
 require_once CS_PATH . 'wordpress/common.php';
 require_once CS_PATH . 'wordpress/tables.php';
