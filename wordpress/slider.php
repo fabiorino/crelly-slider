@@ -12,7 +12,7 @@
 		),
 	);
 	?>
-	
+
 	<?php if($edit) { ?>
 		<input type="text" id="cs-slider-name" placeholder="<?php _e('Slider Name', 'crellyslider'); ?>" value="<?php echo $slider->name; ?>" />
 	<?php
@@ -20,10 +20,10 @@
 	else { ?>
 		<input type="text" id="cs-slider-name" placeholder="<?php _e('Slider Name', 'crellyslider'); ?>" />
 	<?php } ?>
-	
+
 	<br />
 	<br />
-	
+
 	<strong><?php _e('Alias:', 'crellyslider'); ?></strong>
 	<?php if($edit) { ?>
 		<span id="cs-slider-alias"><?php echo $slider->alias; ?></span>
@@ -32,11 +32,11 @@
 	else { ?>
 		<span id="cs-slider-alias"></span>
 	<?php } ?>
-	
+
 	<br />
 	<br />
-	
-	<strong><?php _e('Shortcode:', 'crellyslider'); ?></strong>	
+
+	<strong><?php _e('Shortcode:', 'crellyslider'); ?></strong>
 	<?php if($edit) { ?>
 		<span id="cs-slider-shortcode">[crellyslider alias="<?php echo $slider->alias; ?>"]</span>
 	<?php
@@ -44,10 +44,10 @@
 	else { ?>
 		<span id="cs-slider-shortcode"></span>
 	<?php } ?>
-	
+
 	<br />
 	<br />
-	
+
 	<table class="cs-slider-settings-list cs-table">
 		<thead>
 			<tr class="odd-row">
@@ -248,7 +248,7 @@
 <textarea id="cs-slider-callbacks">
 beforeStart : function() {},
 beforeSetResponsive : function() {},
-beforeSlideStart : function() {},
+beforeSlideStart : function(slide_index) {},
 beforePause	: function() {},
 beforeResume : function() {},</textarea>
 					<?php

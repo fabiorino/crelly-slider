@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Crelly Slider
+ * Plugin Name: Crelly Slider (GA MOD)
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.8.2
+ * Version: 0.8.2-GAMOD
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: MIT
@@ -11,18 +11,18 @@
 
 /*************/
 /** GLOBALS **/
-/*************/ 
+/*************/
 
 define('CS_VERSION', '0.8.2');
 define('CS_PATH', plugin_dir_path(__FILE__));
-define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider');
+define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider-GAMOD');
 
 require_once CS_PATH . 'wordpress/common.php';
 require_once CS_PATH . 'wordpress/tables.php';
 require_once CS_PATH . 'wordpress/frontend.php';
 
-// Create (or remove) 3 tables: the sliders settings, the slides settings and the elements proprieties. We will also store the current version of the plugin			
-register_activation_hook(__FILE__, array('CrellySliderTables', 'setVersion'));			
+// Create (or remove) 3 tables: the sliders settings, the slides settings and the elements proprieties. We will also store the current version of the plugin
+register_activation_hook(__FILE__, array('CrellySliderTables', 'setVersion'));
 register_activation_hook(__FILE__, array('CrellySliderTables', 'setTables'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'removeVersion'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'dropTables'));
@@ -37,7 +37,7 @@ if(is_admin()) {
 }
 
 // CSS and Javascript
-CrellySliderCommon::setEnqueues();
+add_action( 'wp_enqueue_scripts', array('CrellySliderCommon', 'setEnqueues'), 1 );
 
 CrellySliderFrontend::addShortcode();
 
@@ -47,12 +47,13 @@ if(is_admin()) {
 		CrellySliderTables::setVersion();
 		CrellySliderTables::setTables();
 	}
-	
+
 	CrellySliderAdmin::setEnqueues();
+
 	CrellySliderAdmin::showSettings();
-	
+
 	// Ajax functions
-	require_once CS_PATH . 'wordpress/ajax.php';	
+	require_once CS_PATH . 'wordpress/ajax.php';
 }
 
 ?>
