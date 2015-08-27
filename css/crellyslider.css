@@ -51,7 +51,7 @@
 	overflow: hidden;
 }
 
-.crellyslider > .cs-slides > .cs-slide * {
+.crellyslider > .cs-slides > .cs-slide > * {
 	display: block;
 	margin: 0;
 	padding: 0;
