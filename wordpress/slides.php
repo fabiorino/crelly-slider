@@ -12,8 +12,9 @@
 					else {
 						echo '<li class="ui-state-default">';
 					}
-					echo '<a>' . __('Slide', 'crellyslider') . ' <span class="cs-slide-index">' . (($slide->position) + 1) . '</span></a>';
-					echo '<span class="cs-close"></span>';
+					echo '<a><span class="cs-slide-name-text">' . __('Slide', 'crellyslider') . ' <span class="cs-slide-index">' . (($slide->position) + 1) . '</span></span></a>';
+					echo '<span title="' . __('Duplicate slide', 'crellyslider') . '" class="cs-duplicate"></span>';
+                    echo '<span title="' . __('Delete slide', 'crellyslider') . '" class="cs-close"></span>';
 					echo '</li>';
 					
 					$j++;
@@ -21,6 +22,7 @@
 			}
 			?>
 			<li class="ui-state-default ui-state-disabled"><a class="cs-add-new"><?php _e('Add Slide', 'crellyslider'); ?></a></li>
+			<div style="clear: both;"></div>
 		</ul>
 		
 		<div class="cs-slides-list">
@@ -46,6 +48,7 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 	$void = !$slide ? true : false;	
 	
 	$animations = array(
+		'none' => array(__('None', 'crellyslider'), false),
 		'fade' => array(__('Fade', 'crellyslider'), true),
 		'fadeLeft' => array(__('Fade left', 'crellyslider'), false),
 		'fadeRight' => array(__('Fade right', 'crellyslider'), false),
@@ -85,33 +88,38 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 						
 						<?php _e('Background color:', 'crellyslider'); ?> &nbsp;
 						<form>
+							<br />
+							<br />
 							<input type="radio" value="0" name="cs-slide-background_type_color" checked /> <?php _e('Transparent', 'crellyslider'); ?> &nbsp;
+							<br />
 							<input type="radio" value="1" name="cs-slide-background_type_color" /> <input class="cs-slide-background_type_color-picker-input cs-button cs-is-default" type="text" value="rgb(255, 255, 255)" />
+							<br />
+							<input type="radio" value="2" name="cs-slide-background_type_color" placeholder="<?php _e('Enter value', 'crellyslider'); ?>" /> <input class="cs-slide-background_type_color-manual" type="text" />
 						</form>
 						
 						<br />
 						<br />
 						
 						<?php _e('Background position-x:', 'crellyslider'); ?> &nbsp;
-						<input type="text" value="0" class="cs-slide-background_propriety_position_x" />
+						<input type="text" value="center" class="cs-slide-background_propriety_position_x" />
 						<br />
 						<?php _e('Background position-y:', 'crellyslider'); ?> &nbsp;
-						<input type="text" value="0" class="cs-slide-background_propriety_position_y" />
+						<input type="text" value="center" class="cs-slide-background_propriety_position_y" />
 						
 						<br />
 						<br />
 						
 						<?php _e('Background repeat:', 'crellyslider'); ?> &nbsp;
 						<form>
-							<input type="radio" value="1" name="cs-slide-background_repeat" checked /> <?php _e('Repeat', 'crellyslider'); ?> &nbsp;
-							<input type="radio" value="0" name="cs-slide-background_repeat" /> <?php _e('No repeat', 'crellyslider'); ?>
+							<input type="radio" value="1" name="cs-slide-background_repeat" /> <?php _e('Repeat', 'crellyslider'); ?> &nbsp;
+							<input type="radio" value="0" name="cs-slide-background_repeat" checked /> <?php _e('No repeat', 'crellyslider'); ?>
 						</form>
 						
 						<br />
 						<br />
 						
 						<?php _e('Background size:', 'crellyslider'); ?> &nbsp;
-						<input type="text" value="auto" class="cs-slide-background_propriety_size" />
+						<input type="text" value="cover" class="cs-slide-background_propriety_size" />
 					<?php else: ?>
 						<?php _e('Background image:', 'crellyslider'); ?> &nbsp;
 						<form>
@@ -128,13 +136,27 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 						<br />
 						
 						<?php _e('Background color:', 'crellyslider'); ?> &nbsp;
-						<form>
+						<form>							
+							<br />
+							<br />							
 							<?php if($slide->background_type_color == 'transparent'): ?>
 								<input type="radio" value="0" name="cs-slide-background_type_color" checked /> <?php _e('Transparent', 'crellyslider'); ?> &nbsp;
-								<input type="radio" value="1" name="cs-slide-background_type_color" /> <input class="cs-slide-background_type_color-picker-input cs-button cs-is-default" type="text" value="rgb(255, 255, 255)" />
 							<?php else: ?>
 								<input type="radio" value="0" name="cs-slide-background_type_color" /> <?php _e('Transparent', 'crellyslider'); ?> &nbsp;
+							<?php endif; ?>	
+							
+							<br />
+							<?php if($slide->background_type_color_input == '1' || ($slide->background_type_color_input == '-1' && $slide->background_type_color != 'transparent')): ?>
 								<input type="radio" value="1" name="cs-slide-background_type_color" checked /> <input class="cs-slide-background_type_color-picker-input cs-button cs-is-default" type="text" value="<?php echo $slide->background_type_color; ?>" />
+							<?php else: ?>
+								<input type="radio" value="1" name="cs-slide-background_type_color" /> <input class="cs-slide-background_type_color-picker-input cs-button cs-is-default" type="text" value="rgb(255, 255, 255)" />
+							<?php endif; ?>	
+							
+							<br />
+							<?php if($slide->background_type_color_input == '2'): ?>
+								<input type="radio" value="2" name="cs-slide-background_type_color" checked /> <input class="cs-slide-background_type_color-manual" type="text" value="<?php echo $slide->background_type_color; ?>" />
+							<?php else: ?>
+								<input type="radio" value="2" name="cs-slide-background_type_color" /> <input class="cs-slide-background_type_color-manual" type="text" placeholder="<?php _e('Enter value', 'crellyslider'); ?>" />
 							<?php endif; ?>	
 						</form>
 						
@@ -170,6 +192,14 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 				</td>
 				<td class="cs-description">
 					<?php _e('The background of the slide and its proprieties.', 'crellyslider'); ?>
+					<br />
+					<br />
+					<strong><?php _e('Presets:', 'crellyslider'); ?></strong>
+					<br />
+					<ul class="cs-style-list">
+						<li><a class="cs-slide-background-image-fullwidth-preset" href="javascript: void(0);"><?php _e('Full width responsive background image', 'crellyslider'); ?></a></li>
+						<li><a class="cs-slide-background-image-pattern-preset" href="javascript: void(0);"><?php _e('Pattern background image', 'crellyslider'); ?></a></li>
+					</ul>
 				</td>
 			</tr>
 			<tr>
@@ -198,7 +228,7 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 						<?php
 						foreach($animations as $key => $value) {
 							echo '<option value="' . $key . '"';
-							if(($void && $value[1]) || (!$void && $slide->data_in == $key)) {
+							if(($void && $value[1]) || (!$void && $slide->data_out == $key)) {
 								echo ' selected';
 							}
 							echo '>' . $value[0] . '</option>';
@@ -247,6 +277,30 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 				</td>
 				<td class="cs-description">
 					<?php _e('The time that the slide will take to get out.', 'crellyslider'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Link', 'crellyslider'); ?></td>
+				<td class="cs-content">
+					<?php
+					if($void) echo '<input class="cs-background-link" type="text" value="" />';
+					else echo '<input class="cs-background-link" type="text" value="' . stripslashes($slide->link) .'" />';
+					?>
+					<br />
+					<?php
+					if($void) echo '<input class="cs-background-link_new_tab" type="checkbox" />' . __('Open link in a new tab', 'crellyslider');
+					else {
+						if($slide->link_new_tab) {
+							echo '<input class="cs-background-link_new_tab" type="checkbox" checked />' . __('Open link in a new tab', 'crellyslider');
+						}
+						else {
+							echo '<input class="cs-background-link_new_tab" type="checkbox" />' . __('Open link in a new tab', 'crellyslider');
+						}
+					}
+					?>
+				</td>
+				<td class="cs-description">
+					<?php _e('Open the link (e.g.: http://www.google.it) when the user clicks on the background. Leave it empty if you don\'t want it.', 'crellyslider'); ?>
 				</td>
 			</tr>
 			<tr>

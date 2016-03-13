@@ -3,8 +3,8 @@
 	// Contains the key, the display name and a boolean: true if is the default option
 	$slider_select_options = array(
 		'layout' => array(
-			'full-width' => array(__('Full Width', 'crellyslider'), false),
-			'fixed' => array(__('Fixed', 'crellyslider'), true),
+			'full-width' => array(__('Full Width', 'crellyslider'), true),
+			'fixed' => array(__('Fixed', 'crellyslider'), false),
 		),
 		'boolean' => array(
 			1 => array(__('Yes', 'crellyslider'), true),
@@ -102,7 +102,7 @@
 				<td class="cs-name"><?php _e('Start Width', 'crellyslider'); ?></td>
 				<td class="cs-content">
 					<?php
-					if(!$edit) echo '<input id="cs-slider-startWidth" type="text" value="1170" />';
+					if(!$edit) echo '<input id="cs-slider-startWidth" type="text" value="1140" />';
 					else echo '<input id="cs-slider-startWidth" type="text" value="' . $slider->startWidth .'" />';
 					?>
 					px

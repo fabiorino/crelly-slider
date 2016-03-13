@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 0.8.2
+ * Version: 1.1.0
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: MIT
@@ -10,19 +10,30 @@
 
 (function($) {
 	
+	/************************/
+	/** EXTERNAL RESOURCES **/
+	/************************/
+	
+	// Custom build of jQuery mobile. I need it for swipeleft and swiperight
+	(function(e,t,n){typeof define=="function"&&define.amd?define(["jquery"],function(r){return n(r,e,t),r.mobile}):n(e.jQuery,e,t)})(this,document,function(e,t,n,r){(function(e,t,n,r){function T(e){while(e&&typeof e.originalEvent!="undefined")e=e.originalEvent;return e}function N(t,n){var i=t.type,s,o,a,l,c,h,p,d,v;t=e.Event(t),t.type=n,s=t.originalEvent,o=e.event.props,i.search(/^(mouse|click)/)>-1&&(o=f);if(s)for(p=o.length,l;p;)l=o[--p],t[l]=s[l];i.search(/mouse(down|up)|click/)>-1&&!t.which&&(t.which=1);if(i.search(/^touch/)!==-1){a=T(s),i=a.touches,c=a.changedTouches,h=i&&i.length?i[0]:c&&c.length?c[0]:r;if(h)for(d=0,v=u.length;d<v;d++)l=u[d],t[l]=h[l]}return t}function C(t){var n={},r,s;while(t){r=e.data(t,i);for(s in r)r[s]&&(n[s]=n.hasVirtualBinding=!0);t=t.parentNode}return n}function k(t,n){var r;while(t){r=e.data(t,i);if(r&&(!n||r[n]))return t;t=t.parentNode}return null}function L(){g=!1}function A(){g=!0}function O(){E=0,v.length=0,m=!1,A()}function M(){L()}function _(){D(),c=setTimeout(function(){c=0,O()},e.vmouse.resetTimerDuration)}function D(){c&&(clearTimeout(c),c=0)}function P(t,n,r){var i;if(r&&r[t]||!r&&k(n.target,t))i=N(n,t),e(n.target).trigger(i);return i}function H(t){var n=e.data(t.target,s),r;!m&&(!E||E!==n)&&(r=P("v"+t.type,t),r&&(r.isDefaultPrevented()&&t.preventDefault(),r.isPropagationStopped()&&t.stopPropagation(),r.isImmediatePropagationStopped()&&t.stopImmediatePropagation()))}function B(t){var n=T(t).touches,r,i,o;n&&n.length===1&&(r=t.target,i=C(r),i.hasVirtualBinding&&(E=w++,e.data(r,s,E),D(),M(),d=!1,o=T(t).touches[0],h=o.pageX,p=o.pageY,P("vmouseover",t,i),P("vmousedown",t,i)))}function j(e){if(g)return;d||P("vmousecancel",e,C(e.target)),d=!0,_()}function F(t){if(g)return;var n=T(t).touches[0],r=d,i=e.vmouse.moveDistanceThreshold,s=C(t.target);d=d||Math.abs(n.pageX-h)>i||Math.abs(n.pageY-p)>i,d&&!r&&P("vmousecancel",t,s),P("vmousemove",t,s),_()}function I(e){if(g)return;A();var t=C(e.target),n,r;P("vmouseup",e,t),d||(n=P("vclick",e,t),n&&n.isDefaultPrevented()&&(r=T(e).changedTouches[0],v.push({touchID:E,x:r.clientX,y:r.clientY}),m=!0)),P("vmouseout",e,t),d=!1,_()}function q(t){var n=e.data(t,i),r;if(n)for(r in n)if(n[r])return!0;return!1}function R(){}function U(t){var n=t.substr(1);return{setup:function(){q(this)||e.data(this,i,{});var r=e.data(this,i);r[t]=!0,l[t]=(l[t]||0)+1,l[t]===1&&b.bind(n,H),e(this).bind(n,R),y&&(l.touchstart=(l.touchstart||0)+1,l.touchstart===1&&b.bind("touchstart",B).bind("touchend",I).bind("touchmove",F).bind("scroll",j))},teardown:function(){--l[t],l[t]||b.unbind(n,H),y&&(--l.touchstart,l.touchstart||b.unbind("touchstart",B).unbind("touchmove",F).unbind("touchend",I).unbind("scroll",j));var r=e(this),s=e.data(this,i);s&&(s[t]=!1),r.unbind(n,R),q(this)||r.removeData(i)}}}var i="virtualMouseBindings",s="virtualTouchID",o="vmouseover vmousedown vmousemove vmouseup vclick vmouseout vmousecancel".split(" "),u="clientX clientY pageX pageY screenX screenY".split(" "),a=e.event.mouseHooks?e.event.mouseHooks.props:[],f=e.event.props.concat(a),l={},c=0,h=0,p=0,d=!1,v=[],m=!1,g=!1,y="addEventListener"in n,b=e(n),w=1,E=0,S,x;e.vmouse={moveDistanceThreshold:10,clickDistanceThreshold:10,resetTimerDuration:1500};for(x=0;x<o.length;x++)e.event.special[o[x]]=U(o[x]);y&&n.addEventListener("click",function(t){var n=v.length,r=t.target,i,o,u,a,f,l;if(n){i=t.clientX,o=t.clientY,S=e.vmouse.clickDistanceThreshold,u=r;while(u){for(a=0;a<n;a++){f=v[a],l=0;if(u===r&&Math.abs(f.x-i)<S&&Math.abs(f.y-o)<S||e.data(u,s)===f.touchID){t.preventDefault(),t.stopPropagation();return}}u=u.parentNode}}},!0)})(e,t,n),function(e){e.mobile={}}(e),function(e,t){var r={touch:"ontouchend"in n};e.mobile.support=e.mobile.support||{},e.extend(e.support,r),e.extend(e.mobile.support,r)}(e),function(e,t,r){function l(t,n,i,s){var o=i.type;i.type=n,s?e.event.trigger(i,r,t):e.event.dispatch.call(t,i),i.type=o}var i=e(n),s=e.mobile.support.touch,o="touchmove scroll",u=s?"touchstart":"mousedown",a=s?"touchend":"mouseup",f=s?"touchmove":"mousemove";e.each("touchstart touchmove touchend tap taphold swipe swipeleft swiperight scrollstart scrollstop".split(" "),function(t,n){e.fn[n]=function(e){return e?this.bind(n,e):this.trigger(n)},e.attrFn&&(e.attrFn[n]=!0)}),e.event.special.scrollstart={enabled:!0,setup:function(){function s(e,n){r=n,l(t,r?"scrollstart":"scrollstop",e)}var t=this,n=e(t),r,i;n.bind(o,function(t){if(!e.event.special.scrollstart.enabled)return;r||s(t,!0),clearTimeout(i),i=setTimeout(function(){s(t,!1)},50)})},teardown:function(){e(this).unbind(o)}},e.event.special.tap={tapholdThreshold:750,emitTapOnTaphold:!0,setup:function(){var t=this,n=e(t),r=!1;n.bind("vmousedown",function(s){function a(){clearTimeout(u)}function f(){a(),n.unbind("vclick",c).unbind("vmouseup",a),i.unbind("vmousecancel",f)}function c(e){f(),!r&&o===e.target?l(t,"tap",e):r&&e.preventDefault()}r=!1;if(s.which&&s.which!==1)return!1;var o=s.target,u;n.bind("vmouseup",a).bind("vclick",c),i.bind("vmousecancel",f),u=setTimeout(function(){e.event.special.tap.emitTapOnTaphold||(r=!0),l(t,"taphold",e.Event("taphold",{target:o}))},e.event.special.tap.tapholdThreshold)})},teardown:function(){e(this).unbind("vmousedown").unbind("vclick").unbind("vmouseup"),i.unbind("vmousecancel")}},e.event.special.swipe={scrollSupressionThreshold:30,durationThreshold:1e3,horizontalDistanceThreshold:30,verticalDistanceThreshold:30,getLocation:function(e){var n=t.pageXOffset,r=t.pageYOffset,i=e.clientX,s=e.clientY;if(e.pageY===0&&Math.floor(s)>Math.floor(e.pageY)||e.pageX===0&&Math.floor(i)>Math.floor(e.pageX))i-=n,s-=r;else if(s<e.pageY-r||i<e.pageX-n)i=e.pageX-n,s=e.pageY-r;return{x:i,y:s}},start:function(t){var n=t.originalEvent.touches?t.originalEvent.touches[0]:t,r=e.event.special.swipe.getLocation(n);return{time:(new Date).getTime(),coords:[r.x,r.y],origin:e(t.target)}},stop:function(t){var n=t.originalEvent.touches?t.originalEvent.touches[0]:t,r=e.event.special.swipe.getLocation(n);return{time:(new Date).getTime(),coords:[r.x,r.y]}},handleSwipe:function(t,n,r,i){if(n.time-t.time<e.event.special.swipe.durationThreshold&&Math.abs(t.coords[0]-n.coords[0])>e.event.special.swipe.horizontalDistanceThreshold&&Math.abs(t.coords[1]-n.coords[1])<e.event.special.swipe.verticalDistanceThreshold){var s=t.coords[0]>n.coords[0]?"swipeleft":"swiperight";return l(r,"swipe",e.Event("swipe",{target:i,swipestart:t,swipestop:n}),!0),l(r,s,e.Event(s,{target:i,swipestart:t,swipestop:n}),!0),!0}return!1},eventInProgress:!1,setup:function(){var t,n=this,r=e(n),s={};t=e.data(this,"mobile-events"),t||(t={length:0},e.data(this,"mobile-events",t)),t.length++,t.swipe=s,s.start=function(t){if(e.event.special.swipe.eventInProgress)return;e.event.special.swipe.eventInProgress=!0;var r,o=e.event.special.swipe.start(t),u=t.target,l=!1;s.move=function(t){if(!o||t.isDefaultPrevented())return;r=e.event.special.swipe.stop(t),l||(l=e.event.special.swipe.handleSwipe(o,r,n,u),l&&(e.event.special.swipe.eventInProgress=!1)),Math.abs(o.coords[0]-r.coords[0])>e.event.special.swipe.scrollSupressionThreshold&&t.preventDefault()},s.stop=function(){l=!0,e.event.special.swipe.eventInProgress=!1,i.off(f,s.move),s.move=null},i.on(f,s.move).one(a,s.stop)},r.on(u,s.start)},teardown:function(){var t,n;t=e.data(this,"mobile-events"),t&&(n=t.swipe,delete t.swipe,t.length--,t.length===0&&e.removeData(this,"mobile-events")),n&&(n.start&&e(this).off(u,n.start),n.move&&i.off(f,n.move),n.stop&&i.off(a,n.stop))}},e.each({scrollstop:"scrollstart",taphold:"tap",swipeleft:"swipe.left",swiperight:"swipe.right"},function(t,n){e.event.special[t]={setup:function(){e(this).bind(n,e.noop)},teardown:function(){e(this).unbind(n)}}})}(e,this)});
+	
+	// YouTube API:
+	var tag = document.createElement('script');
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	
+	// Vimeo API
+	var Froogaloop=function(){function e(a){return new e.fn.init(a)}function g(a,c,b){if(!b.contentWindow.postMessage)return!1;a=JSON.stringify({method:a,value:c});b.contentWindow.postMessage(a,h)}function l(a){var c,b;try{c=JSON.parse(a.data),b=c.event||c.method}catch(e){}"ready"!=b||k||(k=!0);if(!/^https?:\/\/player.vimeo.com/.test(a.origin))return!1;"*"===h&&(h=a.origin);a=c.value;var m=c.data,f=""===f?null:c.player_id;c=f?d[f][b]:d[b];b=[];if(!c)return!1;void 0!==a&&b.push(a);m&&b.push(m);f&&b.push(f);
+	return 0<b.length?c.apply(null,b):c.call()}function n(a,c,b){b?(d[b]||(d[b]={}),d[b][a]=c):d[a]=c}var d={},k=!1,h="*";e.fn=e.prototype={element:null,init:function(a){"string"===typeof a&&(a=document.getElementById(a));this.element=a;return this},api:function(a,c){if(!this.element||!a)return!1;var b=this.element,d=""!==b.id?b.id:null,e=c&&c.constructor&&c.call&&c.apply?null:c,f=c&&c.constructor&&c.call&&c.apply?c:null;f&&n(a,f,d);g(a,e,b);return this},addEvent:function(a,c){if(!this.element)return!1;
+	var b=this.element,d=""!==b.id?b.id:null;n(a,c,d);"ready"!=a?g("addEventListener",a,b):"ready"==a&&k&&c.call(null,d);return this},removeEvent:function(a){if(!this.element)return!1;var c=this.element,b=""!==c.id?c.id:null;a:{if(b&&d[b]){if(!d[b][a]){b=!1;break a}d[b][a]=null}else{if(!d[a]){b=!1;break a}d[a]=null}b=!0}"ready"!=a&&b&&g("removeEventListener",a,c)}};e.fn.init.prototype=e.fn;window.addEventListener?window.addEventListener("message",l,!1):window.attachEvent("onmessage",l);return window.Froogaloop=
+	window.$f=e}();	
+	
 	/*******************/
 	/** CRELLY SLIDER **/
 	/*******************/
 	
-	var CrellySlider = function(target, settings) {
-	
-		/************************/
-		/** EXTERNAL RESOURCES **/
-		/************************/
-		
-		// TouchSwipe 1.6 (http://labs.rampinteractive.co.uk/touchSwipe/)
-		// fn.swipe has been replaced with fn.crellyslider_swipe to avoid compatibility issues with other scripts
-		(function(a){if(typeof define==="function"&&define.amd&&define.amd.jQuery){define(["jquery"],a)}else{a(jQuery)}}(function(f){var p="left",o="right",e="up",x="down",c="in",z="out",m="none",s="auto",l="swipe",t="pinch",A="tap",j="doubletap",b="longtap",y="hold",D="horizontal",u="vertical",i="all",r=10,g="start",k="move",h="end",q="cancel",a="ontouchstart" in window,v=window.navigator.msPointerEnabled&&!window.navigator.pointerEnabled,d=window.navigator.pointerEnabled||window.navigator.msPointerEnabled,B="TouchSwipe";var n={fingers:1,threshold:75,cancelThreshold:null,pinchThreshold:20,maxTimeThreshold:null,fingerReleaseThreshold:250,longTapThreshold:500,doubleTapThreshold:200,swipe:null,swipeLeft:null,swipeRight:null,swipeUp:null,swipeDown:null,swipeStatus:null,pinchIn:null,pinchOut:null,pinchStatus:null,click:null,tap:null,doubleTap:null,longTap:null,hold:null,triggerOnTouchEnd:true,triggerOnTouchLeave:false,allowPageScroll:"auto",fallbackToMouseEvents:true,excludedElements:"label, button, input, select, textarea, a, .noSwipe"};f.fn.crellyslider_swipe=function(G){var F=f(this),E=F.data(B);if(E&&typeof G==="string"){if(E[G]){return E[G].apply(this,Array.prototype.slice.call(arguments,1))}else{f.error("Method "+G+" does not exist on jQuery.swipe")}}else{if(!E&&(typeof G==="object"||!G)){return w.apply(this,arguments)}}return F};f.fn.crellyslider_swipe.defaults=n;f.fn.crellyslider_swipe.phases={PHASE_START:g,PHASE_MOVE:k,PHASE_END:h,PHASE_CANCEL:q};f.fn.crellyslider_swipe.directions={LEFT:p,RIGHT:o,UP:e,DOWN:x,IN:c,OUT:z};f.fn.crellyslider_swipe.pageScroll={NONE:m,HORIZONTAL:D,VERTICAL:u,AUTO:s};f.fn.crellyslider_swipe.fingers={ONE:1,TWO:2,THREE:3,ALL:i};function w(E){if(E&&(E.allowPageScroll===undefined&&(E.swipe!==undefined||E.swipeStatus!==undefined))){E.allowPageScroll=m}if(E.click!==undefined&&E.tap===undefined){E.tap=E.click}if(!E){E={}}E=f.extend({},f.fn.crellyslider_swipe.defaults,E);return this.each(function(){var G=f(this);var F=G.data(B);if(!F){F=new C(this,E);G.data(B,F)}})}function C(a4,av){var az=(a||d||!av.fallbackToMouseEvents),J=az?(d?(v?"MSPointerDown":"pointerdown"):"touchstart"):"mousedown",ay=az?(d?(v?"MSPointerMove":"pointermove"):"touchmove"):"mousemove",U=az?(d?(v?"MSPointerUp":"pointerup"):"touchend"):"mouseup",S=az?null:"mouseleave",aD=(d?(v?"MSPointerCancel":"pointercancel"):"touchcancel");var ag=0,aP=null,ab=0,a1=0,aZ=0,G=1,aq=0,aJ=0,M=null;var aR=f(a4);var Z="start";var W=0;var aQ=null;var T=0,a2=0,a5=0,ad=0,N=0;var aW=null,af=null;try{aR.bind(J,aN);aR.bind(aD,a9)}catch(ak){f.error("events not supported "+J+","+aD+" on jQuery.swipe")}this.enable=function(){aR.bind(J,aN);aR.bind(aD,a9);return aR};this.disable=function(){aK();return aR};this.destroy=function(){aK();aR.data(B,null);return aR};this.option=function(bc,bb){if(av[bc]!==undefined){if(bb===undefined){return av[bc]}else{av[bc]=bb}}else{f.error("Option "+bc+" does not exist on jQuery.swipe.options")}return null};function aN(bd){if(aB()){return}if(f(bd.target).closest(av.excludedElements,aR).length>0){return}var be=bd.originalEvent?bd.originalEvent:bd;var bc,bb=a?be.touches[0]:be;Z=g;if(a){W=be.touches.length}else{bd.preventDefault()}ag=0;aP=null;aJ=null;ab=0;a1=0;aZ=0;G=1;aq=0;aQ=aj();M=aa();R();if(!a||(W===av.fingers||av.fingers===i)||aX()){ai(0,bb);T=at();if(W==2){ai(1,be.touches[1]);a1=aZ=au(aQ[0].start,aQ[1].start)}if(av.swipeStatus||av.pinchStatus){bc=O(be,Z)}}else{bc=false}if(bc===false){Z=q;O(be,Z);return bc}else{if(av.hold){af=setTimeout(f.proxy(function(){aR.trigger("hold",[be.target]);if(av.hold){bc=av.hold.call(aR,be,be.target)}},this),av.longTapThreshold)}ao(true)}return null}function a3(be){var bh=be.originalEvent?be.originalEvent:be;if(Z===h||Z===q||am()){return}var bd,bc=a?bh.touches[0]:bh;var bf=aH(bc);a2=at();if(a){W=bh.touches.length}if(av.hold){clearTimeout(af)}Z=k;if(W==2){if(a1==0){ai(1,bh.touches[1]);a1=aZ=au(aQ[0].start,aQ[1].start)}else{aH(bh.touches[1]);aZ=au(aQ[0].end,aQ[1].end);aJ=ar(aQ[0].end,aQ[1].end)}G=a7(a1,aZ);aq=Math.abs(a1-aZ)}if((W===av.fingers||av.fingers===i)||!a||aX()){aP=aL(bf.start,bf.end);al(be,aP);ag=aS(bf.start,bf.end);ab=aM();aI(aP,ag);if(av.swipeStatus||av.pinchStatus){bd=O(bh,Z)}if(!av.triggerOnTouchEnd||av.triggerOnTouchLeave){var bb=true;if(av.triggerOnTouchLeave){var bg=aY(this);bb=E(bf.end,bg)}if(!av.triggerOnTouchEnd&&bb){Z=aC(k)}else{if(av.triggerOnTouchLeave&&!bb){Z=aC(h)}}if(Z==q||Z==h){O(bh,Z)}}}else{Z=q;O(bh,Z)}if(bd===false){Z=q;O(bh,Z)}}function L(bb){var bc=bb.originalEvent;if(a){if(bc.touches.length>0){F();return true}}if(am()){W=ad}a2=at();ab=aM();if(ba()||!an()){Z=q;O(bc,Z)}else{if(av.triggerOnTouchEnd||(av.triggerOnTouchEnd==false&&Z===k)){bb.preventDefault();Z=h;O(bc,Z)}else{if(!av.triggerOnTouchEnd&&a6()){Z=h;aF(bc,Z,A)}else{if(Z===k){Z=q;O(bc,Z)}}}}ao(false);return null}function a9(){W=0;a2=0;T=0;a1=0;aZ=0;G=1;R();ao(false)}function K(bb){var bc=bb.originalEvent;if(av.triggerOnTouchLeave){Z=aC(h);O(bc,Z)}}function aK(){aR.unbind(J,aN);aR.unbind(aD,a9);aR.unbind(ay,a3);aR.unbind(U,L);if(S){aR.unbind(S,K)}ao(false)}function aC(bf){var be=bf;var bd=aA();var bc=an();var bb=ba();if(!bd||bb){be=q}else{if(bc&&bf==k&&(!av.triggerOnTouchEnd||av.triggerOnTouchLeave)){be=h}else{if(!bc&&bf==h&&av.triggerOnTouchLeave){be=q}}}return be}function O(bd,bb){var bc=undefined;if(I()||V()){bc=aF(bd,bb,l)}else{if((P()||aX())&&bc!==false){bc=aF(bd,bb,t)}}if(aG()&&bc!==false){bc=aF(bd,bb,j)}else{if(ap()&&bc!==false){bc=aF(bd,bb,b)}else{if(ah()&&bc!==false){bc=aF(bd,bb,A)}}}if(bb===q){a9(bd)}if(bb===h){if(a){if(bd.touches.length==0){a9(bd)}}else{a9(bd)}}return bc}function aF(be,bb,bd){var bc=undefined;if(bd==l){aR.trigger("swipeStatus",[bb,aP||null,ag||0,ab||0,W,aQ]);if(av.swipeStatus){bc=av.swipeStatus.call(aR,be,bb,aP||null,ag||0,ab||0,W,aQ);if(bc===false){return false}}if(bb==h&&aV()){aR.trigger("swipe",[aP,ag,ab,W,aQ]);if(av.swipe){bc=av.swipe.call(aR,be,aP,ag,ab,W,aQ);if(bc===false){return false}}switch(aP){case p:aR.trigger("swipeLeft",[aP,ag,ab,W,aQ]);if(av.swipeLeft){bc=av.swipeLeft.call(aR,be,aP,ag,ab,W,aQ)}break;case o:aR.trigger("swipeRight",[aP,ag,ab,W,aQ]);if(av.swipeRight){bc=av.swipeRight.call(aR,be,aP,ag,ab,W,aQ)}break;case e:aR.trigger("swipeUp",[aP,ag,ab,W,aQ]);if(av.swipeUp){bc=av.swipeUp.call(aR,be,aP,ag,ab,W,aQ)}break;case x:aR.trigger("swipeDown",[aP,ag,ab,W,aQ]);if(av.swipeDown){bc=av.swipeDown.call(aR,be,aP,ag,ab,W,aQ)}break}}}if(bd==t){aR.trigger("pinchStatus",[bb,aJ||null,aq||0,ab||0,W,G,aQ]);if(av.pinchStatus){bc=av.pinchStatus.call(aR,be,bb,aJ||null,aq||0,ab||0,W,G,aQ);if(bc===false){return false}}if(bb==h&&a8()){switch(aJ){case c:aR.trigger("pinchIn",[aJ||null,aq||0,ab||0,W,G,aQ]);if(av.pinchIn){bc=av.pinchIn.call(aR,be,aJ||null,aq||0,ab||0,W,G,aQ)}break;case z:aR.trigger("pinchOut",[aJ||null,aq||0,ab||0,W,G,aQ]);if(av.pinchOut){bc=av.pinchOut.call(aR,be,aJ||null,aq||0,ab||0,W,G,aQ)}break}}}if(bd==A){if(bb===q||bb===h){clearTimeout(aW);clearTimeout(af);if(Y()&&!H()){N=at();aW=setTimeout(f.proxy(function(){N=null;aR.trigger("tap",[be.target]);if(av.tap){bc=av.tap.call(aR,be,be.target)}},this),av.doubleTapThreshold)}else{N=null;aR.trigger("tap",[be.target]);if(av.tap){bc=av.tap.call(aR,be,be.target)}}}}else{if(bd==j){if(bb===q||bb===h){clearTimeout(aW);N=null;aR.trigger("doubletap",[be.target]);if(av.doubleTap){bc=av.doubleTap.call(aR,be,be.target)}}}else{if(bd==b){if(bb===q||bb===h){clearTimeout(aW);N=null;aR.trigger("longtap",[be.target]);if(av.longTap){bc=av.longTap.call(aR,be,be.target)}}}}}return bc}function an(){var bb=true;if(av.threshold!==null){bb=ag>=av.threshold}return bb}function ba(){var bb=false;if(av.cancelThreshold!==null&&aP!==null){bb=(aT(aP)-ag)>=av.cancelThreshold}return bb}function ae(){if(av.pinchThreshold!==null){return aq>=av.pinchThreshold}return true}function aA(){var bb;if(av.maxTimeThreshold){if(ab>=av.maxTimeThreshold){bb=false}else{bb=true}}else{bb=true}return bb}function al(bb,bc){if(av.allowPageScroll===m||aX()){bb.preventDefault()}else{var bd=av.allowPageScroll===s;switch(bc){case p:if((av.swipeLeft&&bd)||(!bd&&av.allowPageScroll!=D)){bb.preventDefault()}break;case o:if((av.swipeRight&&bd)||(!bd&&av.allowPageScroll!=D)){bb.preventDefault()}break;case e:if((av.swipeUp&&bd)||(!bd&&av.allowPageScroll!=u)){bb.preventDefault()}break;case x:if((av.swipeDown&&bd)||(!bd&&av.allowPageScroll!=u)){bb.preventDefault()}break}}}function a8(){var bc=aO();var bb=X();var bd=ae();return bc&&bb&&bd}function aX(){return !!(av.pinchStatus||av.pinchIn||av.pinchOut)}function P(){return !!(a8()&&aX())}function aV(){var be=aA();var bg=an();var bd=aO();var bb=X();var bc=ba();var bf=!bc&&bb&&bd&&bg&&be;return bf}function V(){return !!(av.swipe||av.swipeStatus||av.swipeLeft||av.swipeRight||av.swipeUp||av.swipeDown)}function I(){return !!(aV()&&V())}function aO(){return((W===av.fingers||av.fingers===i)||!a)}function X(){return aQ[0].end.x!==0}function a6(){return !!(av.tap)}function Y(){return !!(av.doubleTap)}function aU(){return !!(av.longTap)}function Q(){if(N==null){return false}var bb=at();return(Y()&&((bb-N)<=av.doubleTapThreshold))}function H(){return Q()}function ax(){return((W===1||!a)&&(isNaN(ag)||ag<av.threshold))}function a0(){return((ab>av.longTapThreshold)&&(ag<r))}function ah(){return !!(ax()&&a6())}function aG(){return !!(Q()&&Y())}function ap(){return !!(a0()&&aU())}function F(){a5=at();ad=event.touches.length+1}function R(){a5=0;ad=0}function am(){var bb=false;if(a5){var bc=at()-a5;if(bc<=av.fingerReleaseThreshold){bb=true}}return bb}function aB(){return !!(aR.data(B+"_intouch")===true)}function ao(bb){if(bb===true){aR.bind(ay,a3);aR.bind(U,L);if(S){aR.bind(S,K)}}else{aR.unbind(ay,a3,false);aR.unbind(U,L,false);if(S){aR.unbind(S,K,false)}}aR.data(B+"_intouch",bb===true)}function ai(bc,bb){var bd=bb.identifier!==undefined?bb.identifier:0;aQ[bc].identifier=bd;aQ[bc].start.x=aQ[bc].end.x=bb.pageX||bb.clientX;aQ[bc].start.y=aQ[bc].end.y=bb.pageY||bb.clientY;return aQ[bc]}function aH(bb){var bd=bb.identifier!==undefined?bb.identifier:0;var bc=ac(bd);bc.end.x=bb.pageX||bb.clientX;bc.end.y=bb.pageY||bb.clientY;return bc}function ac(bc){for(var bb=0;bb<aQ.length;bb++){if(aQ[bb].identifier==bc){return aQ[bb]}}}function aj(){var bb=[];for(var bc=0;bc<=5;bc++){bb.push({start:{x:0,y:0},end:{x:0,y:0},identifier:0})}return bb}function aI(bb,bc){bc=Math.max(bc,aT(bb));M[bb].distance=bc}function aT(bb){if(M[bb]){return M[bb].distance}return undefined}function aa(){var bb={};bb[p]=aw(p);bb[o]=aw(o);bb[e]=aw(e);bb[x]=aw(x);return bb}function aw(bb){return{direction:bb,distance:0}}function aM(){return a2-T}function au(be,bd){var bc=Math.abs(be.x-bd.x);var bb=Math.abs(be.y-bd.y);return Math.round(Math.sqrt(bc*bc+bb*bb))}function a7(bb,bc){var bd=(bc/bb)*1;return bd.toFixed(2)}function ar(){if(G<1){return z}else{return c}}function aS(bc,bb){return Math.round(Math.sqrt(Math.pow(bb.x-bc.x,2)+Math.pow(bb.y-bc.y,2)))}function aE(be,bc){var bb=be.x-bc.x;var bg=bc.y-be.y;var bd=Math.atan2(bg,bb);var bf=Math.round(bd*180/Math.PI);if(bf<0){bf=360-Math.abs(bf)}return bf}function aL(bc,bb){var bd=aE(bc,bb);if((bd<=45)&&(bd>=0)){return p}else{if((bd<=360)&&(bd>=315)){return p}else{if((bd>=135)&&(bd<=225)){return o}else{if((bd>45)&&(bd<135)){return x}else{return e}}}}}function at(){var bb=new Date();return bb.getTime()}function aY(bb){bb=f(bb);var bd=bb.offset();var bc={left:bd.left,right:bd.left+bb.outerWidth(),top:bd.top,bottom:bd.top+bb.outerHeight()};return bc}function E(bb,bc){return(bb.x>bc.left&&bb.x<bc.right&&bb.y>bc.top&&bb.y<bc.bottom)}}}));
+	$.CrellySlider = function(target, settings) {
 		
 		/**********************/
 		/** USEFUL VARIABLES **/
@@ -39,13 +50,18 @@
 		var current_slide = 0;
 		
 		var paused = false;
-		var can_pause = false;
-		var can_change_slide = false;
+		var can_pause = false; // Also used as "can change slide"
+		var executed_slide = false; // Will be true as soon as the current slide is executed
+		var first_play = true;
 		
 		// Slide timer: only current slide. Elements timers: all the elements. This prevents conflicts during changes and pauses
 		var current_slide_time_timer = new Timer(function() {}, 0);
 		var elements_times_timers = new Array();
 		var elements_delays_timers = new Array();
+		
+		// The arrays "link" every DOM iframe element to its player element that can interact with APIs
+		var youtube_videos = {};
+		var vimeo_videos = {};
 		
 		var scale = 1;
 		var window_width_before_setResponsive = 0; // This variable is useful ONLY to prevent that window.resize fires on vertical resizing or on a right window width
@@ -54,7 +70,19 @@
 		/** INITIALIZATION **/
 		/********************/
 		
-		init();
+		// EVERYTHING BEGINS HERE
+		// Before initializing Crelly Slider, we have to wait for the YouTube API. I use the setInterval method to prevent compatibility issues with other plugins and to be sure that, if there is more than a slider loaded on the page, everything works
+		if((typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined')) {
+			var temp = setInterval(function() {
+				if(typeof(YT) != 'undefined' && typeof(YT.Player) != 'undefined') {
+					clearInterval(temp);
+					init();
+				}
+			}, 100);
+		}
+		else {
+			init();
+		}
 		
 		// The slider constructor: runs automatically only the first time, sets the basic needs of the slider and the preloader then runs Crelly Slider
 		function init() {			
@@ -111,15 +139,172 @@
 			}			
 			setLayout();
 			
+			// Set slides links
+			getSlides().find('.cs-background-link')
+			.html(' ')
+			.data({
+				'left' : 0,
+				'top' : 0,
+				'in' : 'none',
+				'out' : 'none',
+				'easeIn' : 0,
+				'easeOut' : 0,
+				'delay' : 0,
+				'time' : 'all',
+			});
+			
 			setPreloader();
 			
-			// In WP window.load does not fire. Need to add that variable
-			if(typeof crellyslider_is_wordpress_admin == 'undefined' || ! crellyslider_is_wordpress_admin) {
-				loadWindow();
+			initVideos().done(function() {
+				// Timeout needed when running on localhost
+				setTimeout(function() {
+					if(document.readyState != 'complete') {
+						loadWindow();
+					}
+					else {
+						loadedWindow();
+					}
+				}, 10);
+			});
+		}
+		
+		// Inits Youtube and Vimeo videos
+		function initVideos() {		
+			var def = new $.Deferred();
+			var total_iframes = getSlides().find('.cs-yt-iframe, .cs-vimeo-iframe').length;
+			var loaded_iframes = 0;
+			
+			if(total_iframes == 0) {
+				return def.resolve().promise();
 			}
-			else {
-				loadedWindow();
+			
+			// When iframes are loaded...
+			getSlides().find('.cs-yt-iframe, .cs-vimeo-iframe').each(function() {
+				var iframe = $(this);
+				
+				iframe.one('load', function() {
+					loaded_iframes++;
+					if(loaded_iframes == total_iframes) {
+						// ...init videos
+						initYoutubeVideos().done(function() {
+							initVimeoVideos().done(function() {
+								def.resolve();
+							});
+						});
+					}
+				})
+			});
+			
+			return def.promise();
+		}
+		
+		// Generates an unique id for each youtube iframe, then links them to a new YouTube player
+		function initYoutubeVideos() {
+			var def = new $.Deferred();
+			var slides = getSlides();
+			var total_yt_videos = slides.find(ELEMENTS + '.cs-yt-iframe').length;
+			var loaded_videos = 0;
+			var temp;
+			
+			if(total_yt_videos == 0) {
+				return def.resolve().promise();
 			}
+			
+			slides.each(function() {
+				var slide = $(this);
+				var elements = slide.find(ELEMENTS + '.cs-yt-iframe');
+				
+				elements.each(function() {
+					var element = $(this);
+					
+					element.uniqueId();
+					element.attr('id', 'cs-yt-iframe-' + element.attr('id'));
+					
+					var player = new YT.Player(element.attr('id'), {
+						events: {
+							'onReady' : function() {							
+								loaded_videos++;
+								if(loaded_videos == total_yt_videos) {
+									def.resolve();
+								}
+							},
+							
+							'onStateChange' : function(e) {
+								if(e.data === YT.PlayerState.ENDED && getItemData(element, 'loop')) {
+									player.playVideo(); 
+								}
+							},
+						},
+					});
+					
+					temp = {
+						player : player,
+						played_once : false
+					};
+					
+					youtube_videos[element.attr('id')] = temp;
+				});
+			});
+			
+			return def.promise();
+		}
+		
+		// Generates an unique id for each Vimeo iframe, then links them to a new Vimeo player
+		function initVimeoVideos() {
+			var def = new $.Deferred();
+			var slides = getSlides();
+			var total_vimeo_videos = slides.find(ELEMENTS + '.cs-vimeo-iframe').length;
+			var loaded_videos = 0;
+			var temp;
+			
+			if(total_vimeo_videos == 0) {
+				return def.resolve().promise();
+			}
+			
+			slides.each(function() {
+				var slide = $(this);
+				var elements = slide.find(ELEMENTS + '.cs-vimeo-iframe');
+				
+				elements.each(function() {
+					var element = $(this);
+					
+					element.uniqueId();
+					element.attr('id', 'cs-vimeo-iframe-' + element.attr('id'));
+					element.attr('src', element.attr('src') + '&player_id=' + element.attr('id'));
+					
+					var player = $f(element[0]);
+					
+					player.addEvent('ready', function() {
+						player.addEvent('finish', function() {
+							vimeo_videos[element.attr('id')].ended = true;
+						});
+						
+						player.addEvent('play', function() {
+							vimeo_videos[element.attr('id')].played_once = true;
+							vimeo_videos[element.attr('id')].ended = false;
+						});
+						
+						if(getItemData(element, 'loop')) {
+							player.api('setLoop', true); 
+						}
+						
+						loaded_videos++;						
+						if(loaded_videos == total_vimeo_videos) {
+							def.resolve();
+						}
+					});
+					
+					temp = {
+						player : player,
+						played_once : false,
+						ended : false,
+					};
+					
+					vimeo_videos[element.attr('id')] = temp;
+				});
+			});
+			
+			return def.promise();
 		}
 		
 		// Waits until the window loads
@@ -130,9 +315,7 @@
 		}
 		
 		// Does operations after window.load is complete. Need to do it as a function for back-end compatibility
-		function loadedWindow() {
-			unsetPreloader();
-			
+		function loadedWindow() {		
 			// Set layout for the second time
 			if(settings.responsive) {
 				setScale();
@@ -144,6 +327,8 @@
 			initProperties();
 			
 			addListeners();
+			
+			unsetPreloader();
 			
 			settings.beforeStart();
 			
@@ -224,26 +409,21 @@
 			});
 			
 			// Swipe and drag
-			if(settings.enableSwipe) {
-				SLIDER.find(CRELLY).crellyslider_swipe({
-					swipeLeft : function(event, direction, distance, duration, fingerCount) {
-						resume();
-						changeSlide(getNextSlide());
-					},
-					
-					swipeRight : function(event, direction, distance, duration, fingerCount) {
-						resume();
-						changeSlide(getPreviousSlide());
-					},
+			if(settings.enableSwipe) {				
+				SLIDER.find(CRELLY).on('swipeleft', function() {
+					resume();
+					changeSlide(getNextSlide());
+				});
+				
+				SLIDER.find(CRELLY).on('swiperight', function() {
+					resume();
+					changeSlide(getPreviousSlide());
 				});
 			}
 			
 			// Navigation link click
 			SLIDER.find(CRELLY).find('.cs-navigation > .cs-slide-link').click(function() {
-				if($(this).index() != current_slide) {
-					paused = false;
-					changeSlide($(this).index());
-				}
+				changeSlide($(this).index());
 			});
 			
 			// Pause on hover
@@ -258,22 +438,75 @@
 			}
 		}
 		
-		// Sets gif loader
+		// Hides the unnecessary divs and sets the blurred preloader and the gif spinner
 		function setPreloader() {
-			SLIDER.find(CRELLY).find(SLIDES).css('display', 'none');
+			// Setup
+			SLIDER.find(CRELLY).find(SLIDES).css('visibility', 'hidden');
 			SLIDER.find(CRELLY).find('.cs-progress-bar').css('display', 'none');
 			SLIDER.find(CRELLY).find('.cs-navigation').css('display', 'none');
-			SLIDER.find(CRELLY).find('.cs-controls').css('display', 'none');
-			SLIDER.find(CRELLY).append('<div class="cs-preloader"><div class="cs-loader"></div></div>');
+			SLIDER.find(CRELLY).find('.cs-controls').css('display', 'none');	
+			
+			// Get the URL of the background image of the first slide
+			var img_url = getSlide(0).css('background-image');
+			img_url = img_url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+			
+			if(img_url == '' || img_url == 'undefined' || img_url == 'none') {
+				addPreloaderHTML();
+			}
+			else {
+				// When the background image of the first slide is loaded
+				$('<img>')
+				.load(function() {
+					addPreloaderHTML();
+				})
+				.attr('src', img_url)
+				.each(function() {
+					if(this.complete) {
+						$(this).load();
+					}
+				});
+			}
+			
+			function addPreloaderHTML() {
+				// Add preloader
+				SLIDER.find(CRELLY).append('<div class="cs-preloader"><div class="cs-bg"></div><div class="cs-loader"><div class="cs-spinner"></div></div></div>');
+				
+				// Set background. Background is set to both the preloader div and the bg div to fix the CSS blur effect
+				SLIDER.find(CRELLY).find('.cs-preloader').css({						
+					'background-color' : getSlide(0).css('background-color'),
+					'background-image' : getSlide(0).css('background-image'),
+					'background-position' : getSlide(0).css('background-position'),
+					'background-repeat' : getSlide(0).css('background-repeat'),
+					'background-size' : getSlide(0).css('background-size'),
+				});				
+				SLIDER.find(CRELLY).find('.cs-preloader > .cs-bg').css({						
+					'background-color' : getSlide(0).css('background-color'),
+					'background-image' : getSlide(0).css('background-image'),
+					'background-position' : getSlide(0).css('background-position'),
+					'background-repeat' : getSlide(0).css('background-repeat'),
+					'background-size' : getSlide(0).css('background-size'),
+				});
+			}
 		}
 		
-		// Removes gif loader
+		// Shows the necessary divs and fades out the preloader
 		function unsetPreloader() {
-			SLIDER.find(CRELLY).find(SLIDES).css('display', 'block');
+			// Setup
+			SLIDER.find(CRELLY).find(SLIDES).css('visibility', 'visible');
 			SLIDER.find(CRELLY).find('.cs-progress-bar').css('display', 'block');
 			SLIDER.find(CRELLY).find('.cs-navigation').css('display', 'block');
 			SLIDER.find(CRELLY).find('.cs-controls').css('display', 'block');
-			SLIDER.find(CRELLY).find('.cs-preloader').remove();
+			
+			// Display the first slide to avoid the slide in animation
+			slideIn(getSlide(0));
+			getSlide(0).finish();
+			
+			// Fade out
+			SLIDER.find(CRELLY).find('.cs-preloader').animate({
+				'opacity' : 0,
+			}, 300, function() {
+				SLIDER.find(CRELLY).find('.cs-preloader').remove();
+			});
 		}
 		
 		/*******************************/
@@ -360,6 +593,10 @@
 					element.finish();
 					elementIn(element);
 					element.finish();
+					
+					if(isVideo(element)) {
+						pauseVideo(element);
+					}
 				});
 			});
 			
@@ -384,6 +621,10 @@
 					element.finish();
 					elementOut(element);
 					element.finish();
+					
+					if(isVideo(element)) {
+						pauseVideo(element);
+					}
 				});
 				
 				slide.finish();
@@ -397,11 +638,9 @@
 		}
 		
 		// Scales a text or an image and their contents
-		function scaleElement(element) {
+		function scaleElement(element) {			
 			// Standard element
 			element.css({
-				'width' 		 : getScaled(getItemData(element, 'width')),
-				'height' 		 : getScaled(getItemData(element, 'height')),
 				'top' 			 : getScaled(getItemData(element, 'top') + getLayoutGaps(element).top),
 				'left' 			 : getScaled(getItemData(element, 'left') + getLayoutGaps(element).left),
 				'padding-top'	 : getScaled(getItemData(element, 'padding-top')),
@@ -411,30 +650,20 @@
 			});
 			
 			// Element contains text
-			if(element.text() != '') {
-				element.css({
-					'width' 		 : 'auto',
-					'height' 		 : 'auto',							
+			if(element.is('input') || element.is('button') || element.text().trim().length) {		
+				element.css({					
 					'line-height'	 : getScaled(getItemData(element, 'line-height')) + 'px',
 					'letter-spacing' : getScaled(getItemData(element, 'letter-spacing')),
 					'font-size'		 : getScaled(getItemData(element, 'font-size')),
 				});
-				
-				/*				
-				Warning: these lines were here because, in text elements, the width and the height depends on font-size, line height etc..
-				Because of that, the we didn't really have to set the width and the height manually because the browser calculated them based on font-size, line-height etc.
-				But, because I hate to see "width: auto", I wanted to set them.
-				The problem appears when we have other HTML inside the text layer. It is scaled correctly but the width and the height aren't.
-				This is not a big problem because, without specifying the dimensions, the slider works with "auto" parameter (wich is correct).
-				If, in a future, I will have to specify a width and a height, I will have to try to fix the width() jQuery function that returns 0 when the element is in "display: none"
-				
-				if(element.width() > 0) {
-					element.css('width', element.width());
-				}
-				if(element.height() > 0) {
-					element.css('height', element.height());
-				}
-				*/
+			}
+			
+			// Element doesn't contain text (like images or iframes)
+			else {
+				element.css({
+					'width'  : getScaled(getItemData(element, 'width')),
+					'height' : getScaled(getItemData(element, 'height')),
+				});
 			}
 		}
 		
@@ -461,13 +690,15 @@
 		/*********************/
 		
 		// Runs Crelly from the current slide
-		function play() {
+		function play() {			
 			if(settings.automaticSlide) {
 				loopSlides();
 			}
 			else {
 				executeSlide(current_slide);
 			}
+			
+			first_play = false;
 		}
 		
 		// Stops all the slides and the elements and resets the progress bar
@@ -625,6 +856,26 @@
 					return settings.ignoreElementsEaseOut;
 					break;
 					
+				case 'autoplay' :
+					if(parseInt(item.data(data)) == 1) {
+						return true;
+					}
+					else if(parseInt(item.data(data)) == 0) {
+						return false;
+					}
+					return settings.videoAutoplay;
+					break;
+				
+				case 'loop' :
+					if(parseInt(item.data(data)) == 1) {
+						return true;
+					}
+					else if(parseInt(item.data(data)) == 0) {
+						return false;
+					}
+					return settings.videoLoop;
+					break;
+					
 				case 'top' :
 				case 'left' :
 				case 'width' :
@@ -692,6 +943,11 @@
 			this.resume();
 		}
 		
+		// Returns true if the user is using a mobile browser
+		function isMobile() {
+			return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		}
+		
 		/*****************/
 		/** SLIDER CORE **/
 		/*****************/
@@ -706,8 +962,8 @@
 			});
 		}
 		
-		// Resets the progress bar and draw the new progress bar for the received slide
-		function drawProgressBar(slide_index) {
+		// Resets the progress bar and draws the progress bar of the current slide
+		function drawProgressBar() {
 			var progress_bar = SLIDER.find(CRELLY).find('.cs-progress-bar');
 			
 			resetProgressBar();
@@ -743,8 +999,12 @@
 		}
 		
 		// Finishes the current slide (animations out of elements and slide) and then plays the new slide
-		function changeSlide(slide_index) {
-			if(can_change_slide) {				
+		function changeSlide(slide_index) {			
+			if(slide_index == current_slide) {
+				return;
+			}
+			
+			if(can_pause || executed_slide) {				
 				stop(false);
 				
 				finishSlide(current_slide, false, true).done(function() {
@@ -759,6 +1019,8 @@
 			settings.beforeSlideStart();
 			
 			var def = new $.Deferred();
+			
+			executed_slide = false;
 			
 			// If something is still animating, reset
 			for(var i = 0; i < elements_times_timers.length; i++) {
@@ -786,11 +1048,13 @@
 			
 			if(settings.automaticSlide) {
 				finishSlide(slide_index, true, true).done(function() {
+					executed_slide = true;
 					def.resolve();					
 				});
 			}
 			else {
 				finishSlide(slide_index, true, false).done(function() {
+					executed_slide = true;					
 					def.resolve();					
 				});
 			}
@@ -809,14 +1073,12 @@
 			var def = new $.Deferred();
 			
 			can_pause = false;
-			can_change_slide = false;
 			
 			// Do slide in animation
-			slideIn(slide_index).done(function() {
-				drawProgressBar(slide_index);
+			slideIn(slide_index).done(function() {			
+				drawProgressBar();
 				
 				can_pause = true;
-				can_change_slide = true;
 				
 				slide_in_completed = true;
 				if(slide_in_completed && elements_in_completed == elements.length) {
@@ -830,7 +1092,11 @@
 				var element_delay = getItemData(element, 'delay');
 				
 				elements_delays_timers.push(new Timer(function() {
-					elementIn(element).done(function() {
+					elementIn(element).done(function() {						
+						if(isVideo(element)) {
+							playVideo(element);
+						}
+						
 						elements_in_completed++;
 						if(slide_in_completed && elements_in_completed == elements.length) {
 							def.resolve();
@@ -842,7 +1108,9 @@
 			return def.promise();
 		}
 		
-		// Does all times, elements out animations and slide out animation. If necessary, won't animate out the slide and the elements with time == "all"
+		// Does all times, elements out animations and slide out animation
+		// execute_time, if true, will do the slide and the elements timers. If false, the timers will be = 0 so the plugin will execute the code of the callback function immediately.
+		// animate_all_out, if false, will execute the elements with time != all out animations but not the slide and the elements with time == all out animations. If true, executes all the out animations
 		function finishSlide(slide_index, execute_time, animate_all_out) {			
 			var slide = getSlide(slide_index);
 			var elements = slide.find(ELEMENTS);
@@ -864,7 +1132,8 @@
 					if(getItemData(element, 'ignore-ease-out')) {
 						elements_out_completed++;
 						
-						if(elements.length == elements_out_completed && slide_time_completed) {
+						if(elements.length == elements_out_completed && slide_time_completed && animate_all_out) {
+							pauseVideos(slide_index);
 							slideOut(slide_index);
 							def.resolve();
 						}
@@ -875,7 +1144,8 @@
 							if(! getItemData(element, 'ignore-ease-out')) {
 								elements_out_completed++;
 								
-								if(elements.length == elements_out_completed && slide_time_completed) {
+								if(elements.length == elements_out_completed && slide_time_completed && animate_all_out) {
+									pauseVideos(slide_index);
 									slideOut(slide_index);
 									def.resolve();
 								}
@@ -893,18 +1163,16 @@
 				
 				slide_time_completed = true;
 				
-				if(elements.length == elements_out_completed && slide_time_completed) {
+				if(elements.length == elements_out_completed && slide_time_completed && animate_all_out) {
+					pauseVideos(slide_index);
 					slideOut(slide_index);
 					def.resolve();
 				}		
 				
 				if(! animate_all_out) {
-					can_change_slide = true;
 					def.resolve();
 				}
-				else {				
-					can_change_slide = false;
-					
+				else {					
 					// Elements with time == "all"
 					elements.each(function() {
 						var element = $(this);
@@ -914,7 +1182,8 @@
 							if(getItemData(element, 'ignore-ease-out')) {
 								elements_out_completed++;
 								
-								if(elements.length == elements_out_completed && slide_time_completed) {
+								if(elements.length == elements_out_completed && slide_time_completed && animate_all_out) {
+									pauseVideos(slide_index);
 									slideOut(slide_index);
 									def.resolve();
 								}
@@ -924,7 +1193,8 @@
 								if(! getItemData(element, 'ignore-ease-out')) {
 									elements_out_completed++;
 									
-									if(elements.length == elements_out_completed && slide_time_completed) {
+									if(elements.length == elements_out_completed && slide_time_completed && animate_all_out) {
+										pauseVideos(slide_index);
 										slideOut(slide_index);
 										def.resolve();
 									}
@@ -938,12 +1208,143 @@
 			return def.promise();
 		}
 		
+		// VIDEOS FUNCTIONS
+		
+		// Returns true if the element is a YouTube or a Vimeo iframe
+		function isVideo(element) {
+			return isYoutubeVideo(element) || isVimeoVideo(element);
+		}
+		
+		// Checks what's the source of the video, then plays it
+		function playVideo(element) {
+			if(isYoutubeVideo(element)) {
+				playYoutubeVideo(element);
+			}
+			else {
+				playVimeoVideo(element);
+			}
+		}
+		
+		// Pauses all the YouTube and Vimeo videos
+		function pauseVideos(slide_index) {
+			pauseYoutubeVideos(slide_index);
+			pauseVimeoVideos(slide_index);
+		}
+		
+		// Checks what's the source of the video, then pauses it
+		function pauseVideo(element) {
+			if(isYoutubeVideo(element)) {
+				pauseYoutubeVideo(element);
+			}
+			else {
+				pauseVimeoVideo(element);
+			}
+		}
+		
+		// Checks if the element is a YouTube video
+		function isYoutubeVideo(element) {
+			return element.hasClass('cs-yt-iframe');
+		}
+		
+		// Returns the player associated to the element
+		function getYoutubePlayer(element) {
+			return youtube_videos[element.attr('id')].player;			
+			return false;
+		}
+		
+		/*
+		Returns:
+		-1 – unstarted
+		0 – ended
+		1 – playing
+		2 – paused
+		3 – buffering
+		5 – video cued
+		*/
+		function getYoutubePlayerState(element) {
+			return getYoutubePlayer(element).getPlayerState();
+		}
+		
+		// Checks if the video can be played and plays it
+		function playYoutubeVideo(element) {
+			// If autplay and first slide loop. Disabled on mobile for compatibility reasons (details on the Youtube's website)
+			if(getItemData(element, 'autoplay') && ! youtube_videos[element.attr('id')].played_once && ! isMobile()) {
+				getYoutubePlayer(element).playVideo();
+			}
+			
+			// If was paused
+			if(getYoutubePlayerState(element) == 2) {
+				getYoutubePlayer(element).playVideo();
+			}
+			
+			youtube_videos[element.attr('id')].played_once = true;
+		}
+		
+		// Pause all the videos in a slide
+		function pauseYoutubeVideos(slide_index) {
+			getSlide(slide_index).each(function() {
+				var slide = $(this);
+				
+				slide.find(ELEMENTS + '.cs-yt-iframe').each(function() {
+					pauseYoutubeVideo($(this));
+				});
+			});
+		}
+		
+		// Checks if the video can be paused and pauses it
+		function pauseYoutubeVideo(element) {
+			if(getYoutubePlayerState(element) == 1) {
+				getYoutubePlayer(element).pauseVideo();
+			}
+		}
+		
+		// Checks if the element is a Vimeo video
+		function isVimeoVideo(element) {
+			return element.hasClass('cs-vimeo-iframe');
+		}
+		
+		// Returns the player associated to the element
+		function getVimeoPlayer(element) {
+			return vimeo_videos[element.attr('id')].player;
+		}
+		
+		// Plays the video
+		function playVimeoVideo(element) {			
+			// If autplay and first slide loop. Disabled on mobile for compatibility reasons (details on the Vimeo's website)
+			if(getItemData(element, 'autoplay') && ! vimeo_videos[element.attr('id')].played_once && ! isMobile()) {
+				getVimeoPlayer(element).api('play');
+			}
+			
+			// If was paused
+			if(getVimeoPlayer(element).api('paused') && ! vimeo_videos[element.attr('id')].ended && vimeo_videos[element.attr('id')].played_once) {
+				getVimeoPlayer(element).api('play');
+			}
+		}
+		
+		// Pause all the videos in a slide
+		function pauseVimeoVideos(slide_index) {
+			getSlide(slide_index).each(function() {
+				var slide = $(this);
+				
+				slide.find(ELEMENTS + '.cs-vimeo-iframe').each(function() {
+					pauseVimeoVideo($(this));
+				});
+			});
+		}
+		
+		// Pauses the video
+		function pauseVimeoVideo(element) {
+			getVimeoPlayer(element).api('pause');
+		}
+		
 		/****************/
 		/** ANIMATIONS **/
 		/****************/
 		
+		// WARNING: slideIn and elementIn must reset every CSS propriety to the correct value before start
+		
 		// Does slide in animation
-		function slideIn(slide_index) {
+		function slideIn(slide_index) {			
 			var slide = getSlide(slide_index);
 			var data_in = getItemData(slide, 'in');
 			var data_ease_in = getItemData(slide, 'ease-in');
@@ -951,6 +1352,17 @@
 			var def = new $.Deferred();
 			
 			if(slide.css('display') == 'block') {
+				return def.resolve().promise();
+			}
+			
+			// If first play, don't execute the animation
+			if(first_play) {
+				slide.css({
+					'display' : 'block',
+					'top'	  : 0,
+					'left'	  : 0,
+					'opacity' : getItemData(slide, 'opacity'),
+				});
 				return def.resolve().promise();
 			}
 			
@@ -998,6 +1410,7 @@
 						'display' : 'block',
 						'top'	  : 0,
 						'left'	  : getWidth(),
+						'opacity' : getItemData(slide, 'opacity'),
 					});
 					slide.animate({
 						'left' : 0,
@@ -1009,6 +1422,7 @@
 						'display' : 'block',
 						'top'	  : 0,
 						'left'	  : -getWidth(),
+						'opacity' : getItemData(slide, 'opacity'),
 					});
 					slide.animate({
 						'left' : 0,
@@ -1020,6 +1434,7 @@
 						'display' : 'block',
 						'top'	  : getHeight(),
 						'left'	  : 0,
+						'opacity' : getItemData(slide, 'opacity'),
 					});
 					slide.animate({
 						'top' : 0,
@@ -1031,6 +1446,7 @@
 						'display' : 'block',
 						'top'	  : -getHeight(),
 						'left'	  : 0,
+						'opacity' : getItemData(slide, 'opacity'),
 					});
 					slide.animate({
 						'top' : 0,
@@ -1191,6 +1607,7 @@
 						'display' : 'block',
 						'top'	  : -element_height,
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
+						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
 					}, data_ease_in, function() { def.resolve(); });
@@ -1201,6 +1618,7 @@
 						'display' : 'block',
 						'top'  	  : getHeight(),
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
+						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
 					}, data_ease_in, function() { def.resolve(); });
@@ -1211,6 +1629,7 @@
 						'display' : 'block',
 						'top'  	  : getScaled(data_top + getLayoutGaps(element).top),
 						'left'	  : getWidth(),
+						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
 					}, data_ease_in, function() { def.resolve(); });
@@ -1221,6 +1640,7 @@
 						'display' : 'block',
 						'top'  	  : getScaled(data_top + getLayoutGaps(element).top),
 						'left'	  : -element_width,
+						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
 					}, data_ease_in, function() { def.resolve(); });
@@ -1545,18 +1965,49 @@
 			return def.promise();
 		}
 		
+		/**********************/
+		/** PUBLIC FUNCTIONS **/
+		/**********************/
+		
+		this.resume = function() {
+			resume();
+		}
+		
+		this.pause = function() {
+			pause();
+		}
+		
+		this.nextSlide = function() {
+			changeSlide(getNextSlide());
+		}
+		
+		this.previousSlide = function() {
+			changeSlide(getPreviousSlide());
+		}
+		
+		this.changeSlide = function(slide_index) {
+			changeSlide(slide_index);
+		}
+		
+		this.getCurrentSlide = function() {
+			return current_slide;
+		}
+		
+		this.getTotalSlides = function() {
+			return total_slides;
+		}
+		
 	};
 	
 	/**************************/
 	/** CRELLY SLIDER PLUGIN **/
 	/**************************/
 	
-	// Plugin
 	$.fn.crellySlider = function(options) {	
         var settings = $.extend({
 			layout					: 'fixed',
 			responsive				: true,
-			startWidth				: 1170,
+			startWidth				: 1140,
 			startHeight				: 500,
 			
 			pauseOnHover			: true,			
@@ -1575,6 +2026,9 @@
 			elementsEaseOut			: 300,
 			ignoreElementsEaseOut 	: false,
 			
+			videoAutoplay			: true,
+			videoLoop				: false,
+			
 			beforeStart				: function() {},
 			beforeSetResponsive		: function() {},
 			beforeSlideStart		: function() {},
@@ -1583,7 +2037,10 @@
         }, options);
 
         return this.each(function() {
-			new CrellySlider(this, settings);
+			if(undefined == $(this).data('crellySlider')) {
+				var plugin = new $.CrellySlider(this, settings);
+				$(this).data('crellySlider', plugin);
+			}
         });
     };
 	

@@ -3,22 +3,22 @@ Contributors:  fabiorino
 Donate link: http://fabiorino1.altervista.org/projects/crellyslider/contribute-and-support/
 Tags: slider, slides, animations, drag & drop, drag and drop, layers, elements
 Requires at least: 3.6.0
-Tested up to: 4.2
-Stable tag: 0.8.2
+Tested up to: 4.4
+Stable tag: 1.1.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-The first FREE WP Slider with elements animations.
+Free Responsive Slider with Elements and Layers Animations, featuring a Drag & Drop slides Builder.
 
 == Description ==
 
-= Crelly Slider has Layers Animations, a Drag and Drop Builder, is Free, Responsive and Easy to Use =
+= Crelly Slider has Layers Animations, is Free, Responsive and Easy to Use =
 <br />
 Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Drop Builder. You can add Texts and Images using animations and transitions. It's perfect to display your creative content in posts and pages. With it's tons of features, Crelly Slider is the best free solution for your online WebSite.
 <br />
 <br />
 <a href="http://fabiorino1.altervista.org/projects/crellyslider/">Official WebSite (with live demo)</a>
-<br /> 
+<br />
 = User Friendly Admin Panel =
 Crelly Slider does not require any Coding Knowledge. With the simple admin panel you will be able to create the sliders in the easiest way. Upload images with the default WordPress interface or choose colors using the picker.
 
@@ -54,6 +54,27 @@ You can find the documentation <a href="http://fabiorino1.altervista.org/project
 3. Unlimited sliders
 
 == Changelog ==
+
+= 1.1.0 =
+* Awesome community: the slider is now translated in 8 different languages! Thank you!<br />English,<br />Italian,<br />Spanish (<a href="https://github.com/eduardoarandah">Eduardo Aranda</a>),<br />Russian (<a href="http://dymskiy.ru/">Andrey Dymskiy</a>),<br />Slovak (<a href="https://github.com/webmandesign">Oliver Juhas</a>),<br />Serbian (Branislav Pakic),<br />French (sLy kereven),<br />German (Andreas Dolinar, <a href="http://elokron.de/"Jan Adams</a>)
+* New feature: Duplicate sliders and slides
+* New feature: Import/Export sliders
+* New feature: Support for YouTube and Vimeo videos
+* New feature: The slides can be linked (the entire background is a link)
+* New feature: New preloader: when loading, the background is no more grey. Now the first slide background image is automatically blurred and used as background for the preloader. When the slider is loaded, the blurred background will fade away and the first slide will be displayed
+* New feature: Added public methods to control the slider. pause(), resume(), nextSlide(), previousSlide(), changeSlide(slide_index), getCurrentSlide(), getTotalSlides()
+* New feature: Slides background color can now be set manually
+* New feature: Custom CSS classes can now be added to elements
+* New feature: Added "Center vertically" and "Center horizontally" buttons to align elements
+* New feature: The slides background image can now be quickly set as "responsive full width image" or "pattern"
+* Bug fix: Sometimes slides and elements weren't saved correctly
+* Bug fix: Text elements were displayed on two lines when an inline tag was added
+* Bug fix: When automatic slide was set to "no", the out animations were still performed
+* Bug fix: When the backend interface was loading there were some graphical glitches
+* Bug fix: Background position wasn't correct on Firefox
+* Minor change: Texts have now a default line height, color and font. In this way, I can be sure that they are displayed exactly in the same way in the backend and in the frontend
+* Minor change: dropped support for IE < 11
+* Other minor changes and bug fixes
 
 = 0.8.2 =
 * Fixed: broken admin layout on Firefox (<a href="https://github.com/fabiorino/crelly-slider/pull/5">Thanks eduardoarandah</a>)

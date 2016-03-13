@@ -55,6 +55,7 @@ class CrellySliderTables {
 		position INT,
 		background_type_image TEXT CHARACTER SET utf8,
 		background_type_color TEXT CHARACTER SET utf8,
+		background_type_color_input INT DEFAULT -1,
 		background_propriety_position_x TEXT CHARACTER SET utf8,
 		background_propriety_position_y TEXT CHARACTER SET utf8,
 		background_repeat TEXT CHARACTER SET utf8,
@@ -64,6 +65,8 @@ class CrellySliderTables {
 		data_time INT,
 		data_easeIn INT,
 		data_easeOut INT,
+		link TEXT CHARACTER SET utf8 DEFAULT '',
+		link_new_tab INT DEFAULT 0,
 		custom_css TEXT CHARACTER SET utf8,
 		UNIQUE KEY id (id)
 		);";
@@ -93,11 +96,15 @@ class CrellySliderTables {
 		data_in TEXT CHARACTER SET utf8,
 		data_out TEXT CHARACTER SET utf8,
 		custom_css TEXT CHARACTER SET utf8,
+		custom_css_classes TEXT CHARACTER SET utf8 DEFAULT '',
 		inner_html TEXT CHARACTER SET utf8,
 		image_src TEXT CHARACTER SET utf8,
 		image_alt TEXT CHARACTER SET utf8,
 		link TEXT CHARACTER SET utf8 DEFAULT '',
 		link_new_tab INT DEFAULT 0,
+		video_id TEXT CHARACTER SET utf8,
+		video_loop INT,
+		video_autoplay INT,
 		UNIQUE KEY id (id)
 		);";
 		

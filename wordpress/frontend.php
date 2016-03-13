@@ -61,8 +61,7 @@ class CrellySliderFrontend {
 			'style="' . "\n" .
 			'background-color: ' . $slide->background_type_color . ';' . "\n" .
 			'background-image: ' . $background_type_image . "\n" .
-			'background-position-x: ' . $slide->background_propriety_position_x . ';' . "\n" .
-			'background-position-y: ' . $slide->background_propriety_position_y . ';' . "\n" .
+			'background-position: ' . $slide->background_propriety_position_x . ' ' . $slide->background_propriety_position_y . ';' . "\n" .
 			'background-repeat: ' . $slide->background_repeat . ';' . "\n" .
 			'background-size: ' . $slide->background_propriety_size . ';' . "\n" .
 			stripslashes($slide->custom_css) . "\n" .
@@ -74,6 +73,15 @@ class CrellySliderFrontend {
 			'data-ease-out="' . $slide->data_easeOut . '"' . "\n" .
 			'data-time="' . $slide->data_time . '"' . "\n" .
 			'>' . "\n";
+			
+			if($slide->link != '') {
+				if($slide->link_new_tab) {
+					$output .= '<a class="cs-background-link" target="_blank" href="' . stripslashes($slide->link) . '"></a>';
+				}
+				else {
+					$output .= '<a class="cs-background-link" href="' . stripslashes($slide->link) . '"></a>';
+				}
+			}
 			
 			$slide_parent = $slide->position;
 			$elements = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = ' . $slider_id . ' AND slide_parent = ' . $slide_parent);	
@@ -102,6 +110,7 @@ class CrellySliderFrontend {
 				switch($element->type) {
 					case 'text':
 						$output .= '<div' . "\n" .
+						'class="' . stripslashes($element->custom_css_classes) . '"' . "\n" .
 						'style="';
 						if($element->link == '') {
 							$output .= 'z-index: ' . $element->z_index . ';' . "\n";
@@ -123,8 +132,10 @@ class CrellySliderFrontend {
 						stripslashes($element->inner_html) . "\n" .
 						'</div>' . "\n";
 					break;
+					
 					case 'image':
 						$output .= '<img' . "\n" .
+						'class="' . stripslashes($element->custom_css_classes) . '"' . "\n" .
 						'src="' . $element->image_src . '"' . "\n" .
 						'alt="' . $element->image_alt . '"' . "\n" .
 						'style="' . "\n";
@@ -145,6 +156,50 @@ class CrellySliderFrontend {
 							'data-time="' . $element->data_time . '"' . "\n";
 						}
 						$output .= '/>' . "\n";
+					break;
+					
+					case 'youtube_video':
+						$output .= '<iframe frameborder="0" type="text/html" width="560" height="315"' . "\n" .
+						'class="cs-yt-iframe ' . stripslashes($element->custom_css_classes) . '"' . "\n" .
+						'src="https://www.youtube.com/embed/' . stripslashes($element->video_id) . '?enablejsapi=1"' . "\n" .
+						'data-autoplay="' . $element->video_autoplay . '"' . "\n" .
+						'data-loop="' . $element->video_loop . '"' . "\n" .
+						'style="' . "\n" .
+						'z-index: ' . $element->z_index . ';' . "\n" .
+						stripslashes($element->custom_css) . "\n" .
+						'"' . "\n" .
+						'data-delay="' . $element->data_delay . '"' . "\n" .
+						'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
+						'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
+						'data-in="' . $element->data_in . '"' . "\n" .
+						'data-out="' . $element->data_out . '"' . "\n" .
+						'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
+						'data-top="' . $element->data_top . '"' . "\n" .
+						'data-left="' . $element->data_left . '"' . "\n" .
+						'data-time="' . $element->data_time . '"' . "\n" .
+						'></iframe>' . "\n";
+					break;
+						
+					case 'vimeo_video':
+						$output .= '<iframe frameborder="0" width="560" height="315"' . "\n" .
+						'class="cs-vimeo-iframe ' . stripslashes($element->custom_css_classes) . '"' . "\n" .
+						'src="https://player.vimeo.com/video/' . stripslashes($element->video_id) . '?api=1"' . "\n" .
+						'data-autoplay="' . $element->video_autoplay . '"' . "\n" .
+						'data-loop="' . $element->video_loop . '"' . "\n" .
+						'style="' . "\n" .
+						'z-index: ' . $element->z_index . ';' . "\n" .
+						stripslashes($element->custom_css) . "\n" .
+						'"' . "\n" .
+						'data-delay="' . $element->data_delay . '"' . "\n" .
+						'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
+						'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
+						'data-in="' . $element->data_in . '"' . "\n" .
+						'data-out="' . $element->data_out . '"' . "\n" .
+						'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
+						'data-top="' . $element->data_top . '"' . "\n" .
+						'data-left="' . $element->data_left . '"' . "\n" .
+						'data-time="' . $element->data_time . '"' . "\n" .
+						'></iframe>' . "\n";
 					break;
 				}
 				
@@ -172,7 +227,7 @@ class CrellySliderFrontend {
 		$output .= 'enableSwipe: ' . $slider->enableSwipe . ',' . "\n";
 		$output .= 'showProgressBar: ' . $slider->showProgressBar . ',' . "\n";
 		$output .= 'pauseOnHover: ' . $slider->pauseOnHover . ',' . "\n";
-		$output .= $slider->callbacks . "\n";
+		$output .= stripslashes($slider->callbacks) . "\n";
 		$output .= '});' . "\n";
 		$output .= '});' . "\n";
 		$output .= '})(jQuery);' . "\n";

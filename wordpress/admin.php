@@ -9,8 +9,6 @@ class CrellySliderAdmin {
 	
 	public static function pluginMenus() {
 		add_menu_page('Crelly Slider', 'Crelly Slider', 'manage_options', 'crellyslider', 'CrellySliderAdmin::displayPage', 'div');
-		//add_submenu_page('crellyslider', 'View Sliders', 'View Sliders', 'manage_options', 'crellyslider', 'CrellySliderAdmin::displayHome');
-		//add_submenu_page('crellyslider', 'Add Slider', 'Add Slider', 'manage_options', 'cs_slider', 'CrellySliderAdmin::displaySlider');
 	}
 	
 	// Go to the correct page
@@ -42,7 +40,7 @@ class CrellySliderAdmin {
 		<?php if($edit && isset($slider)): ?>
 			style="width: <?php echo $slider->startWidth; ?>px;"
 		<?php else: ?>
-			style="width: 1170px;"
+			style="width: 1140px;"
 		<?php endif; ?>
 		>	
 		
@@ -118,11 +116,11 @@ class CrellySliderAdmin {
 					
 						<li>
 							<span class="cs-icon icon-settings"></span>
-							<a href="#cs-slider-settings"><?php _e('Slider Settings', 'crellyslider'); ?></a>
+							<a id="cs-show-slider-settings"><?php _e('Slider Settings', 'crellyslider'); ?></a>
 						</li>
 						<li>
 							<span class="cs-icon icon-edit"></span>
-							<a href="#cs-slides"><?php _e('Edit Slides', 'crellyslider'); ?></a>
+							<a id="cs-show-slides"><?php _e('Edit Slides', 'crellyslider'); ?></a>
 						</li>
 					</ul>
 					
@@ -167,6 +165,7 @@ class CrellySliderAdmin {
 		wp_enqueue_script('jquery-ui-draggable');
 		wp_enqueue_script('jquery-ui-tabs');
 		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('jquery-ui-dialog');
 		wp_enqueue_style('wp-color-picker');
 		wp_enqueue_media();
 		
@@ -248,6 +247,9 @@ class CrellySliderAdmin {
 			'text_element_default_html' => __('Text element', 'crellyslider'),
 			'slide_live_preview' => __('Live preview', 'crellyslider'),
 			'slide_stop_preview' => __('Stop preview', 'crellyslider'),
+			'duplicate_slide' => __('Duplicate slide', 'crellyslider'),
+			'remove_slide' => __('Delete slide', 'crellyslider'),
+			'exit_without_saving' => __('All unsaved changes will be lost. Are you sure you want to leave this page?', 'crellyslider'),
 		);
 		wp_localize_script('crellyslider-admin', 'crellyslider_translations', $crellyslider_translations);
 	}

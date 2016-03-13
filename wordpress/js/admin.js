@@ -1,27 +1,57 @@
+/************************/
+/** EXTERNAL RESOURCES **/
+/************************/
+
+// An improved jQuery clone function that fixes some jQuery issues. https://github.com/spencertipping/jquery.fix.clone
+// The function has been renamed and modified a bit to prevent compatibility issues
+(function (original) {
+  jQuery.fn.crellyslider_betterClone = function () {
+    var result           = original.apply(this, arguments),
+        my_textareas     = this.find('textarea').add(this.filter('textarea')),
+        result_textareas = result.find('textarea').add(result.filter('textarea')),
+        my_selects       = this.find('select').add(this.filter('select')),
+        result_selects   = result.find('select').add(result.filter('select'));
+
+    for (var i = 0, l = my_textareas.length; i < l; ++i) jQuery(result_textareas[i]).val(jQuery(my_textareas[i]).val());
+    for (var i = 0, l = my_selects.length;   i < l; ++i) {
+      for (var j = 0, m = my_selects[i].options.length; j < m; ++j) {
+        if (my_selects[i].options[j].selected === true) {
+          result_selects[i].options[j].selected = true;
+        }
+      }
+    }
+    return result;
+  };
+}) (jQuery.fn.clone);
+
+/*************/
+/** BACKEND **/
+/*************/
+
 (function($) {
 	$(window).load(function() {
 		
-		// Run tabs
-		$('.cs-tabs').tabs({
-			show: function(event, ui) {
-				var $target = $(ui.panel);
-				if(target.hasClass('cs-tabs-fade')) {
-					$('.content:visible').effect(
-						'explode',
-						{},
-						1500,
-						function(){
-							$target.fadeIn(300);
-						}
-					);
-				}
-			}
+		// Simulate keyup. Useful when textboxes change value
+		function crellyslider_keyup(element) {
+			$(element).trigger('keyup');
+		}
+		
+		// Slider settings and slide tabs
+		$('#cs-show-slider-settings').click(function() {
+			$('#cs-slider-settings').fadeIn();
+			$('#cs-slides').hide();
+		});		
+		$('#cs-show-slides').click(function() {
+			$('#cs-slides').fadeIn();
+			$('#cs-slider-settings').hide();
 		});
 		
 		// Run draggables
 		crellyslider_draggableElements();
 		
 		function crellyslider_showSuccess() {
+			$('.cs-admin .cs-message .cs-message-working').css('display', 'none');
+			
 			var target = $('.cs-admin .cs-message.cs-message-ok');
 			target.css({
 				'display' : 'block',
@@ -39,6 +69,8 @@
 		}
 		
 		function crellyslider_showError() {
+			$('.cs-admin .cs-message .cs-message-working').css('display', 'none');
+			
 			var target = $('.cs-admin .cs-message.cs-message-error');
 			target.css({
 				'display' : 'block',
@@ -100,7 +132,7 @@
 		/** SLIDES **/
 		/************/
 		
-		var slides_number = $('.cs-admin #cs-slides .cs-slide-tabs ul li').length - 1;
+		var slides_number = $('.cs-admin #cs-slides .cs-slide-tabs > ul > li').length - 1;
 		
 		// Run sortable
 		var slide_before; // Contains the index before the sorting
@@ -108,14 +140,20 @@
 		$('.cs-slide-tabs .cs-sortable').sortable({
 			items: 'li:not(.ui-state-disabled)',
 			cancel: '.ui-state-disabled',
+			connectWith: '.cs-slide-tabs .cs-sortable',
+			containment: 'parent',
+			placeholder: 'sortable-placeholder',
 			
-			// Store the actual index
 			start: function(event, ui) {
+				// Store the current index
 				slide_before = $(ui.item).index();
+				
+				ui.placeholder.height(ui.helper.height() - 1);
+				ui.placeholder.width(ui.helper.width() - 1);
 			},
 			
 			// Change the .cs-slide order based on the new index and rename the tabs
-			update: function(event, ui) {
+			update: function(event, ui) {				
 				// Store the new index
 				slide_after = $(ui.item).index();
 				
@@ -130,10 +168,10 @@
 				}
 				
 				// Rename all the tabs
-				$('.cs-admin #cs-slides .cs-slide-tabs ul li').each(function() {
+				$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').each(function() {
 					var temp = $(this);
-					if(!temp.find('a').hasClass('cs-add-new')) {
-						temp.find('a').text(crellyslider_translations.slide + (temp.index() + 1));
+					if(!temp.find('a').hasClass('cs-add-new')) {						
+						temp.find('a').html('<span class="cs-slide-name-text">' + crellyslider_translations.slide + ' <span class="cs-slide-index">' + (temp.index() + 1) + '</span></span>');
 					}
 				});
 			}
@@ -141,16 +179,28 @@
 		$('.cs-slide-tabs .cs-sortable li').disableSelection();
 		
 		// Show the slide when clicking on the link
-		$('.cs-admin #cs-slides .cs-slide-tabs ul li a').live('click', function() {
+		$('.cs-admin #cs-slides .cs-slide-tabs > ul > li > a').live('click', function() {
 			// Do only if is not click add new
 			if($(this).parent().index() != slides_number) {
+				// Stop previews
+				$('.cs-admin #cs-slides .cs-slide .cs-elements .cs-elements-actions .cs-live-preview').each(function() {
+					var btn = $(this);
+					var slide_parent = btn.closest('.cs-slide');
+					
+					if(btn.hasClass('cs-live-preview-running')) {
+						btn.removeClass('cs-live-preview-running');
+						btn.text(crellyslider_translations.slide_live_preview);
+						crellyslider_stopLivePreview(slide_parent);
+					}
+				});
+				
 				// Hide all tabs
 				$('.cs-admin #cs-slides .cs-slides-list .cs-slide').css('display', 'none');
 				var tab = $(this).parent().index();
 				$('.cs-admin #cs-slides .cs-slides-list .cs-slide:eq(' + tab + ')').css('display', 'block');
 				
 				// Active class
-				$('.cs-admin #cs-slides .cs-slide-tabs ul li').removeClass('active');
+				$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').removeClass('active');
 				$(this).parent().addClass('active');
 			}
 		});
@@ -161,7 +211,7 @@
 			
 			var void_slide = $('.cs-admin #cs-slides .cs-void-slide').html();
 			// Insert the link at the end of the list
-			add_btn.parent().before('<li class="ui-state-default"><a>' + crellyslider_translations.slide + ' <span class="cs-slide-index">' + (slides_number + 1) + '</span></a><span class="cs-close"></span></li>');
+			add_btn.parent().before('<li class="ui-state-default"><a><span class="cs-slide-name-text">' + crellyslider_translations.slide + ' <span class="cs-slide-index">' + (slides_number + 1) + '</span></span></a><span title="' + crellyslider_translations.duplicate_slide + '" class="cs-duplicate"></span><span title="' + crellyslider_translations.remove_slide + '" class="cs-close"></span></li>');
 			// jQuery UI tabs are not working here. For now, just use a manual created tab
 			$('.cs-admin #cs-slides .cs-slide-tab').tabs('refresh');
 			// Create the slide
@@ -170,11 +220,11 @@
 			
 			// Open the tab just created
 			var tab_index = add_btn.parent().index() - 1;
-			$('.cs-admin #cs-slides .cs-slide-tabs ul li').eq(tab_index).find('a').click();
+			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(tab_index).find('a').click();
 			
 			// Active class
-			$('.cs-admin #cs-slides .cs-slide-tabs ul li').removeClass('active');
-			$('.cs-admin #cs-slides .cs-slide-tabs ul li').eq(tab_index).addClass('active');
+			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').removeClass('active');
+			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(tab_index).addClass('active');
 			
 			// Set editing area sizes
 			crellyslider_setSlidesEditingAreaSizes();
@@ -191,12 +241,12 @@
 			crellyslider_addSlide();
 		}
 		else {
-			$('.cs-admin #cs-slides .cs-slide-tabs ul li').eq(0).find('a').click();
+			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(0).find('a').click();
 		}
 		
 		// Delete
-		$('.cs-admin #cs-slides .cs-slide-tabs ul li .cs-close').live('click', function() {
-			if($('.cs-admin #cs-slides .cs-slide-tabs ul li').length <= 2) {
+		$('.cs-admin #cs-slides .cs-slide-tabs > ul > li .cs-close').live('click', function() {
+			if($('.cs-admin #cs-slides .cs-slide-tabs > ul > li').length <= 2) {
 				alert(crellyslider_translations.slide_delete_just_one);
 				return;
 			}
@@ -211,8 +261,8 @@
 			var slide_index = $(this).parent().index();
 			
 			// If is deleting the current viewing slide, set the first as active
-			if($('.cs-admin #cs-slides .cs-slide-tabs ul li').eq(slide_index).hasClass('active') && slides_number != 0) {
-				$('.cs-admin #cs-slides .cs-slide-tabs ul li').eq(0).addClass('active');
+			if($('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(slide_index).hasClass('active') && slides_number != 0) {
+				$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(0).addClass('active');
 				$('.cs-admin #cs-slides .cs-slides-list .cs-slide').css('display', 'none');
 				$('.cs-admin #cs-slides .cs-slides-list .cs-slide').eq(0).css('display', 'block');			
 			}
@@ -224,11 +274,28 @@
 			
 			// Scale back all the slides text
 			for(var i = slide_index; i < slides_number; i++) {
-				var slide = $('.cs-admin #cs-slides .cs-slide-tabs ul li').eq(i);
+				var slide = $('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(i);
 				var indx = parseInt(slide.find('.cs-slide-index').text());
 				slide.find('.cs-slide-index').text(indx - 1);
 			}
 		});
+        
+        // Duplicate
+        $('.cs-admin #cs-slides .cs-slide-tabs > ul > li .cs-duplicate').live('click', function() {			
+			var slide_index = $(this).parent().index();
+            var slide = $('.cs-admin #cs-slides .cs-slides-list .cs-slide').eq(slide_index);
+			
+            // Clone the slide settings table
+			slide.crellyslider_betterClone(true).appendTo(slide.parent()).css('display', 'none');
+            
+           // Insert the link at the end of the list
+		   $(this).parent().parent().find('.cs-add-new').parent().before('<li class="ui-state-default"><a><span class="cs-slide-name-text">' + crellyslider_translations.slide + ' <span class="cs-slide-index">' + (slides_number + 1) + '</span></span></a><span title="' + crellyslider_translations.duplicate_slide + '" class="cs-duplicate"></span><span title="' + crellyslider_translations.remove_slide + '" class="cs-close"></span></li>');
+		  $('.cs-admin #cs-slides .cs-slide-tab').tabs('refresh');
+		  
+		  crellyslider_draggableElements();
+          
+          slides_number++;
+        });
 		
 		// Set correct size for the editing area
 		function crellyslider_setSlidesEditingAreaSizes() {
@@ -252,12 +319,12 @@
 			$('.cs-admin #cs-slides .cs-slides-list .cs-slide-settings-list .cs-slide-background_type_color-picker-input').wpColorPicker({
 				// a callback to fire whenever the color changes to a valid color
 				change: function(event, ui){
-					// Change only if the color picker is the user choice
 					var btn = $(this);
-					if(btn.closest('.cs-content').find('input[name="cs-slide-background_type_color"]:checked').val() == '1') {
-						var area = btn.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
-						area.css('background-color', ui.color.toString());
+					if(btn.closest('.cs-content').find('input[name="cs-slide-background_type_color"]:checked').val() != '1') {
+						btn.closest('.cs-content').find('input[name="cs-slide-background_type_color"][value="1"]:radio').prop('checked', true);
 					}
+					var area = btn.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
+					area.css('background-color', ui.color.toString());
 				},
 				// a callback to fire when the input is emptied or an invalid color
 				clear: function() {},
@@ -269,18 +336,31 @@
 			});
 		}
 		
-		// Set background color (transparent or color-picker)
+		// Set background color (transparent == 0, color-picker == 1 or manual == 2). For backward compatiblity, a "-1" is used to indicate that there were no way to set the bg color manually
 		$('.cs-admin #cs-slides').on('change', '.cs-slides-list .cs-slide-settings-list input[name="cs-slide-background_type_color"]:radio', function() {
 			var btn = $(this);
+			var btn_val = btn.val();
 			var area = btn.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
 			
-			if(btn.val() == '0') {
+			if(btn_val == '0') {
 				area.css('background-color', '#fff');
 			}
-			else {
+			else if(btn_val == '1') {
 				var color_picker_value = btn.closest('.cs-content').find('.wp-color-result').css('background-color');
 				area.css('background-color', color_picker_value);
 			}
+			else {
+				area.css('background-color', btn.closest('.cs-content').find('.cs-slide-background_type_color-manual').val());
+			}
+		});
+		
+		$('.cs-admin #cs-slides').on('keyup', '.cs-slides-list .cs-slide-settings-list .cs-slide-background_type_color-manual', function() {			
+			var text = $(this);
+			var val = text.val();
+			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
+
+			text.closest('.cs-slide').find('input[name="cs-slide-background_type_color"][value="2"]:radio').prop('checked', true);
+			area.css('background-color', val);		
 		});
 		
 		// Set background image (none or image)
@@ -301,6 +381,11 @@
 		$('.cs-admin #cs-slides').on('click', '.cs-slides-list .cs-slide-settings-list .cs-slide-background_type_image-upload-button', function() {
 			var btn = $(this);
 			if(btn.closest('.cs-content').find('input[name="cs-slide-background_type_image"]:checked').val() == '1') {
+				var slide_parent = $(this).closest('.cs-slide');
+				crellyslider_addSlideImageBackground(slide_parent);
+			}
+			else {
+				btn.closest('.cs-content').find('input[name="cs-slide-background_type_image"]').prop('checked', true);
 				var slide_parent = $(this).closest('.cs-slide');
 				crellyslider_addSlideImageBackground(slide_parent);
 			}
@@ -361,17 +446,21 @@
 		// Background propriety: positions x and y
 		$('.cs-admin #cs-slides').on('keyup', '.cs-slides-list .cs-slide-settings-list .cs-slide-background_propriety_position_x', function() {
 			var text = $(this);
-			var val = text.val();
-			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
-
-			area.css('background-position-x', val);		
+			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');		
+			
+			var x = text.val();
+			var y = text.parent().find('.cs-slide-background_propriety_position_y').val();
+			
+			area.css('background-position', x + ' ' + y);
 		});
 		$('.cs-admin #cs-slides').on('keyup', '.cs-slides-list .cs-slide-settings-list .cs-slide-background_propriety_position_y', function() {
 			var text = $(this);
-			var val = text.val();
 			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
-
-			area.css('background-position-y', val);		
+			
+			var x = text.parent().find('.cs-slide-background_propriety_position_x').val();
+			var y = text.val();
+			
+			area.css('background-position', x + ' ' + y);
 		});
 		
 		// Background propriety: size
@@ -381,6 +470,43 @@
 			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
 
 			area.css('background-size', val);		
+		});
+		
+		// Background presets
+		$('.cs-slide-background-image-fullwidth-preset').click(function() {
+			var text = $(this);	
+			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');		
+			var settings = text.closest('.cs-slide');
+			
+			settings.find('.cs-slide-background_propriety_position_x').val('center');
+			crellyslider_keyup(settings.find('.cs-slide-background_propriety_position_x'));
+			
+			settings.find('.cs-slide-background_propriety_position_y').val('center');
+			crellyslider_keyup(settings.find('.cs-slide-background_propriety_position_y'));
+			
+			settings.find('input[name="cs-slide-background_repeat"][value="0"]').prop('checked', true);
+			area.css('background-repeat', 'no-repeat');
+			
+			settings.find('.cs-slide-background_propriety_size').val('cover');
+			crellyslider_keyup(settings.find('.cs-slide-background_propriety_size'));
+		});
+		
+		$('.cs-slide-background-image-pattern-preset').click(function() {
+			var text = $(this);	
+			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');		
+			var settings = text.closest('.cs-slide');
+			
+			settings.find('.cs-slide-background_propriety_position_x').val(0);
+			crellyslider_keyup(settings.find('.cs-slide-background_propriety_position_x'));
+			
+			settings.find('.cs-slide-background_propriety_position_y').val(0);
+			crellyslider_keyup(settings.find('.cs-slide-background_propriety_position_y'));
+			
+			settings.find('input[name="cs-slide-background_repeat"][value="1"]').prop('checked', true);
+			area.css('background-repeat', 'repeat');
+			
+			settings.find('.cs-slide-background_propriety_size').val('auto');
+			crellyslider_keyup(settings.find('.cs-slide-background_propriety_size'));
 		});
 		
 		// Apply custom CSS
@@ -394,8 +520,7 @@
 			var height = area.css('height');
 			var background_image = area.css('background-image');
 			var background_color = area.css('background-color');
-			var background_position_x = area.css('background-position-x');
-			var background_position_y = area.css('background-position-y');
+			var background_position = area.css('background-position');
 			var background_repeat = area.css('background-repeat');
 			var background_size = area.css('background-size');
 			
@@ -406,8 +531,7 @@
 				'height' : height,
 				'background-image' : background_image,
 				'background-color' : background_color,
-				'background-position-x' : background_position_x,
-				'background-position-y' : background_position_y,
+				'background-position' : background_position,
 				'background-repeat' : background_repeat,
 				'background-size' : background_size
 			});
@@ -513,23 +637,21 @@
 			var index = element.index();
 			var slide_parent = element.closest('.cs-slide');
 			
-			element.clone().appendTo(element.parent());
+			element.clone().appendTo(element.parent()).css({
+				'left' : '+=10',
+				'top' : '+=10',
+			});
 			var element_options = slide_parent.find('.cs-elements-list .cs-element-settings').eq(index);
-			element_options.clone().insertBefore(element_options.parent().find('.cs-void-text-element-settings'));
+			element_options.crellyslider_betterClone(true).insertBefore(element_options.parent().find('.cs-void-text-element-settings'));
 			
 			crellyslider_deselectElements();
 			crellyslider_selectElement(element.parent().find('.cs-element').last());
 			
-			// Clone fixes (Google "jQuery clone() bug")
 			var cloned_options = element.parent().find('.cs-element').last().closest('.cs-slide').find('.cs-elements-list .cs-element-settings.active');
 			
-			cloned_options.find('.cs-element-data_in').val(element_options.find('.cs-element-data_in').val());
-			cloned_options.find('.cs-element-data_out').val(element_options.find('.cs-element-data_out').val());
-			cloned_options.find('.cs-element-custom_css').val(element_options.find('.cs-element-custom_css').val());			
-			if(element_options.hasClass('cs-image-element-settings')) {
-				cloned_options.find('.cs-image-element-upload-button').data('src', element_options.find('.cs-image-element-upload-button').data('src'));	
-				cloned_options.find('.cs-image-element-upload-button').data('alt', element_options.find('.cs-image-element-upload-button').data('alt'));	
-			}
+			// Move the element 10 pixels away
+			cloned_options.find('.cs-element-data_left').val(parseInt(element_options.find('.cs-element-data_left').val()) + 10);
+			cloned_options.find('.cs-element-data_top').val(parseInt(element_options.find('.cs-element-data_top').val()) + 10);
 			
 			// Make draggable
 			crellyslider_draggableElements();
@@ -551,10 +673,26 @@
 			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left', parseFloat($(this).val()));
 		});
 		
+		// Center horizontally
+		$('.cs-admin').on('click', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-center-x', function() {
+			var index = $(this).closest('.cs-element-settings').index();
+			var left = parseInt(($('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startWidth').val() / 2) - (parseFloat($(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').width()) / 2));
+			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left', left);
+			$(this).closest('.cs-elements').find('.cs-elements-list .cs-element-settings:eq(' + index + ') .cs-element-data_left').val(left);
+		});
+		
 		// Modify top position
 		$('.cs-admin').on('keyup', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-data_top', function() {
 			var index = $(this).closest('.cs-element-settings').index();
 			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top', parseFloat($(this).val()));
+		});
+		
+		// Center vertically
+		$('.cs-admin').on('click', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-center-y', function() {
+			var index = $(this).closest('.cs-element-settings').index();
+			var top = parseInt(($('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startHeight').val() / 2) - (parseFloat($(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').height()) / 2));
+			$(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top', top);
+			$(this).closest('.cs-elements').find('.cs-elements-list .cs-element-settings:eq(' + index + ') .cs-element-data_top').val(top);
 		});
 		
 		// Modify z-index
@@ -579,6 +717,10 @@
 			var reapply_css = false;
 			
 			if(textbox_link.val() != '' && !textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').hasClass('cs-element')) {
+				// Remove custom css classes
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').removeClass(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css_classes').val());
+				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').removeClass(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css_classes').val());
+				
 				var link_new_tab = textbox_link.parent().find('.cs-element-link_new_tab').prop('checked') ? 'target="_blank"' : '';
 				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').wrap('<a href="' + textbox_link.val() + '"' + link_new_tab + ' />');
 				copy_attributes = true;
@@ -607,6 +749,9 @@
 				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').css('left', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').css('left'));
 				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').css('z-index', textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').css('z-index'));
 				
+				// Reapply custom css classes
+				crellyslider_applyCustomCssClasses(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css_classes'));
+				
 				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').unwrap();
 				textbox_link.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').parent('a').draggable('destroy');
 				copy_attributes = false;
@@ -625,6 +770,7 @@
 			
 			if(reapply_css) {
 				applyCustomCss(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css'));
+				crellyslider_applyCustomCssClasses(textbox_link.closest('.cs-element-settings').find('.cs-element-custom_css_classes'));
 			}
 		}
 		
@@ -641,16 +787,49 @@
 			var z_index = textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index');
 			
 			// Apply CSS
-			if(! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').is('a')) {
+			if(! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').is('a') && ! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').hasClass('cs-video-element')) {
 				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').attr('style', textarea.val());
 			}
 			else {
 				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').attr('style', textarea.val());
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > .cs-avoid-interaction').removeAttr('style');
 				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').removeAttr('style');
 			}
 			textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('top', top);
 			textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('left', left);
 			textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').css('z-index', z_index);			
+		}
+		
+		// Add custom CSS classes
+		$('.cs-admin').on('keydown', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-custom_css_classes', function() {
+			var textarea = $(this);
+			var index = textarea.closest('.cs-element-settings').index();
+			
+			if(! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').is('a') && ! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').hasClass('cs-video-element')) {
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').removeClass(textarea.val());
+			}
+			else {
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').removeClass(textarea.val());
+				var avoid_interaction = textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > .cs-avoid-interaction');
+				avoid_interaction.removeAttr('class');
+				avoid_interaction.addClass('cs-avoid-interaction');
+			}
+		});
+		$('.cs-admin').on('keyup', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-custom_css_classes', function() {
+			crellyslider_applyCustomCssClasses($(this));
+		});
+		function crellyslider_applyCustomCssClasses(textarea) {
+			var index = textarea.closest('.cs-element-settings').index();
+			
+			if(! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').is('a') && ! textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').hasClass('cs-video-element')) {
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')').addClass(textarea.val());
+			}
+			else {
+				textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > *').addClass(textarea.val());
+				var avoid_interaction = textarea.closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ') > .cs-avoid-interaction');
+				avoid_interaction.removeAttr('class');
+				avoid_interaction.addClass('cs-avoid-interaction');
+			}
 		}
 		
 		// TEXT ELEMENTS
@@ -782,6 +961,63 @@
 			file_frame.open();
 		}
 		
+		// VIDEO ELEMENTS
+		
+		// Add video click
+		$('.cs-admin #cs-slides').on('click', '.cs-slide .cs-elements .cs-elements-actions .cs-add-video-element', function() {
+			var slide_parent = $(this).closest('.cs-slide');
+			crellyslider_addVideoElement(slide_parent);
+		});
+		
+		// Adds a video container. Receives the slide as object
+		function crellyslider_addVideoElement(slide_parent) {
+			var area = slide_parent.find('.cs-slide-editing-area');
+			var settings_div = slide_parent.find('.cs-elements .cs-elements-list .cs-void-text-element-settings');
+			var settings = '<div class="cs-element-settings cs-video-element-settings">' + $('.cs-admin .cs-slide .cs-elements .cs-void-video-element-settings').html() + '</div>';
+			
+			// Insert in editing area
+			area.append('<div class="cs-element cs-video-element" style="z-index: 1;"></div>');
+			
+			// Insert the options
+			settings_div.before(settings);
+			
+			// Make draggable
+			crellyslider_draggableElements();
+			
+			// Display settings
+			crellyslider_selectElement(area.find('.cs-element').last());
+			
+			// Select youtube video as default
+			area.find('.cs-element').last().closest('.cs-slide').find('.cs-elements .cs-elements-list .cs-element-video_src').trigger('change');
+		}
+		
+		// Change video id
+		$('.cs-admin').on('change keyup input', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-video_id', function() {
+			var index = $(this).closest('.cs-element-settings').index();
+			var element = $(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')');
+			
+			crellyslider_changeVideo($(this), element, $(this).parent().find('.cs-element-video_src').val(), $(this).val());
+		});
+		// Change video source
+		$('.cs-admin').on('change', '.cs-elements .cs-elements-list .cs-element-settings .cs-element-video_src', function() {
+			var index = $(this).closest('.cs-element-settings').index();
+			var element = $(this).closest('.cs-elements').find('.cs-slide-editing-area .cs-element:eq(' + index + ')');
+			
+			crellyslider_changeVideo($(this), element, $(this).val(), $(this).parent().find('.cs-element-video_id').val());
+		});		
+		function crellyslider_changeVideo(input, element, source, video_id) {
+			if(source == 'youtube') {
+				element.html('<div class="cs-avoid-interaction"></div><iframe class="cs-yt-iframe" type="text/html" width="560" height="315" src="https://www.youtube.com/embed/' + video_id + '?enablejsapi=1" frameborder="0"></iframe>');
+			}
+			else {
+				element.html('<div class="cs-avoid-interaction"></div><iframe class="cs-vimeo-iframe" src="https://player.vimeo.com/video/' + video_id + '?api=1" width="560" height="315" frameborder="0" ></iframe>');
+			}
+			
+			// Re-apply custom CSS and custom CSS classes
+			crellyslider_keyup(input.closest('.cs-element-settings').find('.cs-element-custom_css'));
+			crellyslider_keyup(input.closest('.cs-element-settings').find('.cs-element-custom_css_classes'));
+		}
+		
 		/******************/
 		/** LIVE PREVIEW **/
 		/******************/
@@ -820,6 +1056,38 @@
 			elements.each(function() {
 				var element = $(this);
 				
+				element.removeAttr('style');
+				element.attr('style', original_elements.eq(i).find('.cs-element-custom_css').val());				
+				element.css({
+					'z-index' : parseInt(original_elements.eq(i).find('.cs-element-z_index').val()),
+					'display' : 'none',
+				});
+				
+				element.removeAttr('class');
+				element.addClass(original_elements.eq(i).find('.cs-element-custom_css_classes').val());
+				
+				// Video elements settings only
+				if(element.find('.cs-yt-iframe').length > 0) {
+					element.find('.cs-avoid-interaction').remove();
+					element = element.find('.cs-yt-iframe');
+					element.unwrap();
+					element.attr({
+						'data-autoplay' : parseInt(original_elements.eq(i).find('.cs-element-video_autoplay').val()),
+						'data-loop' : parseInt(original_elements.eq(i).find('.cs-element-video_loop').val()),
+					});
+					element.addClass('cs-yt-iframe ' + original_elements.eq(i).find('.cs-element-custom_css_classes').val());
+				}
+				else if(element.find('.cs-vimeo-iframe').length > 0) {
+					element.find('.cs-avoid-interaction').remove();
+					element = element.find('.cs-vimeo-iframe');
+					element.unwrap();
+					element.attr({
+						'data-autoplay' : parseInt(original_elements.eq(i).find('.cs-element-video_autoplay').val()),
+						'data-loop' : parseInt(original_elements.eq(i).find('.cs-element-video_loop').val()),
+					});
+					element.addClass('cs-vimeo-iframe ' + original_elements.eq(i).find('.cs-element-custom_css_classes').val());
+				}
+				
 				element.attr({
 					'data-left' : parseInt(original_elements.eq(i).find('.cs-element-data_left').val()),
 					'data-top' : parseInt(original_elements.eq(i).find('.cs-element-data_top').val()),
@@ -832,14 +1100,6 @@
 					'data-ease-out' : parseInt(original_elements.eq(i).find('.cs-element-data_easeOut').val()),
 				});
 				
-				element.removeAttr('style');
-				element.attr('style', original_elements.eq(i).find('.cs-element-custom_css').val());				
-				element.css({
-					'z-index' : parseInt(original_elements.eq(i).find('.cs-element-z_index').val()),				
-				});
-				
-				element.removeAttr('class');
-				
 				i++;
 			});
 			
@@ -847,10 +1107,22 @@
 			prev.wrapInner('<li />');
 			prev.wrapInner('<ul />');
 			
-			// Set slide data and styles
+			
 			var slide = prev.find('ul > li');
 			var original_slide = area.closest('.cs-slide');
 			var content = original_slide.find('.cs-slide-settings-list');
+			
+			// Set slide link
+			if(content.find('.cs-background-link').val() != '') {
+				if(! content.find('.cs-background-link_new_tab').prop('checked')) {
+					slide.prepend('<a class="cs-background-link" href="' + content.find('.cs-background-link').val() + '"></a>');
+				}
+				else {
+					slide.prepend('<a class="cs-background-link" target="_blank" href="' + content.find('.cs-background-link').val() + '"></a>');
+				}
+			}
+			
+			// Set slide data and styles
 			slide.attr({
 				'data-in' : content.find('.cs-slide-data_in').val(),
 				'data-out' : content.find('.cs-slide-data_out').val(),
@@ -863,8 +1135,7 @@
 			slide.css({
 				'background-image' : area.css('background-image') ,
 				'background-color' : area.css('background-color') + "",
-				'background-position-x' : content.find('.cs-slide-background_propriety_position_x').val(),
-				'background-position-y' : content.find('.cs-slide-background_propriety_position_y').val(),
+				'background-position' : content.find('.cs-slide-background_propriety_position_x').val() + ' ' + content.find('.cs-slide-background_propriety_position_y').val(),
 				'background-repeat' : content.find('input[name="cs-slide-background_repeat"]:checked').val() == '0' ? 'no-repeat' : 'repeat',
 				'background-size' : content.find('.cs-slide-background_propriety_size').val(),
 			});
@@ -885,6 +1156,16 @@
 				'showProgressBar' : false,
 				'pauseOnHover' : false,
 			});
+			
+			// Warning: click on background links
+			$('.cs-slide-live-preview-area a').click(function(event) {
+				if($(this).prop('target') != '_blank') {
+					var confirm = window.confirm(crellyslider_translations.exit_without_saving);
+					if(! confirm) {
+						event.preventDefault();
+					}
+				}
+			});
 		}
 		
 		function crellyslider_stopLivePreview(slide_parent) {
@@ -901,11 +1182,22 @@
 		
 		// Save or update the new slider in the database
 		$('.cs-admin .cs-slider .cs-save-settings').click(function() {
+			$('.cs-admin #cs-slides .cs-live-preview').each(function() {
+				var btn = $(this);
+				var slide_parent = btn.closest('.cs-slide');
+				
+				if(btn.hasClass('cs-live-preview-running')) {
+					btn.removeClass('cs-live-preview-running');
+					btn.text(crellyslider_translations.slide_live_preview);
+					crellyslider_stopLivePreview(slide_parent);
+				}
+			});
+			
 			crellyslider_saveSlider();
 		});
 		
 		// Delete slider
-		$('.cs-admin .cs-home .cs-sliders-list .cs-delete-slider').click(function() {
+		$('.cs-admin .cs-home').on('click', '.cs-sliders-list .cs-delete-slider', function() {
 			var confirm = window.confirm(crellyslider_translations.slider_delete_confirm);
 			if(!confirm) {
 				return;
@@ -914,8 +1206,26 @@
 			crellyslider_deleteSlider($(this));
 		});
 		
+		// Duplicate slider
+		$('.cs-admin .cs-home').on('click', '.cs-sliders-list .cs-duplicate-slider', function() {
+			crellyslider_duplicateSlider($(this));
+		});
+		
+		// Export slider
+		$('.cs-admin .cs-home').on('click', '.cs-sliders-list .cs-export-slider', function() {
+			crellyslider_exportSlider($(this));
+		});
+		
+		// Import slider
+		$('.cs-admin .cs-home').on('click', '.cs-import-slider', function() {
+			$('#cs-import-file').trigger('click');
+		});
+		$('.cs-admin .cs-home').on('change', '#cs-import-file', function() {
+			crellyslider_importSlider();
+		});
+		
 		// Sends an array with the new or current slider options
-		function crellyslider_saveSlider() {
+		function crellyslider_saveSlider() {			
 			var content = $('.cs-admin .cs-slider #cs-slider-settings');
 			var options = {
 				id : parseInt($('.cs-admin .cs-slider .cs-save-settings').data('id')),
@@ -963,8 +1273,7 @@
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
 					alert('Error saving slider');
-					alert("Status: " + textStatus);
-					alert("Error: " + errorThrown); 
+					console.log(XMLHttpRequest.responseText);
 					crellyslider_showError();
 				}
 			});
@@ -981,11 +1290,24 @@
 				var slide = $(this);
 				var content = slide.find('.cs-slide-settings-list');
 				
+				var background_type_color;
+				if(content.find('input[name="cs-slide-background_type_color"]:checked').val() == '0') {
+					background_type_color = 'transparent';
+				}
+				else if(content.find('input[name="cs-slide-background_type_color"]:checked').val() == '1') {
+					background_type_color = slide.find('.cs-slide-editing-area').css('background-color') + "";
+				}
+				else {
+					background_type_color = content.find('.cs-slide-background_type_color-manual').val();
+				}
+				
 				var options = {					
+					slider_parent : parseInt($('.cs-admin .cs-save-settings').data('id')),
 					position : i,
 					
 					background_type_image : slide.find('.cs-slide-editing-area').css('background-image') == 'none' ? 'none' : slide.find('.cs-slide-editing-area').data('background-image-src') + "",
-					background_type_color : content.find('input[name="cs-slide-background_type_color"]:checked').val() == '0' ? 'transparent' : slide.find('.cs-slide-editing-area').css('background-color') + "",
+					background_type_color : background_type_color,
+					background_type_color_input : content.find('input[name="cs-slide-background_type_color"]:checked').val(),
 					background_propriety_position_x : content.find('.cs-slide-background_propriety_position_x').val(),
 					background_propriety_position_y : content.find('.cs-slide-background_propriety_position_y').val(),
 					background_repeat : content.find('input[name="cs-slide-background_repeat"]:checked').val() == '0' ? 'no-repeat' : 'repeat',
@@ -995,6 +1317,8 @@
 					data_time : parseInt(content.find('.cs-slide-data_time').val()),
 					data_easeIn : parseInt(content.find('.cs-slide-data_easeIn').val()),
 					data_easeOut : parseInt(content.find('.cs-slide-data_easeOut').val()),
+					link : slide.find('.cs-background-link').val(),
+					link_new_tab : slide.find('.cs-background-link_new_tab').prop('checked') ? 1 : 0,
 					custom_css : content.find('.cs-slide-custom_css').val(),
 				};
 				
@@ -1015,7 +1339,7 @@
 					datas : final_options,
 				},
 				success: function(response) {
-					//alert('Save slides response: ' + response);
+					//console.log('Save slides response: ' + response);
 					if(response !== false) {
 						crellyslider_saveElements();
 					}
@@ -1026,8 +1350,7 @@
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
 					alert('Error saving slides');
-					alert("Status: " + textStatus);
-					alert("Error: " + errorThrown); 
+					console.log(XMLHttpRequest.responseText);
 					crellyslider_showError();
 				}
 			});
@@ -1052,10 +1375,31 @@
 						return;
 					}
 					
+					// Get the type of the element
+					var type;
+					if(element.hasClass('cs-text-element-settings')) {
+						type = 'text';
+					}
+					else if(element.hasClass('cs-image-element-settings')) {
+						type = 'image';
+					}
+					else if(element.hasClass('cs-video-element-settings')) {
+						if(element.find('.cs-element-video_src').val() == 'youtube') {
+							type = 'youtube_video';
+						}
+						else {
+							type = 'vimeo_video';
+						}
+					}
+					else {
+						type = 'undefined';
+					}
+					
 					var options = {
+						slider_parent : parseInt($('.cs-admin .cs-save-settings').data('id')),	
 						slide_parent : i,	
 						position : element.index(),
-						type : element.hasClass('cs-text-element-settings') ? 'text' : element.hasClass('cs-image-element-settings') ? 'image' : '',
+						type : type,
 						
 						inner_html : element.hasClass('cs-text-element-settings') ? element.find('.cs-element-inner_html').val() : '',
 						image_src : element.hasClass('cs-image-element-settings') ? element.find('.cs-image-element-upload-button').data('src') : '',
@@ -1071,8 +1415,12 @@
 						data_easeIn : parseInt(element.find('.cs-element-data_easeIn').val()),
 						data_easeOut : parseInt(element.find('.cs-element-data_easeOut').val()),
 						custom_css : element.find('.cs-element-custom_css').val(),
-						link : element.find('.cs-element-link').val(),
+						custom_css_classes : element.find('.cs-element-custom_css_classes').val(),
+						link : element.hasClass('cs-video-element-settings') ? '' : element.find('.cs-element-link').val(),
 						link_new_tab : element.find('.cs-element-link_new_tab').prop('checked') ? 1 : 0,
+						video_id : element.hasClass('cs-video-element-settings') ? element.find('.cs-element-video_id').val() : '',
+						video_loop : element.hasClass('cs-video-element-settings') ? parseInt(element.find('.cs-element-video_loop').val()) : -1,
+						video_autoplay : element.hasClass('cs-video-element-settings') ? parseInt(element.find('.cs-element-video_autoplay').val()) : -1,
 					};
 					
 					final_options['options'][j] = options;
@@ -1091,6 +1439,8 @@
 			
 			final_options['slider_parent'] = parseInt($('.cs-admin .cs-save-settings').data('id'));
 			
+			final_options['options'] = JSON.stringify(final_options['options']);
+			
 			// Do the ajax call
 			jQuery.ajax({
 				type : 'POST',
@@ -1101,7 +1451,7 @@
 					datas : final_options,
 				},
 				success: function(response) {
-					//alert('Save elements response: ' + response);
+					//console.log(response);
 					if(response !== false) {
 						crellyslider_showSuccess();
 					}
@@ -1112,8 +1462,7 @@
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
 					alert('Error saving elements');
-					alert("Status: " + textStatus);
-					alert("Error: " + errorThrown); 
+					console.log(XMLHttpRequest.responseText);
 					crellyslider_showError();
 				}
 			});
@@ -1137,7 +1486,12 @@
 				success: function(response) {
 					//alert('Delete slider response: ' + response);
 					if(response !== false) {
-						content.parent().parent().remove();
+						if($('.cs-sliders-list .cs-delete-slider').length > 1) {
+							content.parent().parent().remove();
+						}
+						else {
+							location.reload();
+						}
 						crellyslider_showSuccess();
 					}
 					else {
@@ -1147,8 +1501,142 @@
 				
 				error: function(XMLHttpRequest, textStatus, errorThrown) { 
 					alert('Error deleting slider');
-					alert("Status: " + textStatus);
-					alert("Error: " + errorThrown); 
+					console.log(XMLHttpRequest.responseText);
+					crellyslider_showError();
+				},
+			});
+		}
+		
+		function crellyslider_duplicateSlider(content) {
+			// Get options
+			var options = {
+				id : parseInt(content.data('duplicate')),
+			};
+			
+			// Do the ajax call
+			jQuery.ajax({
+				type : 'POST',
+				dataType : 'json',
+				url : ajaxurl,
+				data : {
+					action: 'crellyslider_duplicateSlider',
+					datas : options,
+				},
+				success: function(response) {
+					//console.log(response);
+					if(response['response'] !== false) {
+						var cloned_slider = content.parent().parent().clone().appendTo(content.parent().parent().parent());
+						cloned_slider.find('.cs-slider-id').html(response['cloned_slider_id']);
+						cloned_slider.find('.cs-slider-name a').html(response['cloned_slider_name']);
+						cloned_slider.find('.cs-slider-name a').attr('href', '?page=crellyslider&view=edit&id=' + response['cloned_slider_id']);
+						cloned_slider.find('.cs-slider-alias').html(response['cloned_slider_alias']);
+						cloned_slider.find('.cs-slider-shortcode').html('[crellyslider alias="' + response['cloned_slider_alias'] + '"]');
+						cloned_slider.find('.cs-edit-slider').attr('href', '?page=crellyslider&view=edit&id=' + response['cloned_slider_id']);
+						cloned_slider.find('.cs-duplicate-slider').data('duplicate', response['cloned_slider_id']);
+						cloned_slider.find('.cs-delete-slider').data('delete', response['cloned_slider_id']);
+						cloned_slider.find('.cs-export-slider').data('export', response['cloned_slider_id']);
+						
+						crellyslider_showSuccess();
+					}
+					else {
+						crellyslider_showError();
+					}
+				},
+				
+				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					alert('Error duplicating slider');
+					console.log(XMLHttpRequest.responseText);
+					crellyslider_showError();
+				},
+			});
+		}
+		
+		function crellyslider_exportSlider(content) {
+			// Get options
+			var options = {
+				id : parseInt(content.data('export')),
+			};
+			
+			// Do the ajax call
+			jQuery.ajax({
+				type : 'POST',
+				dataType : 'json',
+				url : ajaxurl,
+				data : {
+					action: 'crellyslider_exportSlider',
+					datas : options,
+				},
+				success: function(response) {
+					if(response['response'] !== false) {						
+						window.location.href = response['url'];
+						crellyslider_showSuccess();
+					}
+					else {
+						crellyslider_showError();
+					}
+				},
+				
+				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					alert('Error while exporting the slider');
+					console.log(XMLHttpRequest.responseText);
+					crellyslider_showError();
+				},
+			});
+		}
+		
+		function crellyslider_importSlider() {
+			var file = $('#cs-import-file')[0].files[0];
+			
+			if(! file) {
+				return;
+			}
+			
+			// Reset input file. Prevents conflicts
+			$('#cs-import-file').val('');
+			
+			// Form data (for file uploads)
+			var fd = new FormData();
+			fd.append('file', file);
+			fd.append('action', 'crellyslider_importSlider');  
+			
+			// Do the ajax call
+			jQuery.ajax({
+				type : 'POST',
+				url : ajaxurl,
+				contentType: false,
+				processData : false,
+				data : fd,
+				success: function(response) {
+					response = JSON.parse(response);
+					//console.log(response);
+					if(response['response'] !== false) {
+						var content = $('.cs-sliders-list .cs-duplicate-slider:eq(0)');
+						if(content.length > 0) {
+							var imported_slider = content.parent().parent().clone().appendTo(content.parent().parent().parent());
+							imported_slider.find('.cs-slider-id').html(response['imported_slider_id']);
+							imported_slider.find('.cs-slider-name a').html(response['imported_slider_name']);
+							imported_slider.find('.cs-slider-name a').attr('href', '?page=crellyslider&view=edit&id=' + response['imported_slider_id']);
+							imported_slider.find('.cs-slider-alias').html(response['imported_slider_alias']);
+							imported_slider.find('.cs-slider-shortcode').html('[crellyslider alias="' + response['imported_slider_alias'] + '"]');
+							imported_slider.find('.cs-edit-slider').attr('href', '?page=crellyslider&view=edit&id=' + response['imported_slider_id']);
+							imported_slider.find('.cs-duplicate-slider').data('duplicate', response['imported_slider_id']);
+							imported_slider.find('.cs-delete-slider').data('delete', response['imported_slider_id']);
+							imported_slider.find('.cs-delete-slider').data('export', response['imported_slider_id']);
+						}
+						else {
+							location.reload();
+						}
+						
+						crellyslider_showSuccess();
+					}
+					else {
+						crellyslider_showError();
+					}
+				},
+				
+				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					alert('Error while importing the slider');
+					console.log(XMLHttpRequest.responseText);
 					crellyslider_showError();
 				},
 			});

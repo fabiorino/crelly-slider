@@ -1,5 +1,3 @@
-<!-- in this file I do all the tests of the jQuery version -->
-
 <!doctype html>
 <html>
 
@@ -33,241 +31,607 @@
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="../js/jquery.crellyslider.min.js"></script>		
-		
-		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$('#demo-1').crellySlider({
-					layout 		  				: 'full-width',
-					automaticSlide 				: false,
-					ignoreElementsEaseOut		: false,
-					responsive					: true,
-					beforeStart					: function() {console.log('before start')},
-					beforeSetResponsive			: function() {console.log('before set responsive')},
-					beforeSlideStart			: function() {console.log(new Date())},
-					beforePause					: function() {console.log('before pause')},
-					beforeResume				: function() {console.log('before resume')},
-				});
-			});
-		</script>
+		<script type="text/javascript" src="../js/jquery.crellyslider.js"></script>	<!-- use jquery.crellyslider.min.js for production --> 
 	</head>
 	
-	<body>		
-		<br />
-		
-		<div id="demo-1" style="display: none;">		
-			<ul>
-				<li style="background: url('images/bg1.png'); background-size: cover;" data-in="slideLeft" data-ease-in="1500" data-ease-out="1500" data-out="slideLeft">
-					<div style="opacity: 0.5; font-size: 48px; color: #fff; font-family: 'Rokkitt', serif;" data-top="190" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="3000" data-ease-out="2000" data-delay="0" data-time="all"><h1><span>Crelly Slider</span></h1></div>
-					<div style="font-size: 22px; line-height: 26px; color: #fff; font-family: 'Rokkitt', serif;" data-top="245" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="3000" data-ease-out="2000" data-delay="0" data-time="3000">Is the first FREE Wordpress slider<br />with layers animations!</div>
-					<div style="font-size: 22px; line-height: 26px; color: #fff; font-family: 'Rokkitt', serif;" data-top="300" data-left="60" data-in="slideRight" data-out="slideLeft" data-ease-in="3000" data-ease-out="2000" data-delay="0" data-time="3000">Another simple text</div>
-					<a data-top="149" data-left="837" data-in="slideLeft" data-out="slideRight" data-ease-in="200" data-ease-out="200" data-delay="0" data-time="all" href="http://www.google.it" target="_blank">
-						<img alt="" src="images/house.png" />
-					</a>
-					<img alt="" src="images/airplane.png" style="height:auto" data-top="44" data-left="1170" data-in="slideRight" data-out="slideRight" data-ease-in="10800" data-ease-out="0" data-delay="0" data-time="0" data-wait-me-out="1" />
-					<a data-top="254" data-left="0" data-in="slideUp" data-out="slideDown" data-ease-in="1080" data-ease-out="200" data-delay="0" data-time="all" href="http://www.google.it" target="_blank">
-						<img alt="" src="images/hill.png" />
-					</a>
-				</li>
-				
-				<li
-				style="
-				background-color: transparent;
-				background-image: url('images/bg1.png');
-				background-position-x: auto;
-				background-position-y: auto;
-				background-repeat: repeat;
-				background-size: cover;
+	<body>
+		<div style="display: none;" class="crellyslider-slider crellyslider-slider-fixed crellyslider-slider-home_slider" id="crellyslider-1">
+		<ul>
+		<li
+		style="
+		background-color: transparent;
+		background-image: url('http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/bg21.png');
+		background-position-x: 0;
+		background-position-y: 0;
+		background-repeat: repeat;
+		background-size: auto;
 
-				"
-				data-in="slideLeft"
-				data-ease-in="1500"
-				data-out="slideLeft"
-				data-ease-out="400"
-				data-time="10000"
-				>
-				<div
-				style="z-index: 1;
-				font-size: 48px;
-				color: #fff;
-				font-family: 'Rokkitt', serif;
-				"
-				data-delay="2500"
-				data-ease-in="30000"
-				data-ease-out="200"
-				data-in="slideRight"
-				data-out="slideLeft"
-				data-top="190"
-				data-left="60"
-				data-time="all"
-				data-ignore-ease-out="0"
-				>
-				<h2>Create Slides</h2>
-				</div>
-				<img
-				src="images/airplane.png"
-				alt=""
-				style="
-				z-index: 1;
+		"
+		data-in="slideLeft"
+		data-ease-in="400"
+		data-out="slideLeft"
+		data-ease-out="400"
+		data-time="5000"
+		>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/and1.png"
+		alt=""
+		style="
+		z-index: 1;
 
-				"
-				data-delay="0"
-				data-ease-in="0"
-				data-ease-out="10800"
-				data-in="none"
-				data-out="slideRight"
-				data-top="44"
-				data-left="-2414"
-				data-time="0"
-				data-ignore-ease-out="1"
-				/>
-				<img
-				src="images/hill.png"
-				alt=""
-				style="
-				z-index: 1;
-
-				"
-				data-delay="0"
-				data-ease-in="200"
-				data-ease-out="200"
-				data-in="slideUp"
-				data-out="slideDown"
-				data-top="254"
-				data-left="0"
-				data-time="all"
-				/>
-				<img
-				src="images/house.png"
-				alt=""
-				style="
-				z-index: 0;
-
-				"
-				data-delay="400"
-				data-ease-in="200"
-				data-ease-out="200"
-				data-in="slideLeft"
-				data-out="slideRight"
-				data-top="149"
-				data-left="837"
-				data-time="all"
-				/>
-				<div
-				style="z-index: 1;
-				font-size: 22px;
-				line-height: 26px;
-				color: #fff;
-				font-family: 'Rokkitt', serif;
-				"
-				data-delay="1100"
-				data-ease-in="300"
-				data-ease-out="200"
-				data-in="slideRight"
-				data-out="slideLeft"
-				data-top="245"
-				data-left="60"
-				data-time="3100"
-				>
-				1 They are colored, animated, creative.<br/>Make your WebSite more awesome
-				</div>
-				<div
-				style="z-index: 1;
-				font-size: 22px;
-				line-height: 26px;
-				color: #fff;
-				font-family: 'Rokkitt', serif;
-				"
-				data-delay="5100"
-				data-ease-in="300"
-				data-ease-out="200"
-				data-in="slideRight"
-				data-out="slideLeft"
-				data-top="245"
-				data-left="60"
-				data-time="7100"
-				>
-				2 They are colored, animated, creative.<br/>Make your WebSite more awesome
-				</div>
-				</li>
-				
-				<li
-				style="
-				background-color: #000;
-				background-position-x: center;
-				background-position-y: center;
-				background-repeat: no-repeat;
-				background-size: cover;
-
-				"
-				data-in="fade"
-				data-ease-in="6000"
-				data-out="fade"
-				data-ease-out="300"
-				data-time="2000"
-				>
-				<div
-				style="z-index: 1;
-				font-size: 48px;
-				color: #fff;
-				font-family: 'Lato';
-				opacity: .5;
-				letter-spacing: 10px;
-				"
-				data-delay="0"
-				data-ease-in="600"
-				data-ease-out="600"
-				data-in="fadeDown"
-				data-out="fadeSmallDown"
-				data-top="195"
-				data-left="386"
-				data-time="all"
-				data-ignore-ease-out="1"
-				>
-				CRELLY SLIDER
-				</div>
-				<div
-				style="z-index: 1;
-				font-size: 18px;
-				color: #fff;
-				font-family: 'Lato';
-				"
-				data-delay="600"
-				data-ease-in="400"
-				data-ease-out="400"
-				data-in="fadeSmallDown"
-				data-out="fadeSmallDown"
-				data-top="273"
-				data-left="337"
-				data-time="all"
-				data-ignore-ease-out="1"
-				>
-				the first FREE WordPress slider with elements animations
-				</div>
-				</li>
-				
-				<li style="background: url('images/bg2.png');" data-in="slideLeft" data-out="slideUp" data-ease-out="2500" data-time="10000">
-					<div style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="385" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="300" data-delay="600" data-time="15000" data-ignore-ease-out="1">IT'S FREE</div>
-					<img alt="" src="images/and.png" data-top="82" data-left="505" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all" />
-					<div style="font-size: 24px; color: #fff; font-family: 'Bender', 'Rokkitt', serif;" data-top="105" data-left="578" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="600" data-time="all">IT'S OPEN - SOURCE</div>
-					<img alt="" src="images/code.png" data-top="216" data-left="60" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="800" data-time="all" />
-					<img alt="" src="images/magic.png" data-top="323" data-left="705" data-in="slideUp" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="1100" data-time="all" />
-					<img alt="" src="images/arrow-UpRight.png" data-top="249" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="1400" data-time="all" />
-					<img alt="" src="images/arrow-right.png" data-top="349" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="1700" data-time="all" />
-					<img alt="" src="images/arrow-downRight.png" data-top="409" data-left="798" data-in="fade" data-out="slideUp" data-ease-in="300" data-ease-out="200" data-delay="2000" data-time="all" />
-					<img alt="" src="images/document.png" data-top="259" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
-					<div style="font-size: 14px; color: #fff;" data-top="258" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Well Documented</div>
-					<img alt="" src="images/tick.png" data-top="349" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
-					<div style="font-size: 14px; color: #fff;" data-top="348" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Clear Code</div>
-					<img alt="" src="images/heart.png" data-top="439" data-left="940" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all" />
-					<div style="font-size: 14px; color: #fff;" data-top="438" data-left="976" data-in="fadeSmallLeft" data-out="slideLeft" data-ease-in="300" data-ease-out="200" data-delay="2300" data-time="all">Done with Love</div>
-				</li>
-			</ul>			
+		"
+		data-delay="600"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="62"
+		data-left="505"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		font-size: 24px;
+		color: #fff;
+		font-family: 'Bender', 'Rokkitt', serif;
+		"
+		data-delay="600"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideUp"
+		data-out="fadeSmallRight"
+		data-ignore-ease-out="0"
+		data-top="85"
+		data-left="578"
+		data-time="all"
+		>
+		IT'S OPEN SOURCE
 		</div>
-	
-		<br />
-		<br />
-	
-	</body>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/heart.png"
+		alt=""
+		style="
+		z-index: 1;
 
+		"
+		data-delay="2300"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fadeSmallLeft"
+		data-out="fadeSmallDown"
+		data-ignore-ease-out="0"
+		data-top="422"
+		data-left="920"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/arrow-right.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="1700"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fade"
+		data-out="fadeSmallRight"
+		data-ignore-ease-out="0"
+		data-top="329"
+		data-left="798"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		font-size: 24px;
+		color: #fff;
+		font-family: 'Bender', 'Rokkitt', serif;
+		"
+		data-delay="600"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideUp"
+		data-out="fadeSmallLeft"
+		data-ignore-ease-out="0"
+		data-top="85"
+		data-left="385"
+		data-time="all"
+		>
+		IT'S FREE
+		</div>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/magic1.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="1100"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="309"
+		data-left="704"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/arrow-upRight.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="1400"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fade"
+		data-out="fadeSmallUp"
+		data-ignore-ease-out="0"
+		data-top="229"
+		data-left="798"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/arrow-downRight.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="2000"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fade"
+		data-out="fadeSmallDown"
+		data-ignore-ease-out="0"
+		data-top="398"
+		data-left="798"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/code1.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="800"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideUp"
+		data-out="slideDown"
+		data-ignore-ease-out="0"
+		data-top="203"
+		data-left="60"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		font-size: 14px;
+		color: #fff;
+		"
+		data-delay="2300"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fadeSmallLeft"
+		data-out="fadeSmallUp"
+		data-ignore-ease-out="0"
+		data-top="232"
+		data-left="959"
+		data-time="all"
+		>
+		Well Documented
+		</div>
+		<div
+		style="z-index: 1;
+		font-size: 14px;
+		color: #fff;
+		"
+		data-delay="2300"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fadeSmallLeft"
+		data-out="fadeSmallRight"
+		data-ignore-ease-out="0"
+		data-top="327"
+		data-left="959"
+		data-time="all"
+		>
+		Clear Code
+		</div>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/document.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="2300"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fadeSmallLeft"
+		data-out="fadeSmallUp"
+		data-ignore-ease-out="0"
+		data-top="232"
+		data-left="920"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		font-size: 14px;
+		color: #fff;
+		"
+		data-delay="2300"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fadeSmallLeft"
+		data-out="fadeSmallDown"
+		data-ignore-ease-out="0"
+		data-top="422"
+		data-left="959"
+		data-time="all"
+		>
+		Done with Love
+		</div>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/tick.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="2300"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="fadeSmallLeft"
+		data-out="fadeSmallRight"
+		data-ignore-ease-out="0"
+		data-top="327"
+		data-left="920"
+		data-time="all"
+		/>
+		</li>
+		<li
+		style="
+		background-color: rgb(255, 255, 255);
+		background-image: none;
+		background-position-x: 0;
+		background-position-y: 0;
+		background-repeat: no-repeat;
+		background-size: auto;
+
+		"
+		data-in="fade"
+		data-ease-in="400"
+		data-out="fade"
+		data-ease-out="400"
+		data-time="3000"
+		>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/man_4.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="450"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="slideUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="237"
+		data-left="349"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/man_1.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="0"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="fadeUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="237"
+		data-left="201"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		font-size: 24px;
+		padding: 5px 0;
+		"
+		data-delay="1300"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="fadeSmallRight"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="59"
+		data-left="511"
+		data-time="all"
+		>
+		LET'S DISCOVER
+		</div>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/man_2.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="150"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="slideUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="237"
+		data-left="795"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		color: #fff;
+		padding: 5px 20px;
+		font-size: 24px;
+		background: red;
+		font-weight: bold;
+		z-index: 2;
+		"
+		data-delay="1000"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="slideRight"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="59"
+		data-left="381"
+		data-time="all"
+		>
+		HELLO
+		</div>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/man_3.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="900"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="slideUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="237"
+		data-left="495"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/man_5.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="700"
+		data-ease-in="300"
+		data-ease-out="300"
+		data-in="slideUp"
+		data-out="fade"
+		data-ignore-ease-out="0"
+		data-top="237"
+		data-left="649"
+		data-time="all"
+		/>
+		</li>
+		<li
+		style="
+		background-color: transparent;
+		background-image: url('http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/business.jpg');
+		background-position-x: center;
+		background-position-y: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+
+		"
+		data-in="fade"
+		data-ease-in="300"
+		data-out="fade"
+		data-ease-out="300"
+		data-time="5000"
+		>
+		<div
+		style="z-index: 1;
+		font-size: 48px;
+		color: #fff;
+		font-family: 'Lato';
+		"
+		data-delay="0"
+		data-ease-in="600"
+		data-ease-out="600"
+		data-in="fadeDown"
+		data-out="fadeSmallDown"
+		data-ignore-ease-out="0"
+		data-top="195"
+		data-left="386"
+		data-time="all"
+		>
+		CRELLY SLIDER
+		</div>
+		<div
+		style="z-index: 1;
+		font-size: 18px;
+		color: #fff;
+		font-family: 'Lato';
+		"
+		data-delay="600"
+		data-ease-in="400"
+		data-ease-out="400"
+		data-in="fadeSmallDown"
+		data-out="fadeSmallDown"
+		data-ignore-ease-out="0"
+		data-top="273"
+		data-left="337"
+		data-time="all"
+		>
+		the first FREE WordPress slider with elements animations
+		</div>
+		</li>
+		<li
+		style="
+		background-color: transparent;
+		background-image: url('http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/bg1.png');
+		background-position-x: auto;
+		background-position-y: auto;
+		background-repeat: repeat;
+		background-size: auto;
+
+		"
+		data-in="fade"
+		data-ease-in="400"
+		data-out="fade"
+		data-ease-out="400"
+		data-time="5000"
+		>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/hill2.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="0"
+		data-ease-in="200"
+		data-ease-out="200"
+		data-in="slideUp"
+		data-out="slideDown"
+		data-ignore-ease-out="0"
+		data-top="254"
+		data-left="0"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/house.png"
+		alt=""
+		style="
+		z-index: 0;
+
+		"
+		data-delay="400"
+		data-ease-in="200"
+		data-ease-out="200"
+		data-in="slideLeft"
+		data-out="slideRight"
+		data-ignore-ease-out="0"
+		data-top="149"
+		data-left="837"
+		data-time="all"
+		/>
+		<img
+		src="http://fabiorino1.altervista.org/projects/crellyslider/wp-content/uploads/2014/08/airplane.png"
+		alt=""
+		style="
+		z-index: 1;
+
+		"
+		data-delay="0"
+		data-ease-in="10800"
+		data-ease-out="200"
+		data-in="slideRight"
+		data-out="fade"
+		data-ignore-ease-out="1"
+		data-top="44"
+		data-left="1140"
+		data-time="all"
+		/>
+		<div
+		style="z-index: 1;
+		font-size: 22px;
+		line-height: 26px;
+		color: #fff;
+		font-family: 'Rokkitt', serif;
+		"
+		data-delay="1100"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideRight"
+		data-out="slideLeft"
+		data-ignore-ease-out="0"
+		data-top="245"
+		data-left="60"
+		data-time="all"
+		>
+		They are colored, animated, creative.<br/>Make your WebSite more awesome
+		</div>
+		<div
+		style="z-index: 1;
+		font-size: 48px;
+		color: #fff;
+		font-family: 'Rokkitt', serif;
+		"
+		data-delay="800"
+		data-ease-in="300"
+		data-ease-out="200"
+		data-in="slideRight"
+		data-out="slideLeft"
+		data-ignore-ease-out="0"
+		data-top="190"
+		data-left="60"
+		data-time="all"
+		>
+		Create Slides
+		</div>
+		</li>
+		</ul>
+		</div>
+		
+		<script type="text/javascript">
+			(function($) {
+				$(document).ready(function() {
+					$("#crellyslider-1").crellySlider({
+						layout					: 'fixed',
+						responsive				: true,
+						startWidth				: 1140,
+						startHeight				: 487,
+						
+						pauseOnHover			: true,			
+						automaticSlide			: false,
+						showControls 			: true,
+						showNavigation			: true,
+						showProgressBar			: true,
+						enableSwipe				: true,
+							
+						slidesTime				: 3000,
+						elementsDelay			: 0,
+						elementsTime			: 'all',
+						slidesEaseIn			: 300,
+						elementsEaseIn			: 300,
+						slidesEaseOut			: 300,
+						elementsEaseOut			: 300,
+						ignoreElementsEaseOut 	: false,
+						
+						videoAutoplay			: true,
+						videoLoop				: false,
+						
+						beforeStart				: function() {},
+						beforeSetResponsive		: function() {},
+						beforeSlideStart		: function() {},
+						beforePause				: function() {},
+						beforeResume			: function() {},
+					});
+				});
+			})(jQuery);
+		</script>
+
+	</body>
 </html>
