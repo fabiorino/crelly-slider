@@ -50,18 +50,20 @@ You can find the documentation <a href="http://fabiorino1.altervista.org/project
 == Screenshots ==
 
 1. An example of a slide you can create
-2. The slider back-end interface
-3. Unlimited sliders
+2. Unlimited sliders
+3. Slider settings
+4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
 
 = 1.1.0 =
-* Awesome community: the slider is now translated in 8 different languages! Thank you!<br />English,<br />Italian,<br />Spanish (<a href="https://github.com/eduardoarandah">Eduardo Aranda</a>),<br />Russian (<a href="http://dymskiy.ru/">Andrey Dymskiy</a>),<br />Slovak (<a href="https://github.com/webmandesign">Oliver Juhas</a>),<br />Serbian (Branislav Pakic),<br />French (sLy kereven),<br />German (Andreas Dolinar, <a href="http://elokron.de/"Jan Adams</a>)
+* Awesome community: the slider is now translated in 8 different languages! Thank you!<br />English,<br />Italian,<br />Spanish (<a href="https://github.com/eduardoarandah">Eduardo Aranda</a>),<br />Russian (<a href="http://dymskiy.ru/">Andrey Dymskiy</a>),<br />Slovak (<a href="https://github.com/webmandesign">Oliver Juhas</a>),<br />Serbian (Branislav Pakic),<br />French (sLy kereven),<br />German (Andreas Dolinar, <a href="http://elokron.de/">Jan Adams</a>)
 * New feature: Duplicate sliders and slides
 * New feature: Import/Export sliders
 * New feature: Support for YouTube and Vimeo videos
 * New feature: The slides can be linked (the entire background is a link)
 * New feature: New preloader: when loading, the background is no more grey. Now the first slide background image is automatically blurred and used as background for the preloader. When the slider is loaded, the blurred background will fade away and the first slide will be displayed
+* New feature: Navigation and controls are much better looking now
 * New feature: Added public methods to control the slider. pause(), resume(), nextSlide(), previousSlide(), changeSlide(slide_index), getCurrentSlide(), getTotalSlides()
 * New feature: Slides background color can now be set manually
 * New feature: Custom CSS classes can now be added to elements
