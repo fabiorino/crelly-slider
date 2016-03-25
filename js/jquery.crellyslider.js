@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: MIT
@@ -314,7 +314,8 @@
 			});
 		}
 		
-		// Does operations after window.load is complete. Need to do it as a function for back-end compatibility
+		// Does operations after window.load is complete.
+		// Need to do it as a function for back-end compatibility
 		function loadedWindow() {		
 			// Set layout for the second time
 			if(settings.responsive) {
@@ -440,6 +441,8 @@
 		
 		// Hides the unnecessary divs and sets the blurred preloader and the gif spinner
 		function setPreloader() {
+			addPreloaderHTML();
+
 			// Setup
 			SLIDER.find(CRELLY).find(SLIDES).css('visibility', 'hidden');
 			SLIDER.find(CRELLY).find('.cs-progress-bar').css('display', 'none');
@@ -449,15 +452,12 @@
 			// Get the URL of the background image of the first slide
 			var img_url = getSlide(0).css('background-image');
 			img_url = img_url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-			
-			if(img_url == '' || img_url == 'undefined' || img_url == 'none') {
-				addPreloaderHTML();
-			}
-			else {
+
+			if (img_url) {
 				// When the background image of the first slide is loaded
 				$('<img>')
 				.load(function() {
-					addPreloaderHTML();
+					updatePreloaderBg();
 				})
 				.attr('src', img_url)
 				.each(function() {
@@ -470,21 +470,28 @@
 			function addPreloaderHTML() {
 				// Add preloader
 				SLIDER.find(CRELLY).append('<div class="cs-preloader"><div class="cs-bg"></div><div class="cs-loader"><div class="cs-spinner"></div></div></div>');
-				
-				// Set background. Background is set to both the preloader div and the bg div to fix the CSS blur effect
-				SLIDER.find(CRELLY).find('.cs-preloader').css({						
-					'background-color' : getSlide(0).css('background-color'),
-					'background-image' : getSlide(0).css('background-image'),
-					'background-position' : getSlide(0).css('background-position'),
-					'background-repeat' : getSlide(0).css('background-repeat'),
-					'background-size' : getSlide(0).css('background-size'),
+				// Set background color
+				SLIDER.find(CRELLY).find('.cs-preloader').css({
+					'background-color' : getSlide(0).css('background-color')
 				});				
-				SLIDER.find(CRELLY).find('.cs-preloader > .cs-bg').css({						
-					'background-color' : getSlide(0).css('background-color'),
+				SLIDER.find(CRELLY).find('.cs-preloader > .cs-bg').css({
+					'background-color' : getSlide(0).css('background-color')
+				});
+			}
+
+			// Update background. Background is set to both the preloader div and the bg div to fix the CSS blur effect
+			function updatePreloaderBg() {
+				SLIDER.find(CRELLY).find('.cs-preloader').css({
 					'background-image' : getSlide(0).css('background-image'),
 					'background-position' : getSlide(0).css('background-position'),
 					'background-repeat' : getSlide(0).css('background-repeat'),
-					'background-size' : getSlide(0).css('background-size'),
+					'background-size' : getSlide(0).css('background-size')
+				});
+				SLIDER.find(CRELLY).find('.cs-preloader > .cs-bg').css({
+					'background-image' : getSlide(0).css('background-image'),
+					'background-position' : getSlide(0).css('background-position'),
+					'background-repeat' : getSlide(0).css('background-repeat'),
+					'background-size' : getSlide(0).css('background-size')
 				});
 			}
 		}
@@ -496,11 +503,9 @@
 			SLIDER.find(CRELLY).find('.cs-progress-bar').css('display', 'block');
 			SLIDER.find(CRELLY).find('.cs-navigation').css('display', 'block');
 			SLIDER.find(CRELLY).find('.cs-controls').css('display', 'block');
-			
 			// Display the first slide to avoid the slide in animation
 			slideIn(getSlide(0));
 			getSlide(0).finish();
-			
 			// Fade out
 			SLIDER.find(CRELLY).find('.cs-preloader').animate({
 				'opacity' : 0,
