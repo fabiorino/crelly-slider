@@ -4,7 +4,7 @@ Donate link: http://fabiorino1.altervista.org/projects/crellyslider/contribute-a
 Tags: slider, slides, animations, drag & drop, drag and drop, layers, elements
 Requires at least: 3.6.0
 Tested up to: 4.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -23,7 +23,7 @@ Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Dr
 Crelly Slider does not require any Coding Knowledge. With the simple admin panel you will be able to create the sliders in the easiest way. Upload images with the default WordPress interface or choose colors using the picker.
 
 = High Cross Browser Compatibility =
-Most of the animations and the transitions are written in jQuery (using the "animate" function). In this way we can assure the compatibility with modern (even Android and iOs) and older browsers (like IE8).
+Most of the animations and the transitions are written in jQuery (using the "animate" function). In this way we can assure the compatibility with modern (even Android and iOs) and older browsers.
 
 = Drag and Drop Builder =
 How can you position all the elements in to the slider area? You just simply drag them in to the desired position. Like in Powerpoint, you just have to move the object around the Slide.
@@ -55,6 +55,9 @@ You can find the documentation <a href="http://fabiorino1.altervista.org/project
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.1.1 =
+* Bug fix: sometimes, the slider got stuck at loading screen
 
 = 1.1.0 =
 * Awesome community: the slider is now translated in 8 different languages! Thank you!<br />English,<br />Italian,<br />Spanish (<a href="https://github.com/eduardoarandah">Eduardo Aranda</a>),<br />Russian (<a href="http://dymskiy.ru/">Andrey Dymskiy</a>),<br />Slovak (<a href="https://github.com/webmandesign">Oliver Juhas</a>),<br />Serbian (Branislav Pakic),<br />French (sLy kereven),<br />German (Andreas Dolinar, <a href="http://elokron.de/">Jan Adams</a>)

@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
  * Description: The first free WordPress slider with elements animations.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: fabiorino
  * Author URI: http://fabiorino1.altervista.org
  * License: MIT
@@ -156,15 +156,13 @@
 			setPreloader();
 			
 			initVideos().done(function() {
-				// Timeout needed when running on localhost
-				setTimeout(function() {
-					if(document.readyState != 'complete') {
-						loadWindow();
-					}
-					else {
+				// Timeout needed to prevent compatibility issues
+				var loading = setInterval(function() {
+					if(document.readyState == 'complete' && SLIDER.find(CRELLY).find('.cs-preloader').length > 0) { // If window.load and preloader is loaded
+						clearInterval(loading);
 						loadedWindow();
 					}
-				}, 10);
+				}, 100);
 			});
 		}
 		
@@ -307,13 +305,6 @@
 			return def.promise();
 		}
 		
-		// Waits until the window loads
-		function loadWindow() {
-			$(window).load(function() {
-				loadedWindow();
-			});
-		}
-		
 		// Does operations after window.load is complete. Need to do it as a function for back-end compatibility
 		function loadedWindow() {		
 			// Set layout for the second time
@@ -450,7 +441,7 @@
 			var img_url = getSlide(0).css('background-image');
 			img_url = img_url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
 			
-			if(img_url == '' || img_url == 'undefined' || img_url == 'none') {
+			if(! img_url.match(/\.(jpeg|jpg|gif|png|bmp|tiff|tif)$/)) { // If there isn't a background image
 				addPreloaderHTML();
 			}
 			else {
@@ -1248,8 +1239,7 @@
 		
 		// Returns the player associated to the element
 		function getYoutubePlayer(element) {
-			return youtube_videos[element.attr('id')].player;			
-			return false;
+			return youtube_videos[element.attr('id')].player;
 		}
 		
 		/*
@@ -1341,7 +1331,7 @@
 		/** ANIMATIONS **/
 		/****************/
 		
-		// WARNING: slideIn and elementIn must reset every CSS propriety to the correct value before start
+		// WARNING: slideIn and elementIn must reset every CSS propriety to the correct value before starting
 		
 		// Does slide in animation
 		function slideIn(slide_index) {			
@@ -2026,7 +2016,7 @@
 			elementsEaseOut			: 300,
 			ignoreElementsEaseOut 	: false,
 			
-			videoAutoplay			: true,
+			videoAutoplay			: false,
 			videoLoop				: false,
 			
 			beforeStart				: function() {},
