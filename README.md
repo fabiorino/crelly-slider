@@ -8,7 +8,9 @@ Official plugin website (with live demo): http://fabiorino1.altervista.org/proje
 Documentation: http://fabiorino1.altervista.org/projects/crellyslider/documentation/
 
 ## Description
-__Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Drop Builder. You can add Texts and Images using animations and transitions. It's perfect to display your creative content in posts and pages. With it's tons of features, Crelly Slider is the best free solution for your online WebSite.__
+```
+Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Drop Builder. You can add Texts and Images using animations and transitions. It's perfect to display your creative content in posts and pages. With it's tons of features, Crelly Slider is the best free solution for your online WebSite.__
+```
 
 ### User Friendly Admin Panel
 Crelly Slider does not require any Coding Knowledge. With the simple admin panel you will be able to create the sliders in the easiest way. Upload images with the default WordPress interface or choose colors using the picker.
