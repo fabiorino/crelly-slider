@@ -31,8 +31,9 @@ class CrellySliderAdmin {
 			$edit = true;
 			$id = isset($_GET['id']) ? $_GET['id'] : NULL;
 			$id = esc_sql($id);
+			$prefix = esc_sql($wpdb->prefix);
 			if(isset($id))
-				$slider = $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = ' . $id);
+				$slider = $wpdb->get_row('SELECT * FROM ' . $prefix . 'crellyslider_sliders WHERE id = ' . $id);
 		}
 
 		?>
@@ -105,8 +106,9 @@ class CrellySliderAdmin {
 			$edit = true;
 			$id = isset($_GET['id']) ? $_GET['id'] : NULL;
 			$id = esc_sql($id);
-			$slider = $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = ' . $id);
-			$slides = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = ' . $id . ' ORDER BY position');
+			$prefix = esc_sql($wpdb->prefix);
+			$slider = $wpdb->get_row('SELECT * FROM ' . $prefix . 'crellyslider_sliders WHERE id = ' . $id);
+			$slides = $wpdb->get_results('SELECT * FROM ' . $prefix . 'crellyslider_slides WHERE slider_parent = ' . $id . ' ORDER BY position');
 			// The elements variable are updated in the foreachh() loop directly in the "slides.php" file
 		}
 		?>
