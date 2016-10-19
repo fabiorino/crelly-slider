@@ -326,6 +326,7 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 	if(!$void) {
 		global $wpdb;
 		$id = isset($_GET['id']) ? $_GET['id'] : NULL;
+		$id = esc_sql($id);
 		$slide_parent = $slide->position;
 		$elements = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = ' . $id . ' AND slide_parent = ' . $slide_parent);
 	}
