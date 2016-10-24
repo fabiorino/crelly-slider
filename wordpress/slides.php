@@ -325,11 +325,12 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 	// If the slide is not void, select her elements
 	if(!$void) {
 		global $wpdb;
-		$id = isset($_GET['id']) ? $_GET['id'] : NULL;
-		$id = esc_sql($id);
+		$id = isset($_GET['id']) ? intval($_GET['id']) : NULL;
 		$prefix = esc_sql($wpdb->prefix);
 		$slide_parent = $slide->position;
-		$elements = $wpdb->get_results('SELECT * FROM ' . $prefix . 'crellyslider_elements WHERE slider_parent = ' . $id . ' AND slide_parent = ' . $slide_parent);
+		$tablename = $prefix . 'crellyslider_elements';
+		$sql = $wpdb->prepare( "SELECT * FROM %s  WHERE slider_parent = %d AND slide_parent = %d", array($tablename,$id,$slide_parent) );
+		$elements = $wpdb->get_results( $sql , ARRAY_A );
 	}
 	else {
 		$slide_id = NULL;

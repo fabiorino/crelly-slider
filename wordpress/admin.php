@@ -29,11 +29,13 @@ class CrellySliderAdmin {
 		}
 		else {
 			$edit = true;
-			$id = isset($_GET['id']) ? $_GET['id'] : NULL;
-			$id = esc_sql($id);
+			$id = isset($_GET['id']) ? intval($_GET['id']) : NULL;
 			$prefix = esc_sql($wpdb->prefix);
-			if(isset($id))
-				$slider = $wpdb->get_row('SELECT * FROM ' . $prefix . 'crellyslider_sliders WHERE id = ' . $id);
+			$tablename = $prefix . 'crellyslider_sliders';
+			if(!empty($id)){
+				$sql = $wpdb->prepare( "SELECT * FROM %s  WHERE id = %d", array($tablename,$id) );
+				$slider = $wpdb->get_row( $sql , ARRAY_A );
+			}
 		}
 
 		?>
@@ -105,11 +107,16 @@ class CrellySliderAdmin {
 		else {
 			$edit = true;
 			$id = isset($_GET['id']) ? $_GET['id'] : NULL;
-			$id = esc_sql($id);
+			$id = esc_sql(intval($id));
 			$prefix = esc_sql($wpdb->prefix);
-			$slider = $wpdb->get_row('SELECT * FROM ' . $prefix . 'crellyslider_sliders WHERE id = ' . $id);
-			$slides = $wpdb->get_results('SELECT * FROM ' . $prefix . 'crellyslider_slides WHERE slider_parent = ' . $id . ' ORDER BY position');
+			$tablename = $prefix . 'crellyslider_sliders';
+			if(!empty($id)){
+				$sql_slider = $wpdb->prepare( "SELECT * FROM %s  WHERE id = %d", array($tablename,$id) );
+				$slider = $wpdb->get_row( $sql_slider , ARRAY_A );
+				$sql_slides = $wpdb->prepare( "SELECT * FROM %s  WHERE slider_parent = %d  ORDER BY position", array($tablename,$id) );
+				$slides = $wpdb->get_results( $sql_slides , ARRAY_A );
 			// The elements variable are updated in the foreachh() loop directly in the "slides.php" file
+			}
 		}
 		?>
 		
