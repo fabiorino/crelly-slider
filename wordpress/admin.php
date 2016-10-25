@@ -29,11 +29,15 @@ class CrellySliderAdmin {
 		}
 		else {
 			$edit = true;
-			$id = isset($_GET['id']) ? $_GET['id'] : NULL;
-			if(isset($id))
-				$slider = $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = ' . $id);
+			$id = isset($_GET['id']) ? intval($_GET['id']) : NULL;
+			$prefix = esc_sql($wpdb->prefix);
+			$tablename = $prefix . 'crellyslider_sliders';
+			if(!empty($id)){
+				$sql = $wpdb->prepare( "SELECT * FROM %s  WHERE id = %d", array($tablename,$id) );
+				$slider = $wpdb->get_row( $sql , ARRAY_A );
+			}
 		}
-		
+
 		?>
 		<div
 		class="wrap cs-admin"
@@ -42,60 +46,60 @@ class CrellySliderAdmin {
 		<?php else: ?>
 			style="width: 1140px;"
 		<?php endif; ?>
-		>	
-		
+		>
+
 			<noscript class="cs-no-js">
 				<div class="cs-message cs-message-error" style="display: block;"><?php _e('JavaScript must be enabled to view this page correctly.', 'crellyslider'); ?></div>
 			</noscript>
-			
+
 			<div class="cs-message cs-message-ok" style="display: none;"><?php _e('Operation completed successfully.', 'crellyslider'); ?></div>
 			<div class="cs-message cs-message-error" style="display: none;"><?php _e('Something went wrong.', 'crellyslider'); ?></div>
 			<?php if(! $edit): ?>
 				<div class="cs-message cs-message-warning"><?php _e('When you\'ll click "Save Settings", you\'ll be able to add slides and elements.', 'crellyslider'); ?></div>
 			<?php endif; ?>
-			
+
 			<h2 class="cs-logo" title="Crelly Slider">
 				<a href="?page=crellyslider">
 					<img src="<?php echo CS_PLUGIN_URL . '/wordpress/images/logo2.png' ?>" alt="Crelly Slider" />
 				</a>
 			</h2>
-			
+
 			<br />
 			<br />
-			
+
 			<?php
-			
+
 			switch($index) {
 				case 'home':
 					self::displayHome();
 				break;
-				
+
 				case 'add':
 				case 'edit':
 					self::displaySlider();
 				break;
 			}
-			
+
 			?>
-		
+
 		</div>
 		<?php
 	}
-	
+
 	// Displays the main plugin page
-	public static function displayHome() {		
+	public static function displayHome() {
 		?>
 		<div class="cs-home">
 			<?php require_once CS_PATH . 'wordpress/home.php'; ?>
 		</div>
 		<?php
 	}
-	
+
 	// Displays the slider page in wich you can add or modify sliders, slides and elements
 	public static function displaySlider() {
 		global $wpdb;
-		
-		// Check what the user is doing: is it adding or modifying a slider? 
+
+		// Check what the user is doing: is it adding or modifying a slider?
 		if($_GET['view'] == 'add') {
 			$edit = false;
 			$id = NULL;	//This variable will be used in other files. It contains the ID of the SLIDER that the user is editing
@@ -103,9 +107,16 @@ class CrellySliderAdmin {
 		else {
 			$edit = true;
 			$id = isset($_GET['id']) ? $_GET['id'] : NULL;
-			$slider = $wpdb->get_row('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = ' . $id);
-			$slides = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = ' . $id . ' ORDER BY position');
+			$id = esc_sql(intval($id));
+			$prefix = esc_sql($wpdb->prefix);
+			$tablename = $prefix . 'crellyslider_sliders';
+			if(!empty($id)){
+				$sql_slider = $wpdb->prepare( "SELECT * FROM %s  WHERE id = %d", array($tablename,$id) );
+				$slider = $wpdb->get_row( $sql_slider , ARRAY_A );
+				$sql_slides = $wpdb->prepare( "SELECT * FROM %s  WHERE slider_parent = %d  ORDER BY position", array($tablename,$id) );
+				$slides = $wpdb->get_results( $sql_slides , ARRAY_A );
 			// The elements variable are updated in the foreachh() loop directly in the "slides.php" file
+			}
 		}
 		?>
 		
