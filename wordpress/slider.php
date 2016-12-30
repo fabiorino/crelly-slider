@@ -1,67 +1,69 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly  ?>
+
 <div id="cs-slider-settings">
 	<?php
 	// Contains the key, the display name and a boolean: true if is the default option
 	$slider_select_options = array(
 		'layout' => array(
-			'full-width' => array(__('Full Width', 'crellyslider'), true),
-			'fixed' => array(__('Fixed', 'crellyslider'), false),
+			'full-width' => array(__('Full Width', 'crelly-slider'), true),
+			'fixed' => array(__('Fixed', 'crelly-slider'), false),
 		),
 		'boolean' => array(
-			1 => array(__('Yes', 'crellyslider'), true),
-			0 => array(__('No', 'crellyslider'), false),
+			1 => array(__('Yes', 'crelly-slider'), true),
+			0 => array(__('No', 'crelly-slider'), false),
 		),
 	);
 	?>
-	
+
 	<?php if($edit) { ?>
-		<input type="text" id="cs-slider-name" placeholder="<?php _e('Slider Name', 'crellyslider'); ?>" value="<?php echo $slider->name; ?>" />
+		<input type="text" id="cs-slider-name" placeholder="<?php _e('Slider Name', 'crelly-slider'); ?>" value="<?php echo sanitize_text_field($slider->name); ?>" />
 	<?php
 	}
 	else { ?>
-		<input type="text" id="cs-slider-name" placeholder="<?php _e('Slider Name', 'crellyslider'); ?>" />
+		<input type="text" id="cs-slider-name" placeholder="<?php _e('Slider Name', 'crelly-slider'); ?>" />
 	<?php } ?>
-	
+
 	<br />
 	<br />
-	
-	<strong><?php _e('Alias:', 'crellyslider'); ?></strong>
+
+	<strong><?php _e('Alias:', 'crelly-slider'); ?></strong>
 	<?php if($edit) { ?>
-		<span id="cs-slider-alias"><?php echo $slider->alias; ?></span>
+		<span id="cs-slider-alias"><?php echo esc_html($slider->alias); ?></span>
 	<?php
 	}
 	else { ?>
 		<span id="cs-slider-alias"></span>
 	<?php } ?>
-	
+
 	<br />
 	<br />
-	
-	<strong><?php _e('Shortcode:', 'crellyslider'); ?></strong>	
+
+	<strong><?php _e('Shortcode:', 'crelly-slider'); ?></strong>
 	<?php if($edit) { ?>
-		<span id="cs-slider-shortcode">[crellyslider alias="<?php echo $slider->alias; ?>"]</span>
+		<span id="cs-slider-shortcode">[crellyslider alias="<?php echo esc_html($slider->alias); ?>"]</span>
 	<?php
 	}
 	else { ?>
 		<span id="cs-slider-shortcode"></span>
 	<?php } ?>
-	
+
 	<br />
 	<br />
-	
+
 	<table class="cs-slider-settings-list cs-table">
 		<thead>
 			<tr class="odd-row">
-				<th colspan="3"><?php _e('Slider General Options', 'crellyslider'); ?></th>
+				<th colspan="3"><?php _e('Slider General Options', 'crelly-slider'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="cs-table-header">
-				<td><?php _e('Option', 'crellyslider'); ?></td>
-				<td><?php _e('Parameter', 'crellyslider'); ?></td>
-				<td><?php _e('Description', 'crellyslider'); ?></td>
+				<td><?php _e('Option', 'crelly-slider'); ?></td>
+				<td><?php _e('Parameter', 'crelly-slider'); ?></td>
+				<td><?php _e('Description', 'crelly-slider'); ?></td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Layout', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Layout', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-layout">
 						<?php
@@ -76,11 +78,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Modify the layout type of the slider.', 'crellyslider'); ?>
+					<?php _e('Modify the layout type of the slider.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Responsive', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Responsive', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-responsive">
 						<?php
@@ -95,37 +97,37 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('The slider will be adapted to the screen size.', 'crellyslider'); ?>
+					<?php _e('The slider will be adapted to the screen size.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Start Width', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Start Width', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<?php
 					if(!$edit) echo '<input id="cs-slider-startWidth" type="text" value="1140" />';
-					else echo '<input id="cs-slider-startWidth" type="text" value="' . $slider->startWidth .'" />';
+					else echo '<input id="cs-slider-startWidth" type="text" value="' . sanitize_text_field($slider->startWidth) .'" />';
 					?>
 					px
 				</td>
 				<td class="cs-description">
-					<?php _e('The content initial width of the slider.', 'crellyslider'); ?>
+					<?php _e('The content initial width of the slider.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Start Height', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Start Height', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<?php
 					if(!$edit) echo '<input id="cs-slider-startHeight" type="text" value="500" />';
-					else echo '<input id="cs-slider-startHeight" type="text" value="' . $slider->startHeight .'" />';
+					else echo '<input id="cs-slider-startHeight" type="text" value="' . sanitize_text_field($slider->startHeight) .'" />';
 					?>
 					px
 				</td>
 				<td class="cs-description">
-					<?php _e('The content initial height of the slider.', 'crellyslider'); ?>
+					<?php _e('The content initial height of the slider.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Automatic Slide', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Automatic Slide', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-automaticSlide">
 						<?php
@@ -140,11 +142,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('The slides loop is automatic.', 'crellyslider'); ?>
+					<?php _e('The slides loop is automatic.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Show Controls', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Show Controls', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-showControls">
 						<?php
@@ -159,11 +161,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Show the previous and next arrows.', 'crellyslider'); ?>
+					<?php _e('Show the previous and next arrows.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Show Navigation', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Show Navigation', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-showNavigation">
 						<?php
@@ -178,11 +180,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Show the links buttons to change slide.', 'crellyslider'); ?>
+					<?php _e('Show the links buttons to change slide.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Enable swipe and drag', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Enable swipe and drag', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-enableSwipe">
 						<?php
@@ -197,11 +199,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Enable swipe left, swipe right, drag left, drag right commands.', 'crellyslider'); ?>
+					<?php _e('Enable swipe left, swipe right, drag left, drag right commands.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Show Progress Bar', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Show Progress Bar', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-showProgressBar">
 						<?php
@@ -216,11 +218,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Draw the progress bar during the slide execution.', 'crellyslider'); ?>
+					<?php _e('Draw the progress bar during the slide execution.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Pause on Hover', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Pause on Hover', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<select id="cs-slider-pauseOnHover">
 						<?php
@@ -235,11 +237,11 @@
 					</select>
 				</td>
 				<td class="cs-description">
-					<?php _e('Pause the current slide when hovered.', 'crellyslider'); ?>
+					<?php _e('Pause the current slide when hovered.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Callbacks', 'crellyslider'); ?></td>
+				<td class="cs-name"><?php _e('Callbacks', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<?php
 					if(!$edit || ($edit && stripslashes($slider->callbacks) == '')) {
@@ -257,7 +259,7 @@ beforeResume : function() {},</textarea>
 					?>
 				</td>
 				<td class="cs-description">
-					<?php _e('Some jQuery functions that you can fire during the slider execution.', 'crellyslider'); ?>
+					<?php _e('Some jQuery functions that you can fire during the slider execution.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 		</tbody>

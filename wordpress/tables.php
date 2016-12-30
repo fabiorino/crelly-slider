@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly 
 
 class CrellySliderTables {
 
@@ -21,7 +22,7 @@ class CrellySliderTables {
 	public static function setSlidersTable() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'crellyslider_sliders';
-		
+
 		$sql = "CREATE TABLE $table_name (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		name TEXT CHARACTER SET utf8,
@@ -39,7 +40,7 @@ class CrellySliderTables {
 		callbacks TEXT CHARACTER SET utf8,
 		UNIQUE KEY id (id)
 		);";
-		
+
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 	}
@@ -48,7 +49,7 @@ class CrellySliderTables {
 	public static function setSlidesTable() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'crellyslider_slides';
-		
+
 		$sql = "CREATE TABLE $table_name (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		slider_parent mediumint(9),
@@ -65,12 +66,12 @@ class CrellySliderTables {
 		data_time INT,
 		data_easeIn INT,
 		data_easeOut INT,
-		link TEXT CHARACTER SET utf8 DEFAULT '',
+		link TEXT CHARACTER SET utf8,
 		link_new_tab INT DEFAULT 0,
 		custom_css TEXT CHARACTER SET utf8,
 		UNIQUE KEY id (id)
 		);";
-		
+
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 	}
@@ -78,7 +79,7 @@ class CrellySliderTables {
 	public static function setElementsTable() {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'crellyslider_elements';
-		
+
 		$sql = "CREATE TABLE $table_name (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		slider_parent mediumint(9),
@@ -96,18 +97,18 @@ class CrellySliderTables {
 		data_in TEXT CHARACTER SET utf8,
 		data_out TEXT CHARACTER SET utf8,
 		custom_css TEXT CHARACTER SET utf8,
-		custom_css_classes TEXT CHARACTER SET utf8 DEFAULT '',
+		custom_css_classes TEXT CHARACTER SET utf8,
 		inner_html TEXT CHARACTER SET utf8,
 		image_src TEXT CHARACTER SET utf8,
 		image_alt TEXT CHARACTER SET utf8,
-		link TEXT CHARACTER SET utf8 DEFAULT '',
+		link TEXT CHARACTER SET utf8,
 		link_new_tab INT DEFAULT 0,
 		video_id TEXT CHARACTER SET utf8,
 		video_loop INT,
 		video_autoplay INT,
 		UNIQUE KEY id (id)
 		);";
-		
+
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 	}
@@ -115,7 +116,7 @@ class CrellySliderTables {
 	// Drops all the slider tables
 	public static function dropTables() {
 		global $wpdb;
-		
+
 		self::dropTable($wpdb->prefix . 'crellyslider_sliders');
 		self::dropTable($wpdb->prefix . 'crellyslider_slides');
 		self::dropTable($wpdb->prefix . 'crellyslider_elements');
@@ -123,7 +124,7 @@ class CrellySliderTables {
 
 	public static function dropTable($table_name) {
 		global $wpdb;
-		
+
 		$sql = 'DROP TABLE ' . $table_name . ';';
 		$wpdb->query($sql);
 	}

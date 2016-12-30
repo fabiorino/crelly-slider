@@ -1,264 +1,262 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Crelly Slider 1.1.0\n"
-"POT-Creation-Date: 2016-03-12 13:34+0100\n"
-"PO-Revision-Date: 2016-03-12 13:34+0100\n"
+"POT-Creation-Date: 2016-10-31 15:46+0100\n"
+"PO-Revision-Date: 2016-10-31 15:46+0100\n"
 "Last-Translator: \n"
-"Language-Team: Andrey Dymskiy <andrey@dymskiy.ru>\n"
-"Language: ru\n"
+"Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../admin.php:48
 msgid "JavaScript must be enabled to view this page correctly."
-msgstr "Необходимо включить JavaScript для правильного отображения страницы."
+msgstr "Debes habilitar JavaScript para ver correctamente esta página."
 
 #: ../admin.php:51
 msgid "Operation completed successfully."
-msgstr "Операция завершена успешно."
+msgstr "Operación completada satisfactoriamente."
 
 #: ../admin.php:52
 msgid "Something went wrong."
-msgstr "Что-то пошло не так."
+msgstr "Algo salió mal."
 
 #: ../admin.php:54
 msgid ""
 "When you'll click \"Save Settings\", you'll be able to add slides and "
 "elements."
-msgstr ""
-"После клика на  \"Сохранить настройки\", можно будет добавлять слайды и "
-"элементы на них."
+msgstr "Cuando hagas clic en guardar podrás agregar diapositivas y elementos."
 
 #: ../admin.php:119
 msgid "Slider Settings"
-msgstr "Настройки слайдера"
+msgstr "Ajustes"
 
 #: ../admin.php:123
 msgid "Edit Slides"
-msgstr "Редактировать слайды"
+msgstr "Editar Diapositivas"
 
 #: ../admin.php:143
 msgid "Save Settings"
-msgstr "Сохранить настройки"
+msgstr "Guardar Ajustes"
 
 #: ../admin.php:243 ../slides.php:15
 msgid "Slide"
-msgstr "Слайд"
+msgstr "Diapositiva"
 
 #: ../admin.php:244
 msgid "The slide will be deleted. Are you sure?"
-msgstr "Слайд будет удален. Вы уверены?"
+msgstr "La diapositiva será borrada, ¿Estás seguro?"
 
 #: ../admin.php:245
 msgid "You can't delete this. You must have at least one slide."
-msgstr "Невозможно удалить т.к. должен остаться хотя бы один слайд."
+msgstr "No se puede eliminar esto. Debe tener al menos una diapositiva."
 
 #: ../admin.php:246
 msgid "The slider will be deleted. Are you sure?"
-msgstr "Слайд будет удален. Вы уверены?"
+msgstr "La diapositiva será borrada, ¿Estás seguro?"
 
 #: ../admin.php:247 ../elements.php:249
 msgid "Text element"
-msgstr "Текстовый элемент..."
+msgstr "Elemento de texto"
 
 #: ../admin.php:248 ../elements.php:159
 msgid "Live preview"
-msgstr "Предосмотр"
+msgstr "Previsualizar diapositivas"
 
 #: ../admin.php:249
 msgid "Stop preview"
-msgstr "Предосмотр"
+msgstr "Detener vista previa"
 
 #: ../admin.php:250 ../slides.php:16
 msgid "Duplicate slide"
-msgstr "Остановить Предосмотр"
+msgstr "Duplicar diapositiva"
 
 #: ../admin.php:251 ../slides.php:17
 msgid "Delete slide"
-msgstr "Удалить слайд"
+msgstr "Borrar diapositiva"
 
 #: ../admin.php:252
 msgid ""
 "All unsaved changes will be lost. Are you sure you want to leave this page?"
 msgstr ""
-"Все несохраненные изменения будут потеряны. Вы уверены, что хотите уйти со "
-"страницы?"
+"Se perderán los cambios sin guardar. ¿Estás seguro que deseas abandonar esta "
+"página?"
 
 #: ../ajax.php:282
 msgid "Copy"
-msgstr "Копировать"
+msgstr "Copiar"
 
 #: ../ajax.php:283
 msgid "copy"
-msgstr "копировать"
+msgstr "copiar"
 
 #: ../elements.php:154
 msgid "Add text"
-msgstr "Добавить текст"
+msgstr "Agregar texto"
 
 #: ../elements.php:155
 msgid "Add image"
-msgstr "Добавить изображение"
+msgstr "Agregar imagen"
 
 #: ../elements.php:156
 msgid "Add video"
-msgstr "Добавить видео"
+msgstr "Agregar video"
 
 #: ../elements.php:160
 msgid "Delete element"
-msgstr "Удалить элемент"
+msgstr "Borrar elemento"
 
 #: ../elements.php:161
 msgid "Duplicate element"
-msgstr "Дублировать элемент"
+msgstr "Duplicar elemento"
 
 #: ../elements.php:215 ../elements.php:466 ../elements.php:716 ../slides.php:51
 #: ../slides.php:82 ../slides.php:127 ../slides.php:130
 msgid "None"
-msgstr "Нет"
+msgstr "Nada"
 
 #: ../elements.php:216 ../elements.php:467 ../elements.php:717 ../slides.php:58
 msgid "Slide down"
-msgstr "Сдвиг вниз"
+msgstr "Deslizar hacia abajo"
 
 #: ../elements.php:217 ../elements.php:468 ../elements.php:718 ../slides.php:57
 msgid "Slide up"
-msgstr "Сдвиг вверх"
+msgstr "Deslizar hacia arriba"
 
 #: ../elements.php:218 ../elements.php:469 ../elements.php:719 ../slides.php:55
 msgid "Slide left"
-msgstr "Сдвиг влево"
+msgstr "Deslizar hacia la izquierda"
 
 #: ../elements.php:219 ../elements.php:470 ../elements.php:720 ../slides.php:56
 msgid "Slide right"
-msgstr "Сдвиг вправо"
+msgstr "Deslizar hacia la derecha"
 
 #: ../elements.php:220 ../elements.php:471 ../elements.php:721 ../slides.php:52
 msgid "Fade"
-msgstr "Проявление"
+msgstr "Desvanecer"
 
 #: ../elements.php:221 ../elements.php:472 ../elements.php:722
 msgid "Fade down"
-msgstr "Проявление с движением вниз"
+msgstr "Desvanecer hacia abajo"
 
 #: ../elements.php:222 ../elements.php:473 ../elements.php:723
 msgid "Fade up"
-msgstr "Проявление с движением вверх"
+msgstr "Desvanecer hacia arriba"
 
 #: ../elements.php:223 ../elements.php:474 ../elements.php:724 ../slides.php:53
 msgid "Fade left"
-msgstr "Проявление с движением влево"
+msgstr "Desvanecer hacia la izquierda"
 
 #: ../elements.php:224 ../elements.php:475 ../elements.php:725 ../slides.php:54
 msgid "Fade right"
-msgstr "Проявление с движением вправо"
+msgstr "Desvanecer hacia la derecha"
 
 #: ../elements.php:225 ../elements.php:476 ../elements.php:726
 msgid "Fade small down"
-msgstr "Проявление с коротким движением вниз"
+msgstr "Desvanecer ligeramente hacia abajo"
 
 #: ../elements.php:226 ../elements.php:477 ../elements.php:727
 msgid "Fade small up"
-msgstr "Проявление с коротким движением вверх"
+msgstr "Desvanecer ligeramente hacia arriba"
 
 #: ../elements.php:227 ../elements.php:478 ../elements.php:728
 msgid "Fade small left"
-msgstr "Проявление с коротким движением влево"
+msgstr "Desvanecer ligeramente hacia la izquierda"
 
 #: ../elements.php:228 ../elements.php:479 ../elements.php:729
 msgid "Fade small right"
-msgstr "Проявление с коротким движением вправо"
+msgstr "Desvanecer ligeramente hacia la derecha"
 
 #: ../elements.php:235 ../elements.php:486 ../elements.php:736
 msgid "Element Options"
-msgstr "Опции элемента"
+msgstr "Opciones de elementos"
 
 #: ../elements.php:241 ../elements.php:491 ../elements.php:742 ../slider.php:59
 #: ../slides.php:71
 msgid "Option"
-msgstr "Опция"
+msgstr "Opción"
 
 #: ../elements.php:242 ../elements.php:492 ../elements.php:743 ../slider.php:60
 #: ../slides.php:72
 msgid "Parameter"
-msgstr "Параметр"
+msgstr "Parámetro"
 
 #: ../elements.php:243 ../elements.php:493 ../elements.php:744 ../slider.php:61
 #: ../slides.php:73
 msgid "Description"
-msgstr "Описание"
+msgstr "Descripción"
 
 #: ../elements.php:246
 msgid "Text"
-msgstr "Текст"
+msgstr "Texto"
 
 #: ../elements.php:254
 msgid "Write the text or the HTML."
-msgstr "Введите тест или HTML."
+msgstr "Escribe el texto o el HTML"
 
 #: ../elements.php:258 ../elements.php:508 ../elements.php:809
 msgid "Left"
-msgstr "Отступ слева"
+msgstr "Izquierda"
 
 #: ../elements.php:267 ../elements.php:517 ../elements.php:818
 msgid "Center horizontally"
-msgstr "Центрировать по горизонтали"
+msgstr "Centrar horizontalmente"
 
 #: ../elements.php:270 ../elements.php:520 ../elements.php:821
 msgid "Left distance in px from the start width."
-msgstr "Отступ слева в px. Считается от начальной ширины слайдера."
+msgstr "Distancia en píxeles desde la izquierda desde el ancho inicial."
 
 #: ../elements.php:274 ../elements.php:524 ../elements.php:825
 msgid "Top"
-msgstr "Отступ сверху"
+msgstr "Arriba"
 
 #: ../elements.php:283 ../elements.php:533 ../elements.php:834
 msgid "Center vertically"
-msgstr "Центрировать по вертикали"
+msgstr "Centrar verticalmente"
 
 #: ../elements.php:286 ../elements.php:536 ../elements.php:837
 msgid "Top distance in px from the start height."
-msgstr "Отступ сверху. Считается от начальной ширины высоты."
+msgstr "Distancia en píxeles desde arriba a partir de la altura inicial."
 
 #: ../elements.php:290 ../elements.php:540 ../elements.php:841
 msgid "Z - index"
-msgstr "Положение z-index"
+msgstr "Z - index"
 
 #: ../elements.php:298 ../elements.php:548 ../elements.php:849
 msgid ""
 "An element with an high z-index will cover an element with a lower z-index "
 "if they overlap."
 msgstr ""
-"Элемент с большим значением z-index накроет элемент с меньшим, если они "
-"накладываются."
+"Un elemento con un z-index mayor cubrirá un elemento con uno menor, si se "
+"sobreponen."
 
 #: ../elements.php:302 ../elements.php:552 ../elements.php:853
 msgid "Delay"
-msgstr "Задержка"
+msgstr "Retraso"
 
 #: ../elements.php:311 ../elements.php:561 ../elements.php:862
 msgid "How long will the element wait before the entrance."
-msgstr "Как долго элемент будет ждать прежде чем появиться."
+msgstr "Cuanto tardará el elemento en hacer su entrada"
 
 #: ../elements.php:315 ../elements.php:565 ../elements.php:866
 #: ../slides.php:244
 msgid "Time"
-msgstr "Время показа"
+msgstr "Tiempo"
 
 #: ../elements.php:324 ../elements.php:574 ../elements.php:875
 msgid "How long will the element be displayed during the slide execution."
-msgstr "Как долго будет показываться элемент на текущем слайде."
+msgstr ""
+"Cuánto tiempo se mostrará el elemento mientras la diapositiva se muestra."
 
 #: ../elements.php:327 ../elements.php:577 ../elements.php:878
 msgid "Write \"all\" to set the entire time."
-msgstr "Если до конца слайда, то указать \"all\"."
+msgstr "Escribe \"all\" para que se muestre siempre"
 
 #: ../elements.php:330 ../elements.php:580 ../elements.php:881
 msgid ""
@@ -266,29 +264,30 @@ msgid ""
 "time is 1000 milliseconds, the element will be displayed for 3000-1000=2000 "
 "milliseconds)."
 msgstr ""
-"Укажите \"3000\" для установки в 3000 миллисекунд минус задержка (если время "
-"задержки 1000 миллисекунд, то элемент будет отображаться 3000-1000=2000 "
-"миллисекунд)."
+"Escribe \"3000\" para establecer 3000 milisegundos menos el tiempo de "
+"retraso (si el tiempo de retraso es de 1000 milisegundos, el elemento será "
+"mostrado por 3000-1000=2000 milisegundos)"
 
 #: ../elements.php:334 ../elements.php:584 ../elements.php:885
 #: ../slides.php:206
 msgid "In animation"
-msgstr "Вводящая анимация"
+msgstr "Animación de entrada"
 
 #: ../elements.php:349 ../elements.php:599 ../elements.php:900
 msgid "The in animation of the element."
-msgstr "Как анимировать появление элемента."
+msgstr "La animación de entrada del elemento"
 
 #: ../elements.php:353 ../elements.php:603 ../elements.php:904
 #: ../slides.php:225
 msgid "Out animation"
-msgstr "Выводящая анимация"
+msgstr "Animación de salida"
 
 #: ../elements.php:368 ../elements.php:371 ../elements.php:374
 #: ../elements.php:618 ../elements.php:621 ../elements.php:624
 #: ../elements.php:919 ../elements.php:922 ../elements.php:925
 msgid "Disable synchronization with slide out animation"
-msgstr "Не синхронизировать с вводящей анимацией"
+msgstr ""
+"Deshabilitar la sincronización con la animación de salida de la diapositiva"
 
 #: ../elements.php:380 ../elements.php:630 ../elements.php:931
 msgid ""
@@ -296,117 +295,117 @@ msgid ""
 "slide out animation: if not checked, the slide out animation won't start "
 "until all the elements that have this option unchecked are animated out."
 msgstr ""
-"Анимация исчезания элемента. <br /><br />Если синхронизация не отключена, то "
-"выводящая анимация самого слайда будет ожидать пока все элементы в слайде с "
-"неотключенной синхронизацией не закончат свою выводящую анимацию."
+"Animación de salida del elemento. <br /><br />Deshabilitar la sincronización "
+"con la salida de la animación: si no está marcada, la salida de la animación "
+"no comenzará hasta que todos los elementos que tengan esta opción sin marcar "
+"hayan hecho su salida"
 
 #: ../elements.php:384 ../elements.php:634 ../elements.php:935
 msgid "Ease in"
-msgstr "Время ввода"
+msgstr "Suavizado de entrada"
 
 #: ../elements.php:393 ../elements.php:643 ../elements.php:944
 msgid "How long will the in animation take."
-msgstr "Скорость вводящей анимации."
+msgstr "Cuánto tardará la animación"
 
 #: ../elements.php:397 ../elements.php:647 ../elements.php:948
 msgid "Ease out"
-msgstr "Время вывода"
+msgstr "Suavizado de salida."
 
 #: ../elements.php:406 ../elements.php:656 ../elements.php:957
 msgid "How long will the out animation take."
-msgstr "Скорость выводящей анимации."
+msgstr "Cuánto tardará la animación de salida."
 
 #: ../elements.php:410 ../elements.php:660 ../slides.php:283
 msgid "Link"
-msgstr "Ссылка"
+msgstr "Enlace"
 
 #: ../elements.php:418 ../elements.php:421 ../elements.php:424
 #: ../elements.php:668 ../elements.php:671 ../elements.php:674
 #: ../slides.php:291 ../slides.php:294 ../slides.php:297
 msgid "Open link in a new tab"
-msgstr "Открывать ссылку в новой вкладке"
+msgstr "Abrir enlace en ventana nueva"
 
 #: ../elements.php:430 ../elements.php:680
 msgid ""
 "Open the link (e.g.: http://www.google.it) on click. Leave it empty if you "
 "don't want it."
-msgstr "Отрывать ссылку кликом. Оставьте поле пустым, если не нужна."
+msgstr "Abrir el enlace al hacer clic en él"
 
 #: ../elements.php:434 ../elements.php:684 ../elements.php:961
 #: ../slides.php:307
 msgid "Custom CSS"
-msgstr "Дополнительный CSS"
+msgstr "Estilo CSS personalizado"
 
 #: ../elements.php:442 ../elements.php:692 ../elements.php:969
 msgid "Style the element."
-msgstr ""
-"Стилизовать элемент (изменить размер и цвет шрифта, добавить тень и т.п.)."
+msgstr "Estilizar el elemento"
 
 #: ../elements.php:446 ../elements.php:696 ../elements.php:973
 msgid "Custom classes"
-msgstr "Дополнительные классы CSS"
+msgstr "Clases personalizadas"
 
 #: ../elements.php:454 ../elements.php:704 ../elements.php:981
 msgid ""
 "Apply custom CSS classes to the element. The style of the classes may not "
 "work when working on backend."
 msgstr ""
-"Применить дополнительные классы CSS к элементу. Стили могут не отображаться "
-"в админке."
+"Aplicar clases personalizadas CSS al elemento. El estilo de las clases puede "
+"no funcionar mientras se trabaja en el escritorio wordpress"
 
 #: ../elements.php:496
 msgid "Modify image"
-msgstr "Изображение"
+msgstr "Modificar imagen"
 
 #: ../elements.php:499 ../elements.php:500
 msgid "Open gallery"
-msgstr "Открыть галерею"
+msgstr "Abrir galería"
 
 #: ../elements.php:504
 msgid "Change the image source or the alt text."
-msgstr "Изменить источник изображения и его текст-заменитель."
+msgstr "Cambia la fuente de la imagen o el texto ALT"
 
 #: ../elements.php:747
 msgid "Video source"
-msgstr "Источник видео"
+msgstr "Fuente del video"
 
 #: ../elements.php:767
 msgid "Set source and ID."
-msgstr "Установить источник и ID."
+msgstr "Establecer fuente e ID"
 
 #: ../elements.php:771
 msgid "Loop video"
-msgstr "Зациклить видео"
+msgstr "Repetición del video"
 
 #: ../elements.php:786
 msgid ""
 "The video will automatically restart from the beginning when it reaches the "
 "end."
-msgstr "Видео перезапустится с начала когда достигнет конца."
+msgstr "El video automáticamente reiniciará desde el inicio cuando finalice"
 
 #: ../elements.php:790
 msgid "Autoplay"
-msgstr "Автовоспроизведение"
+msgstr "Autoplay"
 
 #: ../elements.php:805
 msgid "The video will automatically be played after the in animation."
-msgstr "Видео воспроизводится автоматически после Вводящей анимации."
+msgstr "El video se reproducirá automáticamente después de la animación"
 
 #: ../frontend.php:25
 msgid "You have to insert a valid alias in the shortcode"
-msgstr "Вы должны вставить правильный псевдоним в шорткод"
+msgstr "Introduce un alias válido en el shortcode"
 
 #: ../frontend.php:43 ../frontend.php:47
 msgid "The slider hasn't been found"
-msgstr "Слайдер не найден"
+msgstr "La diapositiva no fue encontrada"
 
 #: ../home.php:7
 msgid "No Sliders found. Please add a new one."
-msgstr "Слайдеров не найдено. Создайте новый."
+msgstr "No se encontraron diapositivas. Por favor agrega una nueva."
 
 #: ../home.php:17
 msgid "Sliders List"
-msgstr "Список слайдеров"
+msgstr "Listado de diapositivas"
 
 #: ../home.php:22
 msgid "ID"
@@ -414,272 +413,274 @@ msgstr "ID"
 
 #: ../home.php:23
 msgid "Name"
-msgstr "Название"
+msgstr "Nombre"
 
 #: ../home.php:24
 msgid "Alias"
-msgstr "Псевдоним"
+msgstr "Alias"
 
 #: ../home.php:25
 msgid "Shortcode"
-msgstr "Шорткод"
+msgstr "Shortcode"
 
 #: ../home.php:26
 msgid "Actions"
-msgstr "Действия"
+msgstr "Acciones"
 
 #: ../home.php:36
 msgid "Edit Slider"
-msgstr "Редактировать слайдер"
+msgstr "Editar Diapositiva"
 
 #: ../home.php:37
 msgid "Duplicate Slider"
-msgstr "Дублировать слайдер"
+msgstr "Duplicar diapositiva"
 
 #: ../home.php:38
 msgid "Export Slider"
-msgstr "Экспортировать слайдер"
+msgstr "Exportar diapositiva"
 
 #: ../home.php:39
 msgid "Delete Slider"
-msgstr "Удалить слайдер"
+msgstr "Borrar Diapositiva"
 
 #: ../home.php:51
 msgid "Add Slider"
-msgstr "Добавить слайдер"
+msgstr "Agregar diapositiva"
 
 #: ../home.php:52
 msgid "Import Slider"
-msgstr "Импортировать слайдер"
+msgstr "Importar diapositiva"
 
 #: ../slider.php:6
 msgid "Full Width"
-msgstr "Во всю ширину"
+msgstr "Ancho completo"
 
 #: ../slider.php:7
 msgid "Fixed"
-msgstr "Фиксированный"
+msgstr "Ancho fijo"
 
 #: ../slider.php:10
 msgid "Yes"
-msgstr "Да"
+msgstr "Sí"
 
 #: ../slider.php:11
 msgid "No"
-msgstr "Нет"
+msgstr "No"
 
 #: ../slider.php:17 ../slider.php:21
 msgid "Slider Name"
-msgstr "Название слайда"
+msgstr "Nombre de la diapositiva"
 
 #: ../slider.php:27
 msgid "Alias:"
-msgstr "Псевдоним:"
+msgstr "Alias:"
 
 #: ../slider.php:39
 msgid "Shortcode:"
-msgstr "Шорткод:"
+msgstr "Shortcode:"
 
 #: ../slider.php:54
 msgid "Slider General Options"
-msgstr "Глобальные настройки слайдера"
+msgstr "Opciones generales de diapositiva"
 
 #: ../slider.php:64
 msgid "Layout"
-msgstr "Макет"
+msgstr "Diseño"
 
 #: ../slider.php:79
 msgid "Modify the layout type of the slider."
-msgstr "Установить тип макета слайдера."
+msgstr "Modifica el tipo de diseño de la diapositiva."
 
 #: ../slider.php:83
 msgid "Responsive"
-msgstr "Адаптивный"
+msgstr "Responsivo"
 
 #: ../slider.php:98
 msgid "The slider will be adapted to the screen size."
-msgstr "Слайдер будет адаптирован к размеру экрана."
+msgstr "La diapositiva será adaptada al tamaño de la pantalla"
 
 #: ../slider.php:102
 msgid "Start Width"
-msgstr "Начальная ширина"
+msgstr "Anchura inicial"
 
 #: ../slider.php:111
 msgid "The content initial width of the slider."
-msgstr "Ширина контента при инициализации слайдера."
+msgstr "El ancho del contenido inicial de la diapositiva."
 
 #: ../slider.php:115
 msgid "Start Height"
-msgstr "Начальная высота"
+msgstr "Altura inicial"
 
 #: ../slider.php:124
 msgid "The content initial height of the slider."
-msgstr "Высота контента при инициализации слайдера."
+msgstr "La altura del contenido inicial de la diapositiva"
 
 #: ../slider.php:128
 msgid "Automatic Slide"
-msgstr "Автоматический цикл"
+msgstr "Pase de diapositivas automático"
 
 #: ../slider.php:143
 msgid "The slides loop is automatic."
-msgstr "Зацикливать показ слайдов или нет."
+msgstr "Las diapositivas se repetirán automáticamente."
 
 #: ../slider.php:147
 msgid "Show Controls"
-msgstr "Стрелки НАЗАД-ВПЕРЕД"
+msgstr "Mostrar flechas"
 
 #: ../slider.php:162
 msgid "Show the previous and next arrows."
-msgstr "Показывать стрелки перехода на предыдущий и следующий слайд."
+msgstr "Mostrar las flechas anterior y siguiente"
 
 #: ../slider.php:166
 msgid "Show Navigation"
-msgstr "Кнопки слайдов"
+msgstr "Mostrar botones"
 
 #: ../slider.php:181
 msgid "Show the links buttons to change slide."
-msgstr "Показывать кнопки перехода к любому слайду."
+msgstr "Mostrar botones para cambiar la diapositiva"
 
 #: ../slider.php:185
 msgid "Enable swipe and drag"
-msgstr "Включить жесты или перетаскивание"
+msgstr "Habilitara barrido con el dedo"
 
 #: ../slider.php:200
 msgid "Enable swipe left, swipe right, drag left, drag right commands."
-msgstr "Включить команды жестами и перетаскивание влево и вправо."
+msgstr "Habilitar el deslizamiento con el dedo hacia la izquierda y derecha"
 
 #: ../slider.php:204
 msgid "Show Progress Bar"
-msgstr "Линейка прогресса"
+msgstr "Mostrar barra de progreso"
 
 #: ../slider.php:219
 msgid "Draw the progress bar during the slide execution."
-msgstr "Отрисовывать линейку прогресса во время выполнения слайда."
+msgstr "Dibujar la barra de progreso mientras se muestra la dispositiva"
 
 #: ../slider.php:223
 msgid "Pause on Hover"
-msgstr "Пауза при наведении"
+msgstr "Pausar con mouse encima"
 
 #: ../slider.php:238
 msgid "Pause the current slide when hovered."
-msgstr "Останавливать слайд при наведении курсора."
+msgstr "Pausar la animación cuando el mouse está encima"
 
 #: ../slider.php:242
 msgid "Callbacks"
-msgstr "Вызовы"
+msgstr "Callbacks"
 
 #: ../slider.php:260
 msgid "Some jQuery functions that you can fire during the slider execution."
-msgstr "Функции jQuery которые можно связать с выполнением слайда."
+msgstr ""
+"Algunas funciones de jQuery que puedes lanzar durante la ejecución de la "
+"diapositiva"
 
 #: ../slides.php:24
 msgid "Add Slide"
-msgstr "Добавить слайд"
+msgstr "Agregar diapositiva"
 
 #: ../slides.php:65
 msgid "Slide Options"
-msgstr "Настройка слайда"
+msgstr "Opciones de diapositiva"
 
 #: ../slides.php:76
 msgid "Background"
-msgstr "Фон"
+msgstr "Fondo"
 
 #: ../slides.php:80 ../slides.php:124
 msgid "Background image:"
-msgstr "Фоновое изображение:"
+msgstr "Imagen de fondo:"
 
 #: ../slides.php:83 ../slides.php:128 ../slides.php:131
 msgid "Select image"
-msgstr "Выбрать изображение"
+msgstr "Selecciona la imagen"
 
 #: ../slides.php:89 ../slides.php:138
 msgid "Background color:"
-msgstr "Цвет фона:"
+msgstr "Color de fondo:"
 
 #: ../slides.php:93 ../slides.php:143 ../slides.php:145
 msgid "Transparent"
-msgstr "Прозрачный"
+msgstr "Transparente"
 
 #: ../slides.php:97 ../slides.php:159
 msgid "Enter value"
-msgstr "Степень прозрачности"
+msgstr "Agregar valor"
 
 #: ../slides.php:103 ../slides.php:166
 msgid "Background position-x:"
-msgstr "Положение фона по X"
+msgstr "Posición X del fondo"
 
 #: ../slides.php:106 ../slides.php:169
 msgid "Background position-y:"
-msgstr "Положение фона по Y"
+msgstr "Posición Y del fondo"
 
 #: ../slides.php:112 ../slides.php:175
 msgid "Background repeat:"
-msgstr "Повтор фона:"
+msgstr "Repetir el fondo"
 
 #: ../slides.php:114 ../slides.php:178 ../slides.php:181
 msgid "Repeat"
-msgstr "Повторять"
+msgstr "Repetir"
 
 #: ../slides.php:115 ../slides.php:179 ../slides.php:182
 msgid "No repeat"
-msgstr "Не повторять"
+msgstr "No repetir"
 
 #: ../slides.php:121 ../slides.php:189
 msgid "Background size:"
-msgstr "Размер фона:"
+msgstr "Tamaño de la imagen de fondo"
 
 #: ../slides.php:194
 msgid "The background of the slide and its proprieties."
-msgstr "Установка и настройка фона слайда."
+msgstr "El fondo de la diapositiva y sus propiedades"
 
 #: ../slides.php:197
 msgid "Presets:"
-msgstr "Пресеты:"
+msgstr "Valores default:"
 
 #: ../slides.php:200
 msgid "Full width responsive background image"
-msgstr "Адаптивное фоновое изображение во всю ширину"
+msgstr "Imagen de fondo responsiva de ancho completo"
 
 #: ../slides.php:201
 msgid "Pattern background image"
-msgstr "Узор фонового изображения"
+msgstr "Imagen de fondo en mosaico"
 
 #: ../slides.php:221
 msgid "The in animation of the slide."
-msgstr "Анимация появления слайда."
+msgstr "La animación de entrada de la diapositiva"
 
 #: ../slides.php:240
 msgid "The out animation of the slide."
-msgstr "Анимация исчезания слайда."
+msgstr "La animación de salida de la diapositiva"
 
 #: ../slides.php:253
 msgid "The time that the slide will remain on the screen."
-msgstr "Как долго показывать слайд."
+msgstr "El tiempo que la diapositiva permanecerá en la pantalla"
 
 #: ../slides.php:257
 msgid "Ease In"
-msgstr "Время ввода"
+msgstr "Suavizado de entrada"
 
 #: ../slides.php:266
 msgid "The time that the slide will take to get in."
-msgstr "Скорость вводящей анимации."
+msgstr "El tiempo que la diapositiva tardará en entrar."
 
 #: ../slides.php:270
 msgid "Ease Out"
-msgstr "Время вывода"
+msgstr "Suavizado de salida"
 
 #: ../slides.php:279
 msgid "The time that the slide will take to get out."
-msgstr "Скорость выводящей анимации."
+msgstr "El tiempo que la diapositiva tardará en salir"
 
 #: ../slides.php:303
 msgid ""
 "Open the link (e.g.: http://www.google.it) when the user clicks on the "
 "background. Leave it empty if you don't want it."
 msgstr ""
-"Открывать какую-то ссылку при нажатии на фоновое изображение Оставьте пустым "
-"если в этом нет необходимости."
+"Abrir el enlace (ej: http://google.com) cuando el usuario hace click en el "
+"fondo. Dejar en blanco si no deseas esto."
 
 #: ../slides.php:315
 msgid "Apply CSS to the slide."
-msgstr "Применить CSS к слайду."
+msgstr "Reglas CSS para la diapositiva"

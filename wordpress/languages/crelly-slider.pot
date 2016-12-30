@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Crelly Slider 1.1.0\n"
-"POT-Creation-Date: 2016-03-09 16:39+0100\n"
+"POT-Creation-Date: 2016-10-31 15:56+0100\n"
 "PO-Revision-Date: 2015-03-15 13:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -369,6 +369,18 @@ msgstr ""
 msgid "Loop video"
 msgstr ""
 
+#: ../elements.php:774 ../elements.php:777 ../elements.php:780
+#: ../elements.php:793 ../elements.php:796 ../elements.php:799
+#: ../slider.php:10
+msgid "Yes"
+msgstr ""
+
+#: ../elements.php:774 ../elements.php:777 ../elements.php:780
+#: ../elements.php:793 ../elements.php:796 ../elements.php:799
+#: ../slider.php:11
+msgid "No"
+msgstr ""
+
 #: ../elements.php:786
 msgid ""
 "The video will automatically restart from the beginning when it reaches "
@@ -449,14 +461,6 @@ msgstr ""
 
 #: ../slider.php:7
 msgid "Fixed"
-msgstr ""
-
-#: ../slider.php:10
-msgid "Yes"
-msgstr ""
-
-#: ../slider.php:11
-msgid "No"
 msgstr ""
 
 #: ../slider.php:17 ../slider.php:21

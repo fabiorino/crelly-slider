@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /********************/
 /** AJAX CALLBACKS **/
 /********************/
@@ -13,14 +15,14 @@ function crellyslider_wp_insert_rows($row_arrays = array(), $wp_table_name) {
 	$place_holders = array();
 	$query = "";
 	$query_columns = "";
-	
+
 	$query .= "INSERT INTO {$wp_table_name} (";
-	
+
 	        foreach($row_arrays as $count => $row_array)
 	        {
-	
+
 	            foreach($row_array as $key => $value) {
-	
+
 	                if($count == 0) {
 	                    if($query_columns) {
 	                    $query_columns .= ",".$key."";
@@ -28,9 +30,9 @@ function crellyslider_wp_insert_rows($row_arrays = array(), $wp_table_name) {
 	                    $query_columns .= "".$key."";
 	                    }
 	                }
-	
+
 	                $values[] =  $value;
-	
+
 	                if(is_numeric($value)) {
 	                    if(isset($place_holders[$count])) {
 	                    $place_holders[$count] .= ", '%d'";
@@ -48,17 +50,17 @@ function crellyslider_wp_insert_rows($row_arrays = array(), $wp_table_name) {
 	                    // mind closing the GAP
 	                    $place_holders[$count] .= ")";
 	        }
-	
+
 	$query .= " $query_columns ) VALUES ";
-	
+
 	$query .= implode(', ', $place_holders);
-	
+
 	if($wpdb->query($wpdb->prepare($query, $values))){
 	    return true;
 	} else {
 	    return false;
 	}
-	
+
 }
 
 // Add slider
@@ -66,20 +68,20 @@ add_action('wp_ajax_crellyslider_addSlider', 'crellyslider_addSlider_callback');
 function crellyslider_addSlider_callback() {
 	global $wpdb;
 	$options = $_POST['datas'];
-	
+
 	$output = crellyslider_insertSliderSQL($options);
-	
+
 	// Returning
-	$output = json_encode($wpdb->insert_id);
+	$output = json_encode(esc_sql($wpdb->insert_id));
 	if(is_array($output)) print_r($output);
 	else echo $output;
-	
+
 	die();
 }
 
 function crellyslider_insertSliderSQL($options) {
 	global $wpdb;
-	
+
 	return $wpdb->insert(
 		$wpdb->prefix . 'crellyslider_sliders',
 		array(
@@ -121,7 +123,12 @@ function crellyslider_editSlider_callback() {
 	global $wpdb;
 	$options = $_POST['datas'];
 	$table_name = $wpdb->prefix . 'crellyslider_sliders';
-		
+
+	if(!CrellySliderCommon::sliderExists((esc_sql($options['id'])))) {
+		echo json_encode(false);
+		return;
+	}
+
 	$output = $wpdb->update(
 		$table_name,
 		array(
@@ -139,7 +146,7 @@ function crellyslider_editSlider_callback() {
 			'callbacks' => $options['callbacks'],
 			'enableSwipe' => $options['enableSwipe'],
 		),
-		array('id' => $options['id']), 
+		array('id' => esc_sql($options['id'])),
 		array(
 			'%s',
 			'%s',
@@ -157,12 +164,12 @@ function crellyslider_editSlider_callback() {
 		),
 		array('%d')
 	);
-	
+
 	// Returning
 	$output = json_encode($output);
 	if(is_array($output)) print_r($output);
 	else echo $output;
-	
+
 	die();
 }
 
@@ -171,24 +178,33 @@ add_action('wp_ajax_crellyslider_editSlides', 'crellyslider_editSlides_callback'
 function crellyslider_editSlides_callback() {
 	global $wpdb;
 	$options = $_POST['datas'];
-	
+
+	if(!CrellySliderCommon::sliderExists((esc_sql($options['slider_parent'])))) {
+		echo json_encode(false);
+		return;
+	}
+
 	$output = true;
-	
+
 	// Remove all the old slides
-	$output = $wpdb->delete($wpdb->prefix . 'crellyslider_slides', array('slider_parent' => $options['slider_parent']), array('%d'));
+	$output = $wpdb->delete($wpdb->prefix . 'crellyslider_slides', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
 	if($output === false) {
 		echo json_encode(false);
 	}
 	else {
 		// It's impossible to have 0 slides (jQuery checks it)
+		if(count($options['options']) == 0) {
+			echo json_encode(false);
+			return;
+		}
 		$output = crellyslider_wp_insert_rows($options['options'], $wpdb->prefix . 'crellyslider_slides');
-		
+
 		// Returning
 		$output = json_encode($output);
 		if(is_array($output)) print_r($output);
 		else echo $output;
 	}
-	
+
 	die();
 }
 
@@ -197,11 +213,16 @@ add_action('wp_ajax_crellyslider_editElements', 'crellyslider_editElements_callb
 function crellyslider_editElements_callback() {
 	global $wpdb;
 	$options = $_POST['datas'];
-	
-	$output = true;	
-	
+
+	if(!CrellySliderCommon::sliderExists((esc_sql($options['slider_parent'])))) {
+		echo json_encode(false);
+		return;
+	}
+
+	$output = true;
+
 	// Remove all the old elements
-	$output = $wpdb->delete($wpdb->prefix . 'crellyslider_elements', array('slider_parent' => $options['slider_parent']), array('%d'));
+	$output = $wpdb->delete($wpdb->prefix . 'crellyslider_elements', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
 	if($output === false) {
 		echo json_encode(false);
 	}
@@ -211,18 +232,18 @@ function crellyslider_editElements_callback() {
 		if(empty($quick_temp)) {
 			echo json_encode(true);
 		}
-		else {			
+		else {
 			$options_array = json_decode(stripslashes($options['options']));
-			
+
 			$output = crellyslider_wp_insert_rows($options_array, $wpdb->prefix . 'crellyslider_elements');
-			
+
 			// Returning
 			$output = json_encode($output);
 			if(is_array($output)) print_r($output);
 			else echo $output;
 		}
 	}
-	
+
 	die();
 }
 
@@ -231,35 +252,40 @@ add_action('wp_ajax_crellyslider_deleteSlider', 'crellyslider_deleteSlider_callb
 function crellyslider_deleteSlider_callback() {
 	global $wpdb;
 	$options = $_POST['datas'];
-	
+
+	if(!CrellySliderCommon::sliderExists((esc_sql($options['id'])))) {
+		echo json_encode(false);
+		return;
+	}
+
 	$real_output = true;
-	
+
 	// Delete slider
-	$table_name = $wpdb->prefix . 'crellyslider_sliders';		
-	$output = $wpdb->delete($table_name, array('id' => $options['id']), array('%d'));
+	$table_name = $wpdb->prefix . 'crellyslider_sliders';
+	$output = $wpdb->delete($table_name, array('id' => esc_sql($options['id'])), array('%d'));
 	if($output === false) {
 		$real_output = false;
 	}
-	
+
 	// Delete slides
-	$table_name = $wpdb->prefix . 'crellyslider_slides';		
-	$output = $wpdb->delete($table_name, array('slider_parent' => $options['id']), array('%d'));
+	$table_name = $wpdb->prefix . 'crellyslider_slides';
+	$output = $wpdb->delete($table_name, array('slider_parent' => esc_sql($options['id'])), array('%d'));
 	if($output === false) {
 		$real_output = false;
 	}
-	
+
 	// Delete elements
-	$table_name = $wpdb->prefix . 'crellyslider_elements';		
-	$output = $wpdb->delete($table_name, array('slider_parent' => $options['id']), array('%d'));
+	$table_name = $wpdb->prefix . 'crellyslider_elements';
+	$output = $wpdb->delete($table_name, array('slider_parent' => esc_sql($options['id'])), array('%d'));
 	if($output === false) {
 		$real_output = false;
 	}
-	
+
 	// Returning
 	$real_output = json_encode($real_output);
 	if(is_array($real_output)) print_r($real_output);
 	else echo $real_output;
-	
+
 	die();
 }
 
@@ -268,30 +294,35 @@ add_action('wp_ajax_crellyslider_duplicateSlider', 'crellyslider_duplicateSlider
 function crellyslider_duplicateSlider_callback() {
 	global $wpdb;
 	$options = $_POST['datas'];
-	
+
+	if(!CrellySliderCommon::sliderExists((esc_sql($options['id'])))) {
+		echo json_encode(false);
+		return;
+	}
+
 	$output = true;
 	$real_output = true;
-	
-	$slider_id = $options['id'];
-	
+
+	$slider_id = esc_sql($options['id']);
+
 	$cloned_slider_name = '';
 	$cloned_slider_alias = '';
-	
-	$sliders = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = \'' . $slider_id . '\'', ARRAY_A);
+
+	$sliders = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = %d', $slider_id), ARRAY_A);
 	foreach($sliders as $slider) {
-		$cloned_slider_name = $slider['name'] = $slider['name'] . '_' . __('Copy', 'crellyslider');
-		$cloned_slider_alias = $slider['alias'] = $slider['alias'] . '_' . __('copy', 'crellyslider');
+		$cloned_slider_name = $slider['name'] = $slider['name'] . '_' . __('Copy', 'crelly-slider');
+		$cloned_slider_alias = $slider['alias'] = $slider['alias'] . '_' . __('copy', 'crelly-slider');
 		$output = crellyslider_insertSliderSQL($slider);
 	}
-	
+
 	if($output === false) {
 		$real_output = false;
 	}
 	else {
 		$cloned_slider_id = $wpdb->insert_id;
-		
+
 		// Clone slides
-		$slides = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = ' . $slider_id . ' ORDER BY position', ARRAY_A);
+		$slides = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d ORDER BY position', $slider_id), ARRAY_A);
 		if(empty($slides)) {
 			$output = true;
 		}
@@ -305,9 +336,9 @@ function crellyslider_duplicateSlider_callback() {
 				$output = false;
 			}
 		}
-		
+
 		// Clone elements
-		$elements = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = ' . $slider_id, ARRAY_A);
+		$elements = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d', $slider_id), ARRAY_A);
 		if(empty($elements)) {
 			$output = true;
 		}
@@ -320,13 +351,13 @@ function crellyslider_duplicateSlider_callback() {
 			if($temp === false) {
 				$output = false;
 			}
-			
+
 			if($output === false) {
 				$real_output = false;
 			}
 		}
 	}
-	
+
 	if($real_output === true) {
 		$real_output = array(
 			'response' => true,
@@ -343,31 +374,36 @@ function crellyslider_duplicateSlider_callback() {
 			'cloned_slider_alias' => false,
 		);
 	}
-	
+
 	// Returning
 	$real_output = json_encode($real_output);
 	if(is_array($real_output)) print_r($real_output);
 	else echo $real_output;
-	
+
 	die();
 }
 
-// Exports the slider in xml
+// Exports the slider in .zip
 add_action('wp_ajax_crellyslider_exportSlider', 'crellyslider_exportSlider_callback');
 function crellyslider_exportSlider_callback() {
 	global $wpdb;
-	
+
 	// Clear the temp folder
 	array_map('unlink', glob(CS_PATH . '/wordpress/temp/*'));
-	
+
 	$options = $_POST['datas'];
-	
+
+	if(!CrellySliderCommon::sliderExists((esc_sql($options['id'])))) {
+		echo json_encode(false);
+		return;
+	}
+
 	$real_output = true;
-	
+
 	$result = array();
-	
+
 	// Get the slider
-	$sliders = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = \'' . $options['id'] . '\'', ARRAY_A);
+	$sliders = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE id = %d', esc_sql($options['id'])), ARRAY_A);
 	if(empty($sliders)) {
 		$real_output = false;
 	}
@@ -377,21 +413,21 @@ function crellyslider_exportSlider_callback() {
 		}
 		$result['sliders'] = $sliders;
 	}
-	
+
 	$zip = new ZipArchive();
 	$filename = 'crellyslider-' . $sliders[0]['alias'] . '.zip';
 	if($zip->open(CS_PATH . '/wordpress/temp/' . $filename, ZipArchive::CREATE) !== TRUE) {
 		echo false;
 		die();
 	}
-	
+
 	// Get the slides
-	$slides = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = ' . $options['id'] . ' ORDER BY position', ARRAY_A);
+	$slides = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d ORDER BY position', esc_sql($options['id'])), ARRAY_A);
 	if(! empty($slides)) {
 		foreach($slides as $key => $temp) {
 			unset($slides[$key]['id']);
 			unset($slides[$key]['slider_parent']);
-			
+
 			// Add images to zip and remove media directory URLs
 			if($slides[$key]['background_type_image'] != 'none' && $slides[$key]['background_type_image'] != 'undefined') {
 				$img = $slides[$key]['background_type_image'];
@@ -401,14 +437,14 @@ function crellyslider_exportSlider_callback() {
 		}
 		$result['slides'] = $slides;
 	}
-	
+
 	// Get the elements
-	$elements = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = ' . $options['id'], ARRAY_A);
+	$elements = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d', esc_sql($options['id'])), ARRAY_A);
 	if(! empty($elements)) {
 		foreach($elements as $key => $temp) {
 			unset($elements[$key]['id']);
 			unset($elements[$key]['slider_parent']);
-			
+
 			// Add images to zip and remove media directory URLs
 			if($elements[$key]['type'] == 'image') {
 				$img = $elements[$key]['image_src'];
@@ -418,12 +454,12 @@ function crellyslider_exportSlider_callback() {
 		}
 		$result['elements'] = $elements;
 	}
-	
-	$json = json_encode($result);	
+
+	$json = json_encode($result);
 	$zip->addFromString("slider.json", $json);
-	
+
 	$zip->close();
-	
+
 	if($real_output === true) {
 		$real_output = array(
 			'response' => true,
@@ -436,12 +472,12 @@ function crellyslider_exportSlider_callback() {
 			'url' => false,
 		);
 	}
-	
+
 	// Returning
 	$real_output = json_encode($real_output);
 	if(is_array($real_output)) print_r($real_output);
 	else echo $real_output;
-	
+
 	die();
 }
 
@@ -449,35 +485,35 @@ function crellyslider_exportSlider_callback() {
 add_action('wp_ajax_crellyslider_importSlider', 'crellyslider_importSlider_callback');
 function crellyslider_importSlider_callback() {
 	global $wpdb;
-	
+
 	// Clear the temp folder
 	array_map('unlink', glob(CS_PATH . '/wordpress/temp/*'));
-	
-	foreach($_FILES as $file) {		
+
+	foreach($_FILES as $file) {
 		$output = true;
 		$real_output = true;
-		
+
 		$zip = new ZipArchive();
 		if($zip->open($file['tmp_name']) !== TRUE) {
 			echo false;
 			die();
 		}
-		
+
 		$zip->extractTo(CS_PATH . '/wordpress/temp/');
-		
+
 		$imported_array = json_decode(file_get_contents(CS_PATH . '/wordpress/temp/slider.json'));
-		
+
 		$sliders = $imported_array->sliders;
 		foreach($sliders as $slider) {
 			$output = crellyslider_insertSliderSQL((array) $slider);
 		}
-		
+
 		if($output === false) {
 			$real_output = false;
 		}
 		else {
 			$imported_slider_id = $wpdb->insert_id;
-			
+
 			// Import slides
 			$slides = $imported_array->slides;
 			if(empty($slides)) {
@@ -486,10 +522,14 @@ function crellyslider_importSlider_callback() {
 			else {
 				foreach($slides as $key => $slide) {
 					$slides[$key]->slider_parent = $imported_slider_id;
-					
+
 					// Set background images
 					if($slides[$key]->background_type_image != 'undefined' && $slides[$key]->background_type_image != 'none') {
 						$upload = media_sideload_image(CS_PLUGIN_URL . '/wordpress/temp/' . $slides[$key]->background_type_image, 0, null, 'src');
+						if(is_wp_error($upload)) {
+							echo json_encode(false);
+							return;
+						}
 						$slides[$key]->background_type_image = $upload;
 					}
 				}
@@ -498,7 +538,7 @@ function crellyslider_importSlider_callback() {
 					$output = false;
 				}
 			}
-			
+
 			// Import elements
 			$elements = (array) $imported_array->elements;
 			if(empty($elements)) {
@@ -507,10 +547,14 @@ function crellyslider_importSlider_callback() {
 			else {
 				foreach($elements as $key => $element) {
 					$elements[$key]->slider_parent = $imported_slider_id;
-					
+
 					// Set images
 					if($elements[$key]->type == 'image') {
 						$upload = media_sideload_image(CS_PLUGIN_URL . '/wordpress/temp/' . $elements[$key]->image_src, 0, null, 'src');
+						if(is_wp_error($upload)) {
+							echo json_encode(false);
+							return;
+						}
 						$elements[$key]->image_src = $upload;
 					}
 				}
@@ -518,13 +562,13 @@ function crellyslider_importSlider_callback() {
 				if($temp === false) {
 					$output = false;
 				}
-				
+
 				if($output === false) {
 					$real_output = false;
 				}
 			}
 		}
-		
+
 		if($real_output === true) {
 			$real_output = array(
 				'response' => true,
@@ -541,12 +585,12 @@ function crellyslider_importSlider_callback() {
 				'imported_slider_alias' => false,
 			);
 		}
-		
+
 		// Returning
 		$real_output = json_encode($real_output);
 		if(is_array($real_output)) print_r($real_output);
 		else echo $real_output;
-		
+
 		die();
 	}
 }

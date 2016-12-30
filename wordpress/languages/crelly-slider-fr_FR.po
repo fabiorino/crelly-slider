@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Crelly Slider 1.1.0\n"
-"POT-Creation-Date: 2016-03-08 20:28+0100\n"
-"PO-Revision-Date: 2016-03-09 16:47+0100\n"
+"POT-Creation-Date: 2016-10-31 15:46+0100\n"
+"PO-Revision-Date: 2016-10-31 15:46+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"Last-Translator: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_FR\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../admin.php:48
@@ -58,8 +58,7 @@ msgstr "La diapositive sera supprimée. Êtes-vous sûr?"
 #: ../admin.php:245
 msgid "You can't delete this. You must have at least one slide."
 msgstr ""
-"Vous ne pouvez pas supprimer cela. Vous devez avoir au moins une "
-"diapositive."
+"Vous ne pouvez pas supprimer cela. Vous devez avoir au moins une diapositive."
 
 #: ../admin.php:246
 msgid "The slider will be deleted. Are you sure?"
@@ -120,33 +119,28 @@ msgstr "Supprimer élément"
 msgid "Duplicate element"
 msgstr "Dupliquer élément"
 
-#: ../elements.php:215 ../elements.php:466 ../elements.php:716
-#: ../slides.php:51 ../slides.php:82 ../slides.php:127 ../slides.php:130
+#: ../elements.php:215 ../elements.php:466 ../elements.php:716 ../slides.php:51
+#: ../slides.php:82 ../slides.php:127 ../slides.php:130
 msgid "None"
 msgstr "Aucun"
 
-#: ../elements.php:216 ../elements.php:467 ../elements.php:717
-#: ../slides.php:58
+#: ../elements.php:216 ../elements.php:467 ../elements.php:717 ../slides.php:58
 msgid "Slide down"
 msgstr "Glisser vers le bas"
 
-#: ../elements.php:217 ../elements.php:468 ../elements.php:718
-#: ../slides.php:57
+#: ../elements.php:217 ../elements.php:468 ../elements.php:718 ../slides.php:57
 msgid "Slide up"
 msgstr "Glisser vers le haut"
 
-#: ../elements.php:218 ../elements.php:469 ../elements.php:719
-#: ../slides.php:55
+#: ../elements.php:218 ../elements.php:469 ../elements.php:719 ../slides.php:55
 msgid "Slide left"
 msgstr "Glisser vers la gauche"
 
-#: ../elements.php:219 ../elements.php:470 ../elements.php:720
-#: ../slides.php:56
+#: ../elements.php:219 ../elements.php:470 ../elements.php:720 ../slides.php:56
 msgid "Slide right"
 msgstr "Glisser vers la droite"
 
-#: ../elements.php:220 ../elements.php:471 ../elements.php:721
-#: ../slides.php:52
+#: ../elements.php:220 ../elements.php:471 ../elements.php:721 ../slides.php:52
 msgid "Fade"
 msgstr "Fondu"
 
@@ -158,13 +152,11 @@ msgstr "Fondu vers le bas"
 msgid "Fade up"
 msgstr "Fondu vers le haut"
 
-#: ../elements.php:223 ../elements.php:474 ../elements.php:724
-#: ../slides.php:53
+#: ../elements.php:223 ../elements.php:474 ../elements.php:724 ../slides.php:53
 msgid "Fade left"
 msgstr "Fondu vers la gauche"
 
-#: ../elements.php:224 ../elements.php:475 ../elements.php:725
-#: ../slides.php:54
+#: ../elements.php:224 ../elements.php:475 ../elements.php:725 ../slides.php:54
 msgid "Fade right"
 msgstr "fondu vers la droite"
 
@@ -188,18 +180,18 @@ msgstr "Fondu vers la droite"
 msgid "Element Options"
 msgstr "Options de l'élément"
 
-#: ../elements.php:241 ../elements.php:491 ../elements.php:742
-#: ../slider.php:59 ../slides.php:71
+#: ../elements.php:241 ../elements.php:491 ../elements.php:742 ../slider.php:59
+#: ../slides.php:71
 msgid "Option"
 msgstr "Option"
 
-#: ../elements.php:242 ../elements.php:492 ../elements.php:743
-#: ../slider.php:60 ../slides.php:72
+#: ../elements.php:242 ../elements.php:492 ../elements.php:743 ../slider.php:60
+#: ../slides.php:72
 msgid "Parameter"
 msgstr "Paramètre"
 
-#: ../elements.php:243 ../elements.php:493 ../elements.php:744
-#: ../slider.php:61 ../slides.php:73
+#: ../elements.php:243 ../elements.php:493 ../elements.php:744 ../slider.php:61
+#: ../slides.php:73
 msgid "Description"
 msgstr "Description"
 

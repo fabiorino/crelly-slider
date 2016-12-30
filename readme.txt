@@ -1,23 +1,21 @@
 === Crelly Slider ===
 Contributors:  fabiorino
-Donate link: http://fabiorino1.altervista.org/projects/crellyslider/contribute-and-support/
-Tags: slider, slides, animations, drag & drop, drag and drop, layers, elements
+Donate link: http://crellyslider.tk/contribute-and-support/
+Tags: animations, layers, texts, images, videos
 Requires at least: 3.6.0
-Tested up to: 4.4
-Stable tag: 1.1.1
+Tested up to: 4.7
+Stable tag: 1.1.2
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Free Responsive Slider with Elements and Layers Animations, featuring a Drag & Drop slides Builder.
+A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
 
 == Description ==
 
-= Crelly Slider has Layers Animations, is Free, Responsive and Easy to Use =
-<br />
-Crelly Slider is a Free / Open Source WordPress slider with a powerful Drag & Drop Builder. You can add Texts and Images using animations and transitions. It's perfect to display your creative content in posts and pages. With it's tons of features, Crelly Slider is the best free solution for your online WebSite.
+Crelly Slider is a Free / Open Source responsive WordPress slider that supports layers. You can add Texts, Images, YouTube/Vimeo videos using a powerful Drag & Drop Builder and animate each of them. It is perfect to display your creative content in posts and pages.
 <br />
 <br />
-<a href="http://fabiorino1.altervista.org/projects/crellyslider/">Official WebSite (with live demo)</a>
+<a href="http://crellyslider.tk/">Official WebSite (with live demo)</a>
 <br />
 = User Friendly Admin Panel =
 Crelly Slider does not require any Coding Knowledge. With the simple admin panel you will be able to create the sliders in the easiest way. Upload images with the default WordPress interface or choose colors using the picker.
@@ -45,7 +43,7 @@ Click Install.
 <br />
 Click Activate.
 <br />
-You can find the documentation <a href="http://fabiorino1.altervista.org/projects/crellyslider/documentation/">here</a>.
+You can find the documentation <a href="http://crellyslider.tk/documentation/">here</a>.
 
 == Screenshots ==
 
@@ -55,6 +53,10 @@ You can find the documentation <a href="http://fabiorino1.altervista.org/project
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.1.2 =
+* Bug fix: security issues
+* Other minor changes and bug fixes
 
 = 1.1.1 =
 * Bug fix: sometimes, the slider got stuck at loading screen
