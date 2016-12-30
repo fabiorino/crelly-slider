@@ -3,8 +3,13 @@ Contributors:  fabiorino
 Donate link: http://crellyslider.tk/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.6.0
+<<<<<<< HEAD
 Tested up to: 4.7
 Stable tag: 1.1.2
+=======
+Tested up to: 4.6
+Stable tag: 1.1.1
+>>>>>>> origin/master
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
