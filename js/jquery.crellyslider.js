@@ -1,12 +1,20 @@
 /**
  * Plugin Name: Crelly Slider
- * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
- * Description: The first free WordPress slider with elements animations.
- * Version: 1.1.2
+ * Plugin URI: http://crellyslider.tk/
+ * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
+ * Version: 1.2.0
  * Author: fabiorino
- * Author URI: http://fabiorino1.altervista.org
+ * Author URI: https://www.linkedin.com/in/fabio-rinaldi-b1021b122/
  * License: MIT
  */
+
+/*************/
+/** GLOBALS **/
+/*************/
+
+// Using these two variables we can check if we still need to load the APIs for YouTube and Vimeo
+var crellyslider_youtube_api_ready = false;
+var crellyslider_vimeo_api_ready = false;
 
 (function($) {
 
@@ -18,16 +26,24 @@
 	(function(e,t,n){typeof define=="function"&&define.amd?define(["jquery"],function(r){return n(r,e,t),r.mobile}):n(e.jQuery,e,t)})(this,document,function(e,t,n,r){(function(e,t,n,r){function T(e){while(e&&typeof e.originalEvent!="undefined")e=e.originalEvent;return e}function N(t,n){var i=t.type,s,o,a,l,c,h,p,d,v;t=e.Event(t),t.type=n,s=t.originalEvent,o=e.event.props,i.search(/^(mouse|click)/)>-1&&(o=f);if(s)for(p=o.length,l;p;)l=o[--p],t[l]=s[l];i.search(/mouse(down|up)|click/)>-1&&!t.which&&(t.which=1);if(i.search(/^touch/)!==-1){a=T(s),i=a.touches,c=a.changedTouches,h=i&&i.length?i[0]:c&&c.length?c[0]:r;if(h)for(d=0,v=u.length;d<v;d++)l=u[d],t[l]=h[l]}return t}function C(t){var n={},r,s;while(t){r=e.data(t,i);for(s in r)r[s]&&(n[s]=n.hasVirtualBinding=!0);t=t.parentNode}return n}function k(t,n){var r;while(t){r=e.data(t,i);if(r&&(!n||r[n]))return t;t=t.parentNode}return null}function L(){g=!1}function A(){g=!0}function O(){E=0,v.length=0,m=!1,A()}function M(){L()}function _(){D(),c=setTimeout(function(){c=0,O()},e.vmouse.resetTimerDuration)}function D(){c&&(clearTimeout(c),c=0)}function P(t,n,r){var i;if(r&&r[t]||!r&&k(n.target,t))i=N(n,t),e(n.target).trigger(i);return i}function H(t){var n=e.data(t.target,s),r;!m&&(!E||E!==n)&&(r=P("v"+t.type,t),r&&(r.isDefaultPrevented()&&t.preventDefault(),r.isPropagationStopped()&&t.stopPropagation(),r.isImmediatePropagationStopped()&&t.stopImmediatePropagation()))}function B(t){var n=T(t).touches,r,i,o;n&&n.length===1&&(r=t.target,i=C(r),i.hasVirtualBinding&&(E=w++,e.data(r,s,E),D(),M(),d=!1,o=T(t).touches[0],h=o.pageX,p=o.pageY,P("vmouseover",t,i),P("vmousedown",t,i)))}function j(e){if(g)return;d||P("vmousecancel",e,C(e.target)),d=!0,_()}function F(t){if(g)return;var n=T(t).touches[0],r=d,i=e.vmouse.moveDistanceThreshold,s=C(t.target);d=d||Math.abs(n.pageX-h)>i||Math.abs(n.pageY-p)>i,d&&!r&&P("vmousecancel",t,s),P("vmousemove",t,s),_()}function I(e){if(g)return;A();var t=C(e.target),n,r;P("vmouseup",e,t),d||(n=P("vclick",e,t),n&&n.isDefaultPrevented()&&(r=T(e).changedTouches[0],v.push({touchID:E,x:r.clientX,y:r.clientY}),m=!0)),P("vmouseout",e,t),d=!1,_()}function q(t){var n=e.data(t,i),r;if(n)for(r in n)if(n[r])return!0;return!1}function R(){}function U(t){var n=t.substr(1);return{setup:function(){q(this)||e.data(this,i,{});var r=e.data(this,i);r[t]=!0,l[t]=(l[t]||0)+1,l[t]===1&&b.bind(n,H),e(this).bind(n,R),y&&(l.touchstart=(l.touchstart||0)+1,l.touchstart===1&&b.bind("touchstart",B).bind("touchend",I).bind("touchmove",F).bind("scroll",j))},teardown:function(){--l[t],l[t]||b.unbind(n,H),y&&(--l.touchstart,l.touchstart||b.unbind("touchstart",B).unbind("touchmove",F).unbind("touchend",I).unbind("scroll",j));var r=e(this),s=e.data(this,i);s&&(s[t]=!1),r.unbind(n,R),q(this)||r.removeData(i)}}}var i="virtualMouseBindings",s="virtualTouchID",o="vmouseover vmousedown vmousemove vmouseup vclick vmouseout vmousecancel".split(" "),u="clientX clientY pageX pageY screenX screenY".split(" "),a=e.event.mouseHooks?e.event.mouseHooks.props:[],f=e.event.props.concat(a),l={},c=0,h=0,p=0,d=!1,v=[],m=!1,g=!1,y="addEventListener"in n,b=e(n),w=1,E=0,S,x;e.vmouse={moveDistanceThreshold:10,clickDistanceThreshold:10,resetTimerDuration:1500};for(x=0;x<o.length;x++)e.event.special[o[x]]=U(o[x]);y&&n.addEventListener("click",function(t){var n=v.length,r=t.target,i,o,u,a,f,l;if(n){i=t.clientX,o=t.clientY,S=e.vmouse.clickDistanceThreshold,u=r;while(u){for(a=0;a<n;a++){f=v[a],l=0;if(u===r&&Math.abs(f.x-i)<S&&Math.abs(f.y-o)<S||e.data(u,s)===f.touchID){t.preventDefault(),t.stopPropagation();return}}u=u.parentNode}}},!0)})(e,t,n),function(e){e.mobile={}}(e),function(e,t){var r={touch:"ontouchend"in n};e.mobile.support=e.mobile.support||{},e.extend(e.support,r),e.extend(e.mobile.support,r)}(e),function(e,t,r){function l(t,n,i,s){var o=i.type;i.type=n,s?e.event.trigger(i,r,t):e.event.dispatch.call(t,i),i.type=o}var i=e(n),s=e.mobile.support.touch,o="touchmove scroll",u=s?"touchstart":"mousedown",a=s?"touchend":"mouseup",f=s?"touchmove":"mousemove";e.each("touchstart touchmove touchend tap taphold swipe swipeleft swiperight scrollstart scrollstop".split(" "),function(t,n){e.fn[n]=function(e){return e?this.bind(n,e):this.trigger(n)},e.attrFn&&(e.attrFn[n]=!0)}),e.event.special.scrollstart={enabled:!0,setup:function(){function s(e,n){r=n,l(t,r?"scrollstart":"scrollstop",e)}var t=this,n=e(t),r,i;n.bind(o,function(t){if(!e.event.special.scrollstart.enabled)return;r||s(t,!0),clearTimeout(i),i=setTimeout(function(){s(t,!1)},50)})},teardown:function(){e(this).unbind(o)}},e.event.special.tap={tapholdThreshold:750,emitTapOnTaphold:!0,setup:function(){var t=this,n=e(t),r=!1;n.bind("vmousedown",function(s){function a(){clearTimeout(u)}function f(){a(),n.unbind("vclick",c).unbind("vmouseup",a),i.unbind("vmousecancel",f)}function c(e){f(),!r&&o===e.target?l(t,"tap",e):r&&e.preventDefault()}r=!1;if(s.which&&s.which!==1)return!1;var o=s.target,u;n.bind("vmouseup",a).bind("vclick",c),i.bind("vmousecancel",f),u=setTimeout(function(){e.event.special.tap.emitTapOnTaphold||(r=!0),l(t,"taphold",e.Event("taphold",{target:o}))},e.event.special.tap.tapholdThreshold)})},teardown:function(){e(this).unbind("vmousedown").unbind("vclick").unbind("vmouseup"),i.unbind("vmousecancel")}},e.event.special.swipe={scrollSupressionThreshold:30,durationThreshold:1e3,horizontalDistanceThreshold:30,verticalDistanceThreshold:30,getLocation:function(e){var n=t.pageXOffset,r=t.pageYOffset,i=e.clientX,s=e.clientY;if(e.pageY===0&&Math.floor(s)>Math.floor(e.pageY)||e.pageX===0&&Math.floor(i)>Math.floor(e.pageX))i-=n,s-=r;else if(s<e.pageY-r||i<e.pageX-n)i=e.pageX-n,s=e.pageY-r;return{x:i,y:s}},start:function(t){var n=t.originalEvent.touches?t.originalEvent.touches[0]:t,r=e.event.special.swipe.getLocation(n);return{time:(new Date).getTime(),coords:[r.x,r.y],origin:e(t.target)}},stop:function(t){var n=t.originalEvent.touches?t.originalEvent.touches[0]:t,r=e.event.special.swipe.getLocation(n);return{time:(new Date).getTime(),coords:[r.x,r.y]}},handleSwipe:function(t,n,r,i){if(n.time-t.time<e.event.special.swipe.durationThreshold&&Math.abs(t.coords[0]-n.coords[0])>e.event.special.swipe.horizontalDistanceThreshold&&Math.abs(t.coords[1]-n.coords[1])<e.event.special.swipe.verticalDistanceThreshold){var s=t.coords[0]>n.coords[0]?"swipeleft":"swiperight";return l(r,"swipe",e.Event("swipe",{target:i,swipestart:t,swipestop:n}),!0),l(r,s,e.Event(s,{target:i,swipestart:t,swipestop:n}),!0),!0}return!1},eventInProgress:!1,setup:function(){var t,n=this,r=e(n),s={};t=e.data(this,"mobile-events"),t||(t={length:0},e.data(this,"mobile-events",t)),t.length++,t.swipe=s,s.start=function(t){if(e.event.special.swipe.eventInProgress)return;e.event.special.swipe.eventInProgress=!0;var r,o=e.event.special.swipe.start(t),u=t.target,l=!1;s.move=function(t){if(!o||t.isDefaultPrevented())return;r=e.event.special.swipe.stop(t),l||(l=e.event.special.swipe.handleSwipe(o,r,n,u),l&&(e.event.special.swipe.eventInProgress=!1)),Math.abs(o.coords[0]-r.coords[0])>e.event.special.swipe.scrollSupressionThreshold&&t.preventDefault()},s.stop=function(){l=!0,e.event.special.swipe.eventInProgress=!1,i.off(f,s.move),s.move=null},i.on(f,s.move).one(a,s.stop)},r.on(u,s.start)},teardown:function(){var t,n;t=e.data(this,"mobile-events"),t&&(n=t.swipe,delete t.swipe,t.length--,t.length===0&&e.removeData(this,"mobile-events")),n&&(n.start&&e(this).off(u,n.start),n.move&&i.off(f,n.move),n.stop&&i.off(a,n.stop))}},e.each({scrollstop:"scrollstart",taphold:"tap",swipeleft:"swipe.left",swiperight:"swipe.right"},function(t,n){e.event.special[t]={setup:function(){e(this).bind(n,e.noop)},teardown:function(){e(this).unbind(n)}}})}(e,this)});
 
 	// YouTube API:
-	var tag = document.createElement('script');
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	function loadYoutubeAPI() {
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+		crellyslider_youtube_api_ready = true;
+	}
 
 	// Vimeo API
-	var Froogaloop=function(){function e(a){return new e.fn.init(a)}function g(a,c,b){if(!b.contentWindow.postMessage)return!1;a=JSON.stringify({method:a,value:c});b.contentWindow.postMessage(a,h)}function l(a){var c,b;try{c=JSON.parse(a.data),b=c.event||c.method}catch(e){}"ready"!=b||k||(k=!0);if(!/^https?:\/\/player.vimeo.com/.test(a.origin))return!1;"*"===h&&(h=a.origin);a=c.value;var m=c.data,f=""===f?null:c.player_id;c=f?d[f][b]:d[b];b=[];if(!c)return!1;void 0!==a&&b.push(a);m&&b.push(m);f&&b.push(f);
-	return 0<b.length?c.apply(null,b):c.call()}function n(a,c,b){b?(d[b]||(d[b]={}),d[b][a]=c):d[a]=c}var d={},k=!1,h="*";e.fn=e.prototype={element:null,init:function(a){"string"===typeof a&&(a=document.getElementById(a));this.element=a;return this},api:function(a,c){if(!this.element||!a)return!1;var b=this.element,d=""!==b.id?b.id:null,e=c&&c.constructor&&c.call&&c.apply?null:c,f=c&&c.constructor&&c.call&&c.apply?c:null;f&&n(a,f,d);g(a,e,b);return this},addEvent:function(a,c){if(!this.element)return!1;
-	var b=this.element,d=""!==b.id?b.id:null;n(a,c,d);"ready"!=a?g("addEventListener",a,b):"ready"==a&&k&&c.call(null,d);return this},removeEvent:function(a){if(!this.element)return!1;var c=this.element,b=""!==c.id?c.id:null;a:{if(b&&d[b]){if(!d[b][a]){b=!1;break a}d[b][a]=null}else{if(!d[a]){b=!1;break a}d[a]=null}b=!0}"ready"!=a&&b&&g("removeEventListener",a,c)}};e.fn.init.prototype=e.fn;window.addEventListener?window.addEventListener("message",l,!1):window.attachEvent("onmessage",l);return window.Froogaloop=
-	window.$f=e}();
+	function loadVimeoAPI() {
+		var Froogaloop=function(){function e(a){return new e.fn.init(a)}function g(a,c,b){if(!b.contentWindow.postMessage)return!1;a=JSON.stringify({method:a,value:c});b.contentWindow.postMessage(a,h)}function l(a){var c,b;try{c=JSON.parse(a.data),b=c.event||c.method}catch(e){}"ready"!=b||k||(k=!0);if(!/^https?:\/\/player.vimeo.com/.test(a.origin))return!1;"*"===h&&(h=a.origin);a=c.value;var m=c.data,f=""===f?null:c.player_id;c=f?d[f][b]:d[b];b=[];if(!c)return!1;void 0!==a&&b.push(a);m&&b.push(m);f&&b.push(f);
+		return 0<b.length?c.apply(null,b):c.call()}function n(a,c,b){b?(d[b]||(d[b]={}),d[b][a]=c):d[a]=c}var d={},k=!1,h="*";e.fn=e.prototype={element:null,init:function(a){"string"===typeof a&&(a=document.getElementById(a));this.element=a;return this},api:function(a,c){if(!this.element||!a)return!1;var b=this.element,d=""!==b.id?b.id:null,e=c&&c.constructor&&c.call&&c.apply?null:c,f=c&&c.constructor&&c.call&&c.apply?c:null;f&&n(a,f,d);g(a,e,b);return this},addEvent:function(a,c){if(!this.element)return!1;
+		var b=this.element,d=""!==b.id?b.id:null;n(a,c,d);"ready"!=a?g("addEventListener",a,b):"ready"==a&&k&&c.call(null,d);return this},removeEvent:function(a){if(!this.element)return!1;var c=this.element,b=""!==c.id?c.id:null;a:{if(b&&d[b]){if(!d[b][a]){b=!1;break a}d[b][a]=null}else{if(!d[a]){b=!1;break a}d[a]=null}b=!0}"ready"!=a&&b&&g("removeEventListener",a,c)}};e.fn.init.prototype=e.fn;window.addEventListener?window.addEventListener("message",l,!1):window.attachEvent("onmessage",l);return window.Froogaloop=
+		window.$f=e}();
+
+		crellyslider_vimeo_api_ready = true;
+	}
 
 	/*******************/
 	/** CRELLY SLIDER **/
@@ -71,8 +87,17 @@
 		/********************/
 
 		// EVERYTHING BEGINS HERE
+
+		// Load necessary APIs
+		if(! crellyslider_youtube_api_ready && thereAreVideos('youtube')) {
+			loadYoutubeAPI();
+		}
+		if(! crellyslider_vimeo_api_ready && thereAreVideos('vimeo')) {
+			loadVimeoAPI();
+		}
+
 		// Before initializing Crelly Slider, we have to wait for the YouTube API. I use the setInterval method to prevent compatibility issues with other plugins and to be sure that, if there is more than a slider loaded on the page, everything works
-		if((typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined')) {
+		if(crellyslider_youtube_api_ready && (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined')) {
 			var temp = setInterval(function() {
 				if(typeof(YT) != 'undefined' && typeof(YT.Player) != 'undefined') {
 					clearInterval(temp);
@@ -82,6 +107,19 @@
 		}
 		else {
 			init();
+		}
+
+		// Returns an array like this: {youtube = true, vimeo = false} if there are YouTube videos but not Vimeo videos
+		// This function can be called before init()
+		function thereAreVideos(platform) {
+			if(platform == 'youtube') {
+				return SLIDER.find('.cs-yt-iframe').length > 0 ? true : false;
+			}
+			if(platform == 'vimeo') {
+				return SLIDER.find('.cs-vimeo-iframe').length > 0 ? true : false;
+			}
+
+			return -1;
 		}
 
 		// The slider constructor: runs automatically only the first time, sets the basic needs of the slider and the preloader then runs Crelly Slider
@@ -106,6 +144,8 @@
 				clone.clone().prependTo(prepend);
 				total_slides++;
 			}
+
+			orderSlides();
 
 			// Show controls (previous and next arrows)
 			if(settings.showControls) {
@@ -164,6 +204,58 @@
 					}
 				}, 100);
 			});
+		}
+
+		// Orders the slides by rearranging them in the DOM
+		function orderSlides() {
+			// If randomOrder is disabled and the initial slide is the first, the slides are already ordered
+			if(! settings.randomOrder && settings.startFromSlide == 0) {
+				return;
+			}
+
+			var slides_order = new Array();
+			var ordered_slides = new Array();
+
+			// Set the first slide according to the settings
+			if(settings.startFromSlide == -1) {
+				var index = Math.floor((Math.random() * total_slides));
+				slides_order[0] = index;
+				ordered_slides[0] = getSlide(index);
+			}
+			else {
+				slides_order[0] = settings.startFromSlide;
+				ordered_slides[0] = getSlide(settings.startFromSlide);
+			}
+
+			// Set all the other slides
+			for(var i = 1; i < total_slides; i++) {
+				var index;
+
+				if(settings.randomOrder) { // Get a random slide index that was never generated before
+					do {
+						index = Math.floor((Math.random() * total_slides));
+					} while(slides_order.indexOf(index) != -1);
+				}
+				else { // Get the next index
+					if(i + slides_order[0] < total_slides) {
+						index = i + slides_order[0];
+					}
+					else {
+						index = i + slides_order[0] - total_slides;
+					}
+				}
+
+				slides_order[i] = index;
+				ordered_slides[i] = getSlide(index);
+			}
+
+			// Delete all the slides
+			SLIDER.find(CRELLY).find(SLIDES).empty();
+
+			// Put the slides that are now ordered
+			for(var i = 0; i < total_slides; i++) {
+				SLIDER.find(CRELLY).find(SLIDES).append(ordered_slides[i]);
+			}
 		}
 
 		// Inits Youtube and Vimeo videos
@@ -464,18 +556,18 @@
 
 				// Set background. Background is set to both the preloader div and the bg div to fix the CSS blur effect
 				SLIDER.find(CRELLY).find('.cs-preloader').css({
-					'background-color' : getSlide(0).css('background-color'),
-					'background-image' : getSlide(0).css('background-image'),
-					'background-position' : getSlide(0).css('background-position'),
-					'background-repeat' : getSlide(0).css('background-repeat'),
-					'background-size' : getSlide(0).css('background-size'),
+					'background-color' : getSlide(current_slide).css('background-color'),
+					'background-image' : getSlide(current_slide).css('background-image'),
+					'background-position' : getSlide(current_slide).css('background-position'),
+					'background-repeat' : getSlide(current_slide).css('background-repeat'),
+					'background-size' : getSlide(current_slide).css('background-size'),
 				});
 				SLIDER.find(CRELLY).find('.cs-preloader > .cs-bg').css({
-					'background-color' : getSlide(0).css('background-color'),
-					'background-image' : getSlide(0).css('background-image'),
-					'background-position' : getSlide(0).css('background-position'),
-					'background-repeat' : getSlide(0).css('background-repeat'),
-					'background-size' : getSlide(0).css('background-size'),
+					'background-color' : getSlide(current_slide).css('background-color'),
+					'background-image' : getSlide(current_slide).css('background-image'),
+					'background-position' : getSlide(current_slide).css('background-position'),
+					'background-repeat' : getSlide(current_slide).css('background-repeat'),
+					'background-size' : getSlide(current_slide).css('background-size'),
 				});
 			}
 		}
@@ -948,6 +1040,7 @@
 			executeSlide(current_slide).done(function() {
 				if(! paused) {
 					current_slide = getNextSlide();
+
 					loopSlides();
 				}
 			});
@@ -1994,44 +2087,46 @@
 	/**************************/
 
 	$.fn.crellySlider = function(options) {
-        var settings = $.extend({
-			layout					: 'fixed',
-			responsive				: true,
-			startWidth				: 1140,
-			startHeight				: 500,
+      var settings = $.extend({
+				layout									: 'fixed',
+				responsive							: true,
+				startWidth							: 1140,
+				startHeight							: 500,
 
-			pauseOnHover			: true,
-			automaticSlide			: true,
-			showControls 			: true,
-			showNavigation			: true,
-			showProgressBar			: true,
-			enableSwipe				: true,
+				pauseOnHover						: true,
+				automaticSlide					: true,
+				randomOrder							: true,
+				startFromSlide					: 0, // -1 means random, >= 0 means the exact index
+				showControls 						: true,
+				showNavigation					: true,
+				showProgressBar					: true,
+				enableSwipe							: true,
 
-			slidesTime				: 3000,
-			elementsDelay			: 0,
-			elementsTime			: 'all',
-			slidesEaseIn			: 300,
-			elementsEaseIn			: 300,
-			slidesEaseOut			: 300,
-			elementsEaseOut			: 300,
-			ignoreElementsEaseOut 	: false,
+				slidesTime							: 3000,
+				elementsDelay						: 0,
+				elementsTime						: 'all',
+				slidesEaseIn						: 300,
+				elementsEaseIn					: 300,
+				slidesEaseOut						: 300,
+				elementsEaseOut					: 300,
+				ignoreElementsEaseOut 	: false,
 
-			videoAutoplay			: false,
-			videoLoop				: false,
+				videoAutoplay						: false,
+				videoLoop								: false,
 
-			beforeStart				: function() {},
-			beforeSetResponsive		: function() {},
-			beforeSlideStart		: function() {},
-			beforePause				: function() {},
-			beforeResume			: function() {},
-        }, options);
+				beforeStart							: function() {},
+				beforeSetResponsive			: function() {},
+				beforeSlideStart				: function() {},
+				beforePause							: function() {},
+				beforeResume						: function() {},
+      }, options);
 
-        return this.each(function() {
-			if(undefined == $(this).data('crellySlider')) {
-				var plugin = new $.CrellySlider(this, settings);
-				$(this).data('crellySlider', plugin);
-			}
-        });
+      return this.each(function() {
+				if(undefined == $(this).data('crellySlider')) {
+					var plugin = new $.CrellySlider(this, settings);
+					$(this).data('crellySlider', plugin);
+				}
+      });
     };
 
 })(jQuery);

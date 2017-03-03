@@ -224,6 +224,8 @@
 	border-spacing: 0px;
 	border-collapse: separate;
 	clear: left;
+	position: relative;
+	z-index: 999;
 }
 
 .cs-admin .cs-table th,
@@ -361,7 +363,7 @@
 	padding-right: 20px;
 	margin-right: 20px;
 	border-right: solid 1px #ddd;
-	text-transform: uppercase;	
+	text-transform: uppercase;
 	font-weight: bold;
 	outline: none;
 	display: block;
@@ -454,12 +456,12 @@
   margin: 0 auto;
   line-height: 1.5;
   white-space: nowrap;
-  
+
   line-height: 1.5;
   font-size: 14px;
   color: #000;
   font-family: 'Verdana', sans-serif;
-  
+
   /* Default slide background settings: */
   background-repeat: no-repeat;
   background-size: cover;
@@ -507,6 +509,8 @@
 
 .cs-admin .cs-slide .cs-elements .cs-elements-actions {
 	text-align: center;
+	z-index: 999;
+	position: relative;
 }
 
 .cs-admin .cs-slide .cs-elements .cs-void-element-settings {
@@ -550,4 +554,13 @@
 	-webkit-box-shadow: 0px 0px 0px 2px rgba(50, 50, 50, 0.75);
 	-moz-box-shadow: 0px 0px 0px 2px rgba(50, 50, 50, 0.75);
 	box-shadow: 0px 0px 0px 2px rgba(50, 50, 50, 0.75);
+}
+
+.cs-admin .cs-slide .cs-elements .cs-text-element-settings .cs-switch-editor {
+	margin-bottom: 15px;
+	text-align: right;
+}
+
+.cs-admin .cs-slide .cs-elements .cs-text-element-settings .mce-toolbar {
+	display: block !important;
 }

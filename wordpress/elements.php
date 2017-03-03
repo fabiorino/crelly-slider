@@ -12,11 +12,14 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 			if($slide->background_type_image != 'none') {
 				echo 'data-background-image-src="' . stripslashes($slide->background_type_image) . '"';
 			}
+
+			$background_url = CrellySliderCommon::getURL(stripslashes($slide->background_type_image));
+
 			?>
 			style="
 			width: <?php echo esc_attr($slider->startWidth); ?>px;
 			height: <?php echo esc_attr($slider->startHeight); ?>px;
-			background-image: url('<?php echo stripslashes($slide->background_type_image); ?>');
+			background-image: url('<?php echo $background_url; ?>');
 			background-color: <?php echo esc_attr($slide->background_type_color) == 'transparent' ? 'rgb(255, 255, 255)' : esc_attr($slide->background_type_color); ?>;
 			background-position: <?php echo esc_attr($slide->background_propriety_position_x) . ' ' . esc_attr($slide->background_propriety_position_y); ?>;
 			background-repeat: <?php echo esc_attr($slide->background_repeat); ?>;
@@ -75,7 +78,7 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 						case 'image':
 							?>
 							<img
-							src="<?php echo esc_url($element->image_src); ?>"
+							src="<?php echo CrellySliderCommon::getURL(stripslashes($element->image_src)); ?>"
 							alt="<?php echo esc_attr($element->image_alt); ?>"
 							style="
 							<?php
@@ -249,7 +252,7 @@ function crellyslider_printTextElement($element) {
 				<td class="cs-content">
 					<?php
 					if($void) echo '<textarea class="cs-element-inner_html">' . __('Text element', 'crelly-slider') . '</textarea>';
-					else echo '<textarea class="cs-element-inner_html">' . esc_textarea($element->inner_html) . '</textarea>';
+					else echo '<textarea class="cs-element-inner_html">' . esc_textarea(stripslashes($element->inner_html)) . '</textarea>';
 					?>
 				</td>
 				<td class="cs-description">
@@ -499,7 +502,7 @@ function crellyslider_printImageElement($element) {
 				<td class="cs-content">
 					<?php
 					if($void) echo '<input class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Open gallery', 'crelly-slider') . '" />';
-					else echo '<input data-src="' . esc_url($element->image_src) . '" data-alt="' . esc_attr($element->image_alt) . '" class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Open gallery', 'crelly-slider') . '" />';
+					else echo '<input data-src="' . stripslashes($element->image_src) . '" data-alt="' . esc_attr($element->image_alt) . '" class="cs-image-element-upload-button cs-button cs-is-default" type="button" value="' . __('Open gallery', 'crelly-slider') . '" />';
 					?>
 				</td>
 				<td class="cs-description">

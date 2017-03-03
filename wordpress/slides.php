@@ -317,6 +317,26 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 					<?php _e('Apply CSS to the slide.', 'crelly-slider'); ?>
 				</td>
 			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Draft', 'crelly-slider'); ?></td>
+				<td class="cs-content">
+					<select class="cs-slide-draft">
+						<?php
+						if(!$void && $slide->draft) {
+							echo '<option selected value="1">' . __('Yes', 'crelly-slider') . '</option>';
+							echo '<option value="0">' . __('No', 'crelly-slider') . '</option>';
+						}
+						else {
+							echo '<option value="1">' . __('Yes', 'crelly-slider') . '</option>';
+							echo '<option selected value="0">' . __('No', 'crelly-slider') . '</option>';
+						}
+						?>
+					</select>
+				</td>
+				<td class="cs-description">
+					<?php _e('If it is set to "Yes", the slide will not be displayed to the users.', 'crelly-slider'); ?>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 

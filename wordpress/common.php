@@ -40,5 +40,34 @@ class CrellySliderCommon {
 		}
 		return false;
 	}
+
+	// Returns the correct URL of an attachment
+	public static function getURL($attachment_url) {
+		// If the attachment ID is provided, get the URL
+		if(is_numeric($attachment_url)) {
+			return wp_get_attachment_url(intval($attachment_url));
+		}
+
+		// If a URL is provided, return the filtered URL
+		if($attachment_url != 'none' && $attachment_url != 'undefined' && $attachment_url != '') {
+			global $wpdb;
+			$attachment_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s'", $attachment_url));
+
+			if($attachment_id == NULL) {
+				return $attachment_url;
+			}
+
+			$ret = wp_get_attachment_url($attachment_id);
+
+			if($ret == false) {
+				return $attachment_url;
+			}
+
+			return $ret;
+		}
+
+		// If something else is provided, do not touch it
+		return $attachment_url;
+	}
 }
 ?>

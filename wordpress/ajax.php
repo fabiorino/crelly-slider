@@ -1,6 +1,24 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+/************************/
+/** EXTERNAL RESOURCES **/
+/************************/
+
+// Alternative to file_get_contents. If CURL is not installed, file_get_contents is called
+// http://stackoverflow.com/questions/3979802/alternative-to-file-get-contents
+function crellyslider_url_get_contents ($Url) {
+    if (!function_exists('curl_init')){
+        return file_get_contents($Url);
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $Url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
+}
+
 /********************/
 /** AJAX CALLBACKS **/
 /********************/
@@ -97,6 +115,8 @@ function crellyslider_insertSliderSQL($options) {
 			'showProgressBar' => $options['showProgressBar'],
 			'pauseOnHover' => $options['pauseOnHover'],
 			'callbacks' => $options['callbacks'],
+			'randomOrder' => $options['randomOrder'],
+			'startFromSlide' => $options['startFromSlide'],
 			'enableSwipe' => $options['enableSwipe'],
 		),
 		array(
@@ -112,6 +132,8 @@ function crellyslider_insertSliderSQL($options) {
 			'%d',
 			'%d',
 			'%s',
+			'%d',
+			'%d',
 			'%d',
 		)
 	);
@@ -144,6 +166,8 @@ function crellyslider_editSlider_callback() {
 			'showProgressBar' => $options['showProgressBar'],
 			'pauseOnHover' => $options['pauseOnHover'],
 			'callbacks' => $options['callbacks'],
+      'randomOrder' => $options['randomOrder'],
+      'startFromSlide' => $options['startFromSlide'],
 			'enableSwipe' => $options['enableSwipe'],
 		),
 		array('id' => esc_sql($options['id'])),
@@ -160,6 +184,8 @@ function crellyslider_editSlider_callback() {
 			'%d',
 			'%d',
 			'%s',
+			'%d',
+			'%d',
 			'%d',
 		),
 		array('%d')
@@ -197,6 +223,7 @@ function crellyslider_editSlides_callback() {
 			echo json_encode(false);
 			return;
 		}
+
 		$output = crellyslider_wp_insert_rows($options['options'], $wpdb->prefix . 'crellyslider_slides');
 
 		// Returning
@@ -430,9 +457,9 @@ function crellyslider_exportSlider_callback() {
 
 			// Add images to zip and remove media directory URLs
 			if($slides[$key]['background_type_image'] != 'none' && $slides[$key]['background_type_image'] != 'undefined') {
-				$img = $slides[$key]['background_type_image'];
-				$zip->addFromString(basename($img), file_get_contents($img));
-				$slides[$key]['background_type_image'] = basename($img);
+				$img = CrellySliderCommon::getURL($slides[$key]['background_type_image']);
+				$zip->addFromString(basename($img), crellyslider_url_get_contents($img));
+        $slides[$key]['background_type_image'] = basename($img);
 			}
 		}
 		$result['slides'] = $slides;
@@ -447,8 +474,8 @@ function crellyslider_exportSlider_callback() {
 
 			// Add images to zip and remove media directory URLs
 			if($elements[$key]['type'] == 'image') {
-				$img = $elements[$key]['image_src'];
-				$zip->addFromString(basename($img), file_get_contents($img));
+				$img = CrellySliderCommon::getURL($elements[$key]['image_src']);
+				$zip->addFromString(basename($img), crellyslider_url_get_contents($img));
 				$elements[$key]['image_src'] = basename($img);
 			}
 		}
@@ -505,7 +532,15 @@ function crellyslider_importSlider_callback() {
 
 		$sliders = $imported_array->sliders;
 		foreach($sliders as $slider) {
-			$output = crellyslider_insertSliderSQL((array) $slider);
+      // Prevent compatiblity issues with old .zip exported sliders (< 1.2.0)
+      if(! isset($slider->randomOrder)) {
+        $slider->randomOrder = 0;
+      }
+      if(! isset($slider->startFromSlide)) {
+        $slider->startFromSlide = 0;
+      }
+
+      $output = crellyslider_insertSliderSQL((array) $slider);
 		}
 
 		if($output === false) {
@@ -525,12 +560,9 @@ function crellyslider_importSlider_callback() {
 
 					// Set background images
 					if($slides[$key]->background_type_image != 'undefined' && $slides[$key]->background_type_image != 'none') {
-						$upload = media_sideload_image(CS_PLUGIN_URL . '/wordpress/temp/' . $slides[$key]->background_type_image, 0, null, 'src');
-						if(is_wp_error($upload)) {
-							echo json_encode(false);
-							return;
-						}
-						$slides[$key]->background_type_image = $upload;
+						$url = CS_PLUGIN_URL . '/wordpress/temp/' . $slides[$key]->background_type_image;
+            $id = crellyslider_importImage($url);
+						$slides[$key]->background_type_image = $id;
 					}
 				}
 				$temp = crellyslider_wp_insert_rows($slides, $wpdb->prefix . 'crellyslider_slides');
@@ -550,12 +582,9 @@ function crellyslider_importSlider_callback() {
 
 					// Set images
 					if($elements[$key]->type == 'image') {
-						$upload = media_sideload_image(CS_PLUGIN_URL . '/wordpress/temp/' . $elements[$key]->image_src, 0, null, 'src');
-						if(is_wp_error($upload)) {
-							echo json_encode(false);
-							return;
-						}
-						$elements[$key]->image_src = $upload;
+						$url = CS_PLUGIN_URL . '/wordpress/temp/' . $elements[$key]->image_src;
+						$id = crellyslider_importImage($url);
+						$elements[$key]->image_src = $id;
 					}
 				}
 				$temp = crellyslider_wp_insert_rows($elements, $wpdb->prefix . 'crellyslider_elements');
@@ -593,5 +622,30 @@ function crellyslider_importSlider_callback() {
 
 		die();
 	}
+}
+
+// Imports an image to the WordPress media library. Returns the attachment ID
+function crellyslider_importImage($local_url) {
+  $url = $local_url;
+  $tmp = download_url($url);
+  if( is_wp_error( $tmp ) ){
+    echo json_encode(false);
+    die();
+  }
+  $file_array = array();
+  preg_match('/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $url, $matches);
+  $file_array['name'] = basename($matches[0]);
+  $file_array['tmp_name'] = $tmp;
+  if (is_wp_error($tmp)) {
+    @unlink($file_array['tmp_name']);
+    $file_array['tmp_name'] = '';
+  }
+  $id = media_handle_sideload($file_array, 0);
+  if ( is_wp_error($id) ) {
+    @unlink($file_array['tmp_name']);
+    return false;
+  }
+
+  return $id;
 }
 ?>

@@ -123,6 +123,13 @@ class CrellySliderAdmin {
 		}
 		?>
 
+		<div class="cs-useless-wp_editor" style="display: none;">
+			<?php
+			// I need to call wp_editor just to include TinyMCE's javascript
+			wp_editor('', 'cs-element-editor-useless');
+			?>
+		</div>
+
 		<div class="cs-slider <?php echo $edit ? 'cs-edit-slider' : 'cs-add-slider' ?>">
 			<div class="cs-tabs cs-tabs-fade cs-tabs-switch-interface">
 				<?php if($edit): ?>
@@ -166,6 +173,7 @@ class CrellySliderAdmin {
 		?>
 		<script type="text/javascript">
 			var crellyslider_is_wordpress_admin = true;
+			var crellyslider_locale = '<?php echo get_locale(); ?>';
 		</script>
 		<?php
 	}
@@ -264,6 +272,7 @@ class CrellySliderAdmin {
 			'duplicate_slide' => __('Duplicate slide', 'crelly-slider'),
 			'remove_slide' => __('Delete slide', 'crelly-slider'),
 			'exit_without_saving' => __('All unsaved changes will be lost. Are you sure you want to leave this page?', 'crelly-slider'),
+			'switch_editor' => __('Switch editor', 'crelly-slider'),
 		);
 		wp_localize_script('crellyslider-admin', 'crellyslider_translations', $crellyslider_translations);
 	}

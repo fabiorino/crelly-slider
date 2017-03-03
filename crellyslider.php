@@ -1,17 +1,17 @@
 <?php
 /**
  * Plugin Name: Crelly Slider
- * Plugin URI: http://fabiorino1.altervista.org/projects/crellyslider
- * Description: A free responsive slider that supports layers. Add texts, images and videos using a Drop & Builder.
- * Version: 1.1.2
+ * Plugin URI: http://crellyslider.tk/
+ * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
+ * Version: 1.2.0
  * Author: fabiorino
- * Author URI: http://fabiorino1.altervista.org
+ * Author URI: https://www.linkedin.com/in/fabio-rinaldi-b1021b122/
  * Text Domain: crelly-slider
  * Domain Path: /wordpress/languages
  * License: MIT
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /*************/
 /** GLOBALS **/
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('CS_DEBUG', false);
 
-define('CS_VERSION', '1.1.2');
+define('CS_VERSION', '1.2.0');
 define('CS_PATH', plugin_dir_path(__FILE__));
 define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider');
 
@@ -30,8 +30,7 @@ require_once CS_PATH . 'wordpress/frontend.php';
 // Create (or remove) 3 tables: the sliders settings, the slides settings and the elements proprieties. We will also store the current version of the plugin
 register_activation_hook(__FILE__, array('CrellySliderTables', 'setVersion'));
 register_activation_hook(__FILE__, array('CrellySliderTables', 'setTables'));
-register_uninstall_hook(__FILE__, array('CrellySliderTables', 'removeVersion'));
-register_uninstall_hook(__FILE__, array('CrellySliderTables', 'dropTables'));
+register_uninstall_hook(__FILE__, array('CrellySliderTables', 'clearDatabase'));
 
 // Languages
 CrellySliderCommon::loadPluginTextDomain();

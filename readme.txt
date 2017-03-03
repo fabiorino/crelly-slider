@@ -3,13 +3,8 @@ Contributors:  fabiorino
 Donate link: http://crellyslider.tk/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.6.0
-<<<<<<< HEAD
 Tested up to: 4.7
-Stable tag: 1.1.2
-=======
-Tested up to: 4.6
-Stable tag: 1.1.1
->>>>>>> origin/master
+Stable tag: 1.2.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -58,6 +53,19 @@ You can find the documentation <a href="http://crellyslider.tk/documentation/">h
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.2.0 =
+* New feature: texts can be edited with the default WordPress editor (TinyMCE)
+* New feature: the order of the slides can be set to "random"
+* New feature: you can select the first slide that will be displayed
+* New feature: slides can be marked as "draft"
+* New feature: Crelly Slider is now compatible with WP Offload S3
+* Improvement: the YouTube and the Vimeo APIs won't be loaded unless there is a video in the slider
+* Bug fix: when a text element was selected and then modified, the black box around it wasn't correctly adapted to fit the new dimensions
+* Bug fix: when a slide was cloned, it was impossible to change its background color and to move its elements, unless by refreshing the page
+* Bug fix: improved compatibility for some web hosting providers that restricted the import/export functions
+* Bug fix: when you added a really large image element, the element options were covered by the image
+* Other minor changes and bug fixes
 
 = 1.1.2 =
 * Bug fix: security issues

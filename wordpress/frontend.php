@@ -50,14 +50,14 @@ class CrellySliderFrontend {
 		}
 
 		$slider_id = esc_sql($slider->id);
-		$slides = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d ORDER BY position', $slider_id));
+		$slides = $wpdb->get_results($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE draft = 0 AND slider_parent = %d ORDER BY position', $slider_id));
 
 		$output = '';
 
 		$output .= '<div style="display: none;" class="crellyslider-slider crellyslider-slider-' . esc_attr($slider->layout) . ' crellyslider-slider-' . esc_attr($alias) . '" id="crellyslider-' . esc_attr($slider_id) . '">' . "\n";
 		$output .= '<ul>' . "\n";
 		foreach($slides as $slide) {
-			$background_type_image = $slide->background_type_image == 'undefined' || $slide->background_type_image == 'none' ? 'none;' : 'url(\'' . stripslashes($slide->background_type_image) . '\');';
+			$background_type_image = $slide->background_type_image == 'undefined' || $slide->background_type_image == 'none' ? 'none;' : 'url(\'' . CrellySliderCommon::getURL($slide->background_type_image) . '\');';
 			$output .= '<li' .  "\n" .
 			'style="' . "\n" .
 			'background-color: ' . esc_attr($slide->background_type_color) . ';' . "\n" .
@@ -137,7 +137,7 @@ class CrellySliderFrontend {
 					case 'image':
 						$output .= '<img' . "\n" .
 						'class="' . esc_attr($element->custom_css_classes) . '"' . "\n" .
-						'src="' . esc_url($element->image_src) . '"' . "\n" .
+						'src="' . CrellySliderCommon::getURL($element->image_src) . '"' . "\n" .
 						'alt="' . esc_attr($element->image_alt) . '"' . "\n" .
 						'style="' . "\n";
 						if($element->link == '') {
@@ -228,6 +228,12 @@ class CrellySliderFrontend {
 		$output .= 'enableSwipe: ' . $slider->enableSwipe . ',' . "\n";
 		$output .= 'showProgressBar: ' . $slider->showProgressBar . ',' . "\n";
 		$output .= 'pauseOnHover: ' . $slider->pauseOnHover . ',' . "\n";
+		if($slider->randomOrder != NULL) {
+			$output .= 'randomOrder: ' . $slider->randomOrder . ',' . "\n";
+		}
+		if($slider->startFromSlide != NULL) {
+			$output .= 'startFromSlide: ' . $slider->startFromSlide . ',' . "\n";
+		}
 		$output .= stripslashes($slider->callbacks) . "\n";
 		$output .= '});' . "\n";
 		$output .= '});' . "\n";

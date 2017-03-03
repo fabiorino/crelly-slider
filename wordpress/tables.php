@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class CrellySliderTables {
 
@@ -37,6 +37,8 @@ class CrellySliderTables {
 		enableSwipe INT DEFAULT 1,
 		showProgressBar INT,
 		pauseOnHover INT,
+		randomOrder INT DEFAULT 0,
+		startFromSlide INT DEFAULT 0,
 		callbacks TEXT CHARACTER SET utf8,
 		UNIQUE KEY id (id)
 		);";
@@ -54,6 +56,7 @@ class CrellySliderTables {
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		slider_parent mediumint(9),
 		position INT,
+		draft INT DEFAULT 0,
 		background_type_image TEXT CHARACTER SET utf8,
 		background_type_color TEXT CHARACTER SET utf8,
 		background_type_color_input INT DEFAULT -1,
@@ -129,6 +132,11 @@ class CrellySliderTables {
 		$wpdb->query($sql);
 	}
 
+	// Removes everything related to Crelly Slider from the database
+	public static function clearDatabase() {
+		self::dropTables();
+		self::removeVersion();
+	}
 }
 
 ?>

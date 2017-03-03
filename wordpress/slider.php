@@ -12,6 +12,10 @@
 			1 => array(__('Yes', 'crelly-slider'), true),
 			0 => array(__('No', 'crelly-slider'), false),
 		),
+		'boolean_not' => array(
+			1 => array(__('Yes', 'crelly-slider'), false),
+			0 => array(__('No', 'crelly-slider'), true),
+		),
 	);
 	?>
 
@@ -238,6 +242,56 @@
 				</td>
 				<td class="cs-description">
 					<?php _e('Pause the current slide when hovered.', 'crelly-slider'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Random order', 'crelly-slider'); ?></td>
+				<td class="cs-content">
+					<select id="cs-slider-randomOrder">
+						<?php
+						foreach($slider_select_options['boolean_not'] as $key => $value) {
+							echo '<option value="' . $key . '"';
+							if((!$edit && $value[1]) || ($edit && $slider->randomOrder == $key)) {
+								echo ' selected';
+							}
+							echo '>' . $value[0] . '</option>';
+						}
+						?>
+					</select>
+				</td>
+				<td class="cs-description">
+					<?php _e('The order of the slides is random (instead of being linear).', 'crelly-slider'); ?>
+				</td>
+			</tr>
+			<tr>
+				<td class="cs-name"><?php _e('Start from slide', 'crelly-slider'); ?></td>
+				<td class="cs-content">
+					<select id="cs-slider-startFromSlide">
+						<?php
+						if(! $edit) {
+							echo '<option selected value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
+							echo '<option selected value="0">' . __('Slide', 'crelly-slider') . ' 1</option>';
+						}
+						else {
+							if($edit && $slider->startFromSlide == -1) {
+								echo '<option selected value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
+							}
+							else {
+								echo '<option value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
+							}
+							for($i = 0; $i < count($slides); $i++) {
+								echo '<option value="' . $i . '"';
+								if((!$edit && $i == 0) || ($edit && $slider->startFromSlide == $i)) {
+									echo ' selected';
+								}
+								echo '>' . __('Slide', 'crelly-slider') . ' ' . ($i + 1) . '</option>';
+							}
+						}
+						?>
+					</select>
+				</td>
+				<td class="cs-description">
+					<?php _e('The slide that will be displayed first.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
