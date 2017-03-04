@@ -1,3 +1,13 @@
+/**
+ * Plugin Name: Crelly Slider
+ * Plugin URI: http://crellyslider.tk/
+ * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
+ * Version: 1.2.0
+ * Author: fabiorino
+ * Author URI: https://www.linkedin.com/in/fabio-rinaldi-b1021b122/
+ * License: MIT
+ */
+
 .crellyslider {
 	margin: 0 auto;
 	position: relative;
@@ -48,8 +58,8 @@
 	top: 50%;
 	left: 50%;
 	margin-top: -25px;
-	margin-left: -25px;	
-	z-index: 12;	
+	margin-left: -25px;
+	z-index: 12;
 	background-color:#fff;
 	box-shadow:0 3px 10px rgba(0,0,0,0.16), 0 3px 10px rgba(0,0,0,0.23);
 	background-repeat: no-repeat;
@@ -168,7 +178,7 @@
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	overflow: hidden;	
+	overflow: hidden;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -249,12 +259,12 @@
 	text-align: center;
 }
 
-.crellyslider > .cs-navigation > .cs-slide-link {	
+.crellyslider > .cs-navigation > .cs-slide-link {
 	width: 15px;
 	height: 15px;
 	display: inline-block;
 	cursor: pointer;
-	margin: 6px;	
+	margin: 6px;
 	background-color:#fff;
 	box-shadow:0 3px 10px rgba(0,0,0,0.16), 0 3px 10px rgba(0,0,0,0.23);
 	border: 10px;
