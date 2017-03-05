@@ -4,7 +4,7 @@
  * Plugin URI: http://crellyslider.tk/
  * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
  * Version: 1.2.0
- * Author: Fabio Rinaldi (fabiorino)
+ * Author: Fabio Rinaldi
  * Author URI: https://github.com/fabiorino
  * Text Domain: crelly-slider
  * Domain Path: /wordpress/languages
