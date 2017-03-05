@@ -1,8 +1,8 @@
 === Crelly Slider ===
-Contributors:  fabiorino
+Contributors: fabiorino
 Donate link: http://crellyslider.tk/contribute-and-support/
 Tags: animations, layers, texts, images, videos
-Requires at least: 3.6.0
+Requires at least: 3.9
 Tested up to: 4.7
 Stable tag: 1.2.0
 License: MIT

@@ -3,8 +3,8 @@
  * Plugin URI: http://crellyslider.tk/
  * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
  * Version: 1.2.0
- * Author: fabiorino
- * Author URI: https://www.linkedin.com/in/fabio-rinaldi-b1021b122/
+ * Author: Fabio Rinaldi (fabiorino)
+ * Author URI: https://github.com/fabiorino
  * License: MIT
  */
 
