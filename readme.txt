@@ -1,10 +1,10 @@
 === Crelly Slider ===
 Contributors: fabiorino
-Donate link: http://crellyslider.tk/contribute-and-support/
+Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.9
 Tested up to: 4.7
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -15,7 +15,7 @@ A free responsive slider that supports layers. Add texts, images, videos and bea
 Crelly Slider is a Free / Open Source responsive WordPress slider that supports layers. You can add Texts, Images, YouTube/Vimeo videos using a powerful Drag & Drop Builder and animate each of them. It is perfect to display your creative content in posts and pages.
 <br />
 <br />
-<a href="http://crellyslider.tk/">Official WebSite (with live demo)</a>
+<a href="http://crellyslider.altervista.org/">Official WebSite (with live demo)</a>
 <br />
 = User Friendly Admin Panel =
 Crelly Slider does not require any Coding Knowledge. With the simple admin panel you will be able to create the sliders in the easiest way. Upload images with the default WordPress interface or choose colors using the picker.
@@ -43,7 +43,7 @@ Click Install.
 <br />
 Click Activate.
 <br />
-You can find the documentation <a href="http://crellyslider.tk/documentation/">here</a>.
+You can find the documentation <a href="http://crellyslider.altervista.org/documentation/">here</a>.
 
 == Screenshots ==
 
@@ -53,6 +53,10 @@ You can find the documentation <a href="http://crellyslider.tk/documentation/">h
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.2.1 =
+* Bug fix: if the user setting "Disable the visual editor when writing" was enabled, there were JavaScript errors
+* Other minor changes and bug fixes
 
 = 1.2.0 =
 * New feature: texts can be edited with the default WordPress editor (TinyMCE)

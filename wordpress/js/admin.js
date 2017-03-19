@@ -932,7 +932,9 @@
   			}
       };
 
-      tinyMCE.init(settings);
+      if(typeof tinyMCE != 'undefined') {
+        tinyMCE.init(settings);
+      }      
     }
 
     // When the user modifies the text in the TinyMCE editor, apply the changes to the preview area

@@ -560,7 +560,7 @@ function crellyslider_importSlider_callback() {
 
 					// Set background images
 					if($slides[$key]->background_type_image != 'undefined' && $slides[$key]->background_type_image != 'none') {
-						$url = CS_PLUGIN_URL . '/wordpress/temp/' . $slides[$key]->background_type_image;
+						$url = CS_PATH . '/wordpress/temp/' . $slides[$key]->background_type_image;
             $id = crellyslider_importImage($url);
 						$slides[$key]->background_type_image = $id;
 					}
@@ -582,7 +582,7 @@ function crellyslider_importSlider_callback() {
 
 					// Set images
 					if($elements[$key]->type == 'image') {
-						$url = CS_PLUGIN_URL . '/wordpress/temp/' . $elements[$key]->image_src;
+						$url = CS_PATH . '/wordpress/temp/' . $elements[$key]->image_src;
 						$id = crellyslider_importImage($url);
 						$elements[$key]->image_src = $id;
 					}
@@ -625,27 +625,29 @@ function crellyslider_importSlider_callback() {
 }
 
 // Imports an image to the WordPress media library. Returns the attachment ID
+// Original script: https://gist.github.com/hissy/7352933
 function crellyslider_importImage($local_url) {
-  $url = $local_url;
-  $tmp = download_url($url);
-  if( is_wp_error( $tmp ) ){
-    echo json_encode(false);
-    die();
-  }
-  $file_array = array();
-  preg_match('/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $url, $matches);
-  $file_array['name'] = basename($matches[0]);
-  $file_array['tmp_name'] = $tmp;
-  if (is_wp_error($tmp)) {
-    @unlink($file_array['tmp_name']);
-    $file_array['tmp_name'] = '';
-  }
-  $id = media_handle_sideload($file_array, 0);
-  if ( is_wp_error($id) ) {
-    @unlink($file_array['tmp_name']);
-    return false;
+  $file = $local_url;
+  $filename = basename($file);
+
+  $upload_file = wp_upload_bits($filename, null, file_get_contents($file));
+  if (!$upload_file['error']) {
+  	$wp_filetype = wp_check_filetype($filename, null );
+  	$attachment = array(
+  		'post_mime_type' => $wp_filetype['type'],
+  		'post_parent' => 0,
+  		'post_title' => preg_replace('/\.[^.]+$/', '', $filename),
+  		'post_content' => '',
+  		'post_status' => 'inherit'
+  	);
+  	$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $parent_post_id );
+  	if (!is_wp_error($attachment_id)) {
+  		require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+  		$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
+  		wp_update_attachment_metadata( $attachment_id,  $attachment_data );
+  	}
   }
 
-  return $id;
+  return $attachment_id;
 }
 ?>
