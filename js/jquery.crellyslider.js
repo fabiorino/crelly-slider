@@ -432,12 +432,22 @@ var crellyslider_vimeo_api_ready = false;
 				slide.find(ELEMENTS).each(function() {
 					var element = $(this);
 
-					element.find('*').each(function() {
+					// Clone the element and get its real properties (avoids width and height = 0). Then replace the original element
+					var clone = element.clone();
+					clone.css('visibility', 'hidden');
+					$('body').append(clone);
+
+					clone.find('*').each(function() {
 						var element_content = $(this);
-						setElementDatas(element_content, true);
+						setElementData(element_content, true);
 					});
 
-					setElementDatas(element, false);
+					setElementData(clone, false);
+					clone.css('display', 'none');
+					clone.css('visibility', 'visible');
+
+					clone.insertAfter(element);
+					element.remove();
 				});
 
 				slide.css('display', 'none');
@@ -446,7 +456,7 @@ var crellyslider_vimeo_api_ready = false;
 		}
 
 		// Initializes the element with original values
-		function setElementDatas(element, is_element_content) {
+		function setElementData(element, is_element_content) {
 			element.data('width', parseFloat(element.width()));
 			element.data('height', parseFloat(element.height()));
 			element.data('letter-spacing', parseFloat(element.css('letter-spacing')));
@@ -464,10 +474,6 @@ var crellyslider_vimeo_api_ready = false;
 			element.data('padding-bottom', parseFloat(element.css('padding-bottom')));
 			element.data('padding-left', parseFloat(element.css('padding-left')));
 			element.data('opacity', parseFloat(element.css('opacity')));
-
-			if(! is_element_content) {
-				element.css('display', 'none');
-			}
 		}
 
 		// Sets all listeners for the user interaction
@@ -480,6 +486,13 @@ var crellyslider_vimeo_api_ready = false;
 					}
 				});
 			}
+
+			// Compatibility with Popup Maker (https://wordpress.org/plugins/popup-maker/)
+			$(document).on('pumAfterOpen', '.pum', function() {
+				if($(this).find(CRELLY).length > 0) {
+					setResponsive();
+				}
+			});
 
 			// Previous control click
 			SLIDER.find(CRELLY).find('.cs-controls > .cs-previous').click(function() {

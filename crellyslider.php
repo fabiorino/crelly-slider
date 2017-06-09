@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /** GLOBALS **/
 /*************/
 
-define('CS_DEBUG', false);
+define('CS_DEBUG', true);
 
 define('CS_VERSION', '1.2.2');
 define('CS_PATH', plugin_dir_path(__FILE__));
