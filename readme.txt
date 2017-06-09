@@ -3,8 +3,8 @@ Contributors: fabiorino
 Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.9
-Tested up to: 4.7
-Stable tag: 1.2.1
+Tested up to: 4.8
+Stable tag: 1.2.2
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -53,6 +53,9 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.2.2 =
+* Bug fix: fixed incompatibility with WordPress 4.8
 
 = 1.2.1 =
 * Bug fix: if the user setting "Disable the visual editor when writing" was enabled, there were JavaScript errors
