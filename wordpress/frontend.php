@@ -3,11 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Code output
 function crellySlider($alias) {
-	CrellySliderFrontend::output($alias, true);
+	echo getCrellySlider($alias);
 }
 
 function getCrellySlider($alias) {
-	CrellySliderFrontend::output($alias, false);
+	return CrellySliderFrontend::output($alias);
 }
 
 class CrellySliderFrontend {
@@ -26,7 +26,7 @@ class CrellySliderFrontend {
 			return __('You have to insert a valid alias in the shortcode', 'crelly-slider');
 		}
 		else {
-			return CrellySliderFrontend::output($a['alias'], false);
+			return CrellySliderFrontend::output($a['alias']);
 		}
 	}
 
@@ -34,19 +34,13 @@ class CrellySliderFrontend {
 		add_shortcode('crellyslider', array( __CLASS__, 'shortcode'));
 	}
 
-	public static function output($alias, $echo) {
+	public static function output($alias) {
 		global $wpdb;
 
 		$slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE alias = %s', esc_sql($alias)));
 
 		if(! $slider) {
-			if($echo) {
-				_e('The slider hasn\'t been found', 'crelly-slider');
-				return;
-			}
-			else {
-				return __('The slider hasn\'t been found', 'crelly-slider');
-			}
+			return __('The slider hasn\'t been found', 'crelly-slider');
 		}
 
 		$slider_id = esc_sql($slider->id);
@@ -245,12 +239,7 @@ class CrellySliderFrontend {
 		$output .= '})(jQuery);' . "\n";
 		$output .= '</script>' . "\n";
 
-		if($echo) {
-			echo $output;
-		}
-		else {
-			return $output;
-		}
+		return $output;
 	}
 
 }
