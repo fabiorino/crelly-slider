@@ -98,6 +98,7 @@ class CrellySliderTables {
 		data_left FLOAT,
 		z_index INT,
 		data_in TEXT CHARACTER SET utf8,
+        data_easeEffect TEXT CHARACTER SET utf8,
 		data_out TEXT CHARACTER SET utf8,
 		custom_css TEXT CHARACTER SET utf8,
 		custom_css_classes TEXT CHARACTER SET utf8,

@@ -233,6 +233,53 @@ function crellyslider_printTextElement($element) {
 		'fadeSmallRight' => array(__('Fade small right', 'crelly-slider'), false),
 	);
 
+    $easings = array(
+        'swing' => array(__('Default (swing)', 'crelly-slider'), false), // JQuery UI default, should work always - even without JQuery-Effects-Core 
+
+        'linear' => array(__('linear', 'crelly-slider'), false),
+
+        'easeInSine' => array(__('easeInSine', 'crelly-slider'), false),
+        'easeOutSine' => array(__('easeOutSine', 'crelly-slider'), false),
+        'easeInOutSine' => array(__('easeInOutSine', 'crelly-slider'), false),
+
+        'easeInQuad' => array(__('easeInQuad', 'crelly-slider'), false),
+        'easeOutQuad' => array(__('easeOutQuad', 'crelly-slider'), false),
+        'easeInOutQuad' => array(__('easeInOutQuad', 'crelly-slider'), false),
+
+        'easeInCubic' => array(__('easeInCubic', 'crelly-slider'), false),
+        'easeOutCubic' => array(__('easeOutCubic', 'crelly-slider'), false),
+        'easeInOutCubic' => array(__('easeInOutCubic', 'crelly-slider'), false),
+
+        'easeInQuart' => array(__('easeInQuart', 'crelly-slider'), false),
+        'easeOutQuart' => array(__('easeOutQuart', 'crelly-slider'), false),
+        'easeInOutQuart' => array(__('easeInOutQuart', 'crelly-slider'), false),
+
+        'easeInQuint' => array(__('easeInQuint', 'crelly-slider'), false),
+        'easeOutQuint' => array(__('easeOutQuint', 'crelly-slider'), false),
+        'easeInOutQuint' => array(__('easeInOutQuint', 'crelly-slider'), false),
+
+        'easeInExpo' => array(__('easeInExpo', 'crelly-slider'), false),
+        'easeOutExpo' => array(__('easeOutExpo', 'crelly-slider'), false),
+        'easeInOutExpo' => array(__('easeInOutExpo', 'crelly-slider'), false),
+
+        'easeInCirc' => array(__('easeInCirc', 'crelly-slider'), false),
+        'easeOutCirc' => array(__('easeOutCirc', 'crelly-slider'), false),
+        'easeInOutCirc' => array(__('easeInOutCirc', 'crelly-slider'), false),
+
+        'easeInBack' => array(__('easeInBack', 'crelly-slider'), false),
+        'easeOutBack' => array(__('easeOutBack', 'crelly-slider'), false),
+        'easeInOutBack' => array(__('easeInOutBack', 'crelly-slider'), false),
+
+        'easeInElastic' => array(__('easeInElastic', 'crelly-slider'), false),
+        'easeOutElastic' => array(__('easeOutElastic', 'crelly-slider'), false),
+        'easeInOutElastic' => array(__('easeInOutElastic', 'crelly-slider'), false),
+
+        
+        'easeInBounce' => array(__('easeInBounce', 'crelly-slider'), false),
+        'easeOutBounce' => array(__('easeOutBounce', 'crelly-slider'), false),
+        'easeInOutBounce' => array(__('easeInOutBounce', 'crelly-slider'), false),
+    );
+
 	?>
 	<table class="cs-element-settings-list cs-text-element-settings-list cs-table">
 		<thead>
@@ -354,6 +401,25 @@ function crellyslider_printTextElement($element) {
 					<?php _e('The in animation of the element.', 'crelly-slider'); ?>
 				</td>
 			</tr>
+            <tr>
+                <td class="cs-name"><?php _e('Easing effect', 'crelly-slider'); ?></td>
+                <td class="cs-content">
+                    <select class="cs-element-data_ease_effect">
+                        <?php
+                        foreach($easings as $key => $value) {
+                            echo '<option value="' . $key . '"';
+                            if(($void && $value[1]) || (!$void && $element->data_easeEffect == $key)) {
+                                echo ' selected';
+                            }
+                            echo '>' . $value[0] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </td>
+                <td class="cs-description">
+                    <?php _e('The easing effect of the element\'s in animation (where applicable).', 'crelly-slider'); ?>
+                </td>
+            </tr>
 			<tr>
 				<td class="cs-name"><?php _e('Out animation', 'crelly-slider'); ?></td>
 				<td class="cs-content">
@@ -484,6 +550,53 @@ function crellyslider_printImageElement($element) {
 		'fadeSmallRight' => array(__('Fade small right', 'crelly-slider'), false),
 	);
 
+    $easings = array(
+        'swing' => array(__('Default (swing)', 'crelly-slider'), false), // JQuery UI default, should work always - even without JQuery-Effects-Core 
+
+        'linear' => array(__('linear', 'crelly-slider'), false),
+
+        'easeInSine' => array(__('easeInSine', 'crelly-slider'), false),
+        'easeOutSine' => array(__('easeOutSine', 'crelly-slider'), false),
+        'easeInOutSine' => array(__('easeInOutSine', 'crelly-slider'), false),
+
+        'easeInQuad' => array(__('easeInQuad', 'crelly-slider'), false),
+        'easeOutQuad' => array(__('easeOutQuad', 'crelly-slider'), false),
+        'easeInOutQuad' => array(__('easeInOutQuad', 'crelly-slider'), false),
+
+        'easeInCubic' => array(__('easeInCubic', 'crelly-slider'), false),
+        'easeOutCubic' => array(__('easeOutCubic', 'crelly-slider'), false),
+        'easeInOutCubic' => array(__('easeInOutCubic', 'crelly-slider'), false),
+
+        'easeInQuart' => array(__('easeInQuart', 'crelly-slider'), false),
+        'easeOutQuart' => array(__('easeOutQuart', 'crelly-slider'), false),
+        'easeInOutQuart' => array(__('easeInOutQuart', 'crelly-slider'), false),
+
+        'easeInQuint' => array(__('easeInQuint', 'crelly-slider'), false),
+        'easeOutQuint' => array(__('easeOutQuint', 'crelly-slider'), false),
+        'easeInOutQuint' => array(__('easeInOutQuint', 'crelly-slider'), false),
+
+        'easeInExpo' => array(__('easeInExpo', 'crelly-slider'), false),
+        'easeOutExpo' => array(__('easeOutExpo', 'crelly-slider'), false),
+        'easeInOutExpo' => array(__('easeInOutExpo', 'crelly-slider'), false),
+
+        'easeInCirc' => array(__('easeInCirc', 'crelly-slider'), false),
+        'easeOutCirc' => array(__('easeOutCirc', 'crelly-slider'), false),
+        'easeInOutCirc' => array(__('easeInOutCirc', 'crelly-slider'), false),
+
+        'easeInBack' => array(__('easeInBack', 'crelly-slider'), false),
+        'easeOutBack' => array(__('easeOutBack', 'crelly-slider'), false),
+        'easeInOutBack' => array(__('easeInOutBack', 'crelly-slider'), false),
+
+        'easeInElastic' => array(__('easeInElastic', 'crelly-slider'), false),
+        'easeOutElastic' => array(__('easeOutElastic', 'crelly-slider'), false),
+        'easeInOutElastic' => array(__('easeInOutElastic', 'crelly-slider'), false),
+
+        
+        'easeInBounce' => array(__('easeInBounce', 'crelly-slider'), false),
+        'easeOutBounce' => array(__('easeOutBounce', 'crelly-slider'), false),
+        'easeInOutBounce' => array(__('easeInOutBounce', 'crelly-slider'), false),
+    );
+
 	?>
 	<table class="cs-element-settings-list cs-image-element-settings-list cs-table">
 		<thead>
@@ -604,6 +717,25 @@ function crellyslider_printImageElement($element) {
 					<?php _e('The in animation of the element.', 'crelly-slider'); ?>
 				</td>
 			</tr>
+            <tr>
+                <td class="cs-name"><?php _e('Easing effect', 'crelly-slider'); ?></td>
+                <td class="cs-content">
+                    <select class="cs-element-data_ease_effect">
+                        <?php
+                        foreach($easings as $key => $value) {
+                            echo '<option value="' . $key . '"';
+                            if(($void && $value[1]) || (!$void && $element->data_easeEffect == $key)) {
+                                echo ' selected';
+                            }
+                            echo '>' . $value[0] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </td>
+                <td class="cs-description">
+                    <?php _e('The easing of the elements in animation.', 'crelly-slider'); ?>
+                </td>
+            </tr>
 			<tr>
 				<td class="cs-name"><?php _e('Out animation', 'crelly-slider'); ?></td>
 				<td class="cs-content">
@@ -733,6 +865,53 @@ function crellyslider_printVideoElement($element) {
 		'fadeSmallLeft' => array(__('Fade small left', 'crelly-slider'), false),
 		'fadeSmallRight' => array(__('Fade small right', 'crelly-slider'), false),
 	);
+
+    $easings = array(
+        'swing' => array(__('Default (swing)', 'crelly-slider'), false), // JQuery UI default, should work always - even without JQuery-Effects-Core 
+
+        'linear' => array(__('linear', 'crelly-slider'), false),
+
+        'easeInSine' => array(__('easeInSine', 'crelly-slider'), false),
+        'easeOutSine' => array(__('easeOutSine', 'crelly-slider'), false),
+        'easeInOutSine' => array(__('easeInOutSine', 'crelly-slider'), false),
+
+        'easeInQuad' => array(__('easeInQuad', 'crelly-slider'), false),
+        'easeOutQuad' => array(__('easeOutQuad', 'crelly-slider'), false),
+        'easeInOutQuad' => array(__('easeInOutQuad', 'crelly-slider'), false),
+
+        'easeInCubic' => array(__('easeInCubic', 'crelly-slider'), false),
+        'easeOutCubic' => array(__('easeOutCubic', 'crelly-slider'), false),
+        'easeInOutCubic' => array(__('easeInOutCubic', 'crelly-slider'), false),
+
+        'easeInQuart' => array(__('easeInQuart', 'crelly-slider'), false),
+        'easeOutQuart' => array(__('easeOutQuart', 'crelly-slider'), false),
+        'easeInOutQuart' => array(__('easeInOutQuart', 'crelly-slider'), false),
+
+        'easeInQuint' => array(__('easeInQuint', 'crelly-slider'), false),
+        'easeOutQuint' => array(__('easeOutQuint', 'crelly-slider'), false),
+        'easeInOutQuint' => array(__('easeInOutQuint', 'crelly-slider'), false),
+
+        'easeInExpo' => array(__('easeInExpo', 'crelly-slider'), false),
+        'easeOutExpo' => array(__('easeOutExpo', 'crelly-slider'), false),
+        'easeInOutExpo' => array(__('easeInOutExpo', 'crelly-slider'), false),
+
+        'easeInCirc' => array(__('easeInCirc', 'crelly-slider'), false),
+        'easeOutCirc' => array(__('easeOutCirc', 'crelly-slider'), false),
+        'easeInOutCirc' => array(__('easeInOutCirc', 'crelly-slider'), false),
+
+        'easeInBack' => array(__('easeInBack', 'crelly-slider'), false),
+        'easeOutBack' => array(__('easeOutBack', 'crelly-slider'), false),
+        'easeInOutBack' => array(__('easeInOutBack', 'crelly-slider'), false),
+
+        'easeInElastic' => array(__('easeInElastic', 'crelly-slider'), false),
+        'easeOutElastic' => array(__('easeOutElastic', 'crelly-slider'), false),
+        'easeInOutElastic' => array(__('easeInOutElastic', 'crelly-slider'), false),
+
+        
+        'easeInBounce' => array(__('easeInBounce', 'crelly-slider'), false),
+        'easeOutBounce' => array(__('easeOutBounce', 'crelly-slider'), false),
+        'easeInOutBounce' => array(__('easeInOutBounce', 'crelly-slider'), false),
+    );
 
 	?>
 	<table class="cs-element-settings-list cs-video-element-settings-list cs-table">
@@ -905,6 +1084,25 @@ function crellyslider_printVideoElement($element) {
 					<?php _e('The in animation of the element.', 'crelly-slider'); ?>
 				</td>
 			</tr>
+            <tr>
+                <td class="cs-name"><?php _e('Easing effect', 'crelly-slider'); ?></td>
+                <td class="cs-content">
+                    <select class="cs-element-data_ease_effect">
+                        <?php
+                        foreach($easings as $key => $value) {
+                            echo '<option value="' . $key . '"';
+                            if(($void && $value[1]) || (!$void && $element->data_easeEffect == $key)) {
+                                echo ' selected';
+                            }
+                            echo '>' . $value[0] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </td>
+                <td class="cs-description">
+                    <?php _e('The easing of the elements in animation.', 'crelly-slider'); ?>
+                </td>
+            </tr>
 			<tr>
 				<td class="cs-name"><?php _e('Out animation', 'crelly-slider'); ?></td>
 				<td class="cs-content">

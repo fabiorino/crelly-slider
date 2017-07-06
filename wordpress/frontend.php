@@ -3,11 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Code output
 function crellySlider($alias) {
-	echo getCrellySlider($alias);
+	CrellySliderFrontend::output($alias, true);
 }
 
 function getCrellySlider($alias) {
-	return CrellySliderFrontend::output($alias);
+	CrellySliderFrontend::output($alias, false);
 }
 
 class CrellySliderFrontend {
@@ -26,7 +26,7 @@ class CrellySliderFrontend {
 			return __('You have to insert a valid alias in the shortcode', 'crelly-slider');
 		}
 		else {
-			return CrellySliderFrontend::output($a['alias']);
+			return CrellySliderFrontend::output($a['alias'], false);
 		}
 	}
 
@@ -34,13 +34,19 @@ class CrellySliderFrontend {
 		add_shortcode('crellyslider', array( __CLASS__, 'shortcode'));
 	}
 
-	public static function output($alias) {
+	public static function output($alias, $echo) {
 		global $wpdb;
 
 		$slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE alias = %s', esc_sql($alias)));
 
 		if(! $slider) {
-			return __('The slider hasn\'t been found', 'crelly-slider');
+			if($echo) {
+				_e('The slider hasn\'t been found', 'crelly-slider');
+				return;
+			}
+			else {
+				return __('The slider hasn\'t been found', 'crelly-slider');
+			}
 		}
 
 		$slider_id = esc_sql($slider->id);
@@ -90,6 +96,7 @@ class CrellySliderFrontend {
 					'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 					'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 					'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                    'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 					'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 					'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 					'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -117,6 +124,7 @@ class CrellySliderFrontend {
 							'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 							'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 							'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                            'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 							'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 							'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 							'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -144,6 +152,7 @@ class CrellySliderFrontend {
 							'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 							'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 							'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                            'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 							'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 							'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 							'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -167,6 +176,7 @@ class CrellySliderFrontend {
 						'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
 						'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
 						'data-in="' . $element->data_in . '"' . "\n" .
+                        'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 						'data-out="' . $element->data_out . '"' . "\n" .
 						'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
 						'data-top="' . $element->data_top . '"' . "\n" .
@@ -189,6 +199,7 @@ class CrellySliderFrontend {
 						'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 						'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 						'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                        'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 						'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 						'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 						'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -234,7 +245,12 @@ class CrellySliderFrontend {
 		$output .= '})(jQuery);' . "\n";
 		$output .= '</script>' . "\n";
 
-		return $output;
+		if($echo) {
+			echo $output;
+		}
+		else {
+			return $output;
+		}
 	}
 
 }

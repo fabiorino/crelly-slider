@@ -987,6 +987,7 @@ var crellyslider_vimeo_api_ready = false;
 					break;
 
 				case 'in' :
+				case 'ease-effect' :
 				case 'out' :
 				case 'opacity' :
 					return item.data(data);
@@ -1687,6 +1688,7 @@ var crellyslider_vimeo_api_ready = false;
 			var element_width = element.outerWidth();
 			var element_height = element.outerHeight();
 			var data_in = getItemData(element, 'in');
+			var data_ease_effect = getItemData(element, 'ease-effect');
 			var data_ease_in = getItemData(element, 'ease-in');
 			var data_top = getItemData(element, 'top');
 			var data_left = getItemData(element, 'left');
@@ -1706,7 +1708,7 @@ var crellyslider_vimeo_api_ready = false;
 						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'slideUp' :
@@ -1717,7 +1719,7 @@ var crellyslider_vimeo_api_ready = false;
 						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'slideLeft' :
@@ -1728,7 +1730,7 @@ var crellyslider_vimeo_api_ready = false;
 						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'slideRight' :
@@ -1739,7 +1741,7 @@ var crellyslider_vimeo_api_ready = false;
 						'opacity' : getItemData(element, 'opacity'),
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fade' :
@@ -1750,7 +1752,7 @@ var crellyslider_vimeo_api_ready = false;
 						'opacity' : 0,
 					}).animate({
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeDown' :
@@ -1762,7 +1764,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeUp' :
@@ -1774,7 +1776,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeLeft' :
@@ -1786,7 +1788,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeRight' :
@@ -1798,7 +1800,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeSmallDown' :
@@ -1810,7 +1812,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeSmallUp' :
@@ -1822,7 +1824,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'top'	  : getScaled(data_top + getLayoutGaps(element).top),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeSmallLeft' :
@@ -1834,7 +1836,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				case 'fadeSmallRight' :
@@ -1846,7 +1848,7 @@ var crellyslider_vimeo_api_ready = false;
 					}).animate({
 						'left'	  : getScaled(data_left + getLayoutGaps(element).left),
 						'opacity' : getItemData(element, 'opacity'),
-					}, data_ease_in, function() { def.resolve(); });
+					}, data_ease_in, data_ease_effect, function() { def.resolve(); });
 					break;
 
 				default :
