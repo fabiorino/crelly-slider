@@ -123,8 +123,8 @@ class CrellySliderFrontend {
 							'data-left="' . esc_attr($element->data_left) . '"' . "\n" .
 							'data-time="' . esc_attr($element->data_time) . '"' . "\n";
 						}
-						$output .= '>' . "\n" .
-						stripslashes($element->inner_html) . "\n" .
+						$output .= '>' .
+						stripslashes($element->inner_html) .
 						'</div>' . "\n";
 					break;
 
