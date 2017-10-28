@@ -348,7 +348,7 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 	if(!$void) {
 		global $wpdb;
 
-		$id = isset($_GET['id']) ? esc_sql($_GET['id']) : NULL;
+		$id = isset($_GET['id']) ? (int)$_GET['id'] : NULL;
 		if($id == NULL || ($id != NULL && !CrellySliderCommon::sliderExists($id))) {
 			die();
 		}
