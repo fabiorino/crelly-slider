@@ -376,8 +376,7 @@ class CrellySliderAdmin {
 		$serialized = '';
 		foreach($options as $key => $value) {
 			if (is_bool($value)) {
-				$val = $value ? 'true' : 'false';
-				$options .= $key . ':' . $val . ',';
+				$serialized .= $key . ':' . ($value ? 'true' : 'false') . ',';
 			} else {
 				$length = !empty($value && is_string($value)) ? strlen($value) : 0;
 
@@ -387,7 +386,7 @@ class CrellySliderAdmin {
 						('[' == $value{0} && ']' == $value{$length - 1}) ||
 						preg_match('/^\(?function ?\(/', $value))) {
 
-					$options .= $key . ':' . $value . ',';
+					$serialized .= $key . ':' . $value . ',';
 				} else {
 					$serialized .= $key . ':"' . $value . '",';
 				}
