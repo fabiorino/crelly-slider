@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class CrellySliderAdmin {
 
+	private static $mceSettings = array();
+
 	// Creates the menu and the admin panel
 	public static function showSettings() {
 		add_action('admin_menu', 'CrellySliderAdmin::pluginMenus');
@@ -127,6 +129,7 @@ class CrellySliderAdmin {
 			<?php
 			// I need to call wp_editor just to include TinyMCE's javascript
 			wp_editor('', 'cs-element-editor-useless');
+			self::setTinyMCEOptions();
 			?>
 		</div>
 
@@ -191,6 +194,7 @@ class CrellySliderAdmin {
 		wp_enqueue_style('wp-color-picker');
 		wp_enqueue_media();
 
+		add_action('admin_print_footer_scripts', array( __CLASS__, 'printTinyMCEOptions'), 1);
 		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker'), CS_VERSION, true);
 
 		self::localization();
@@ -277,6 +281,126 @@ class CrellySliderAdmin {
 		wp_localize_script('crellyslider-admin', 'crellyslider_translations', $crellyslider_translations);
 	}
 
+	/**
+	 * Invokes the filter for the tinyMCE init options
+	 */
+	public static function setTinyMCEOptions() {
+		self::$mceSettings = apply_filters( 'crellyslider_tiny_mce_before_init', self::tinyMCEDefaultOptions());
+	}
+
+	/**
+	 * Generates the default tinyMCE options
+	 *
+	 * @return array Default options for the tinyMCE editor
+	 */
+	private static function tinyMCEDefaultOptions() {
+		return array(
+			'toolbar1' => 'bold,italic,strikethrough,alignleft,aligncenter,alignright,link,unlink,underline,forecolor,backcolor',
+			'toolbar2' => 'fontselect,fontsizeselect',
+			'toolbar3' => '',
+			'toolbar4' => '',
+			'height' => 200,
+			'forced_root_block' => false,
+			'wpautop' => false,
+			'fontsize_formats' => implode(' ', array_map(function($x) { return $x . 'px'; }, range(1, 200))),
+			'wp_lang_attr' => get_locale(),
+			'content_css' => '',
+			'cache_suffix' => '',
+			'language' => explode('_', get_locale())[0],
+			'theme' => 'modern',
+			'skin' => 'lightgray',
+			'formats' => '{' .
+				'alignleft: [' .
+					'{'.
+						'selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", ' .
+						'styles: {textAlign:"left", lineHeight:"inherit"}, ' .
+						'inline: "div"'.
+					'},' .
+					'{' .
+						'selector: "img,table,dl.wp-caption", ' .
+						'classes: "alignleft"' .
+					'}' .
+				'],' .
+				'aligncenter: [' .
+					'{' .
+						'selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", ' .
+						'styles: {textAlign:"center", lineHeight:"inherit"}, ' .
+						'inline: "div"' .
+					'},' .
+					'{' .
+						'selector: "img,table,dl.wp-caption", ' .
+						'classes: "aligncenter"' .
+					'}' .
+				'],' .
+				'alignright: [' .
+					'{' .
+						'selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", ' .
+						'styles: {textAlign:"right", lineHeight:"inherit"}, ' .
+						'inline: "div"' .
+					'},' .
+					'{' .
+						'selector: "img,table,dl.wp-caption", ' .
+						'classes: "alignright"' .
+					'}' .
+				'],' .
+				'strikethrough: {inline: "del"}' .
+			'}',
+			'relative_urls' => false,
+			'remove_script_host' => false,
+			'convert_urls' => false,
+			'browser_spellcheck' => true,
+			'fix_list_elements' => true,
+			'entities' => '38,amp,60,lt,62,gt',
+			'entity_encoding' => 'raw',
+			'keep_styles' => false,
+			'preview_styles' => 'font-family font-size font-weight font-style text-decoration text-transform',
+			'end_container_on_empty_block' => true,
+			'wpeditimage_disable_captions' => false,
+			'wpeditimage_html5_captions' => true,
+			'plugins' => 'charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview,image',
+			'resize' => 'vertical',
+			'menubar' => false,
+			'indent' => true,
+			'tabfocus_elements' => ':prev,:next',
+		);
+	}
+
+	/**
+	 * Outputs the previously set tinyMCE options (init Options)
+	 *
+	 * A <script> tag containing the global variable crellyslider_tinyMCEInit is printed
+	 */
+	public static function printTinyMCEOptions() {
+		$options = self::$mceSettings;
+
+		$serialized = '';
+		foreach($options as $key => $value) {
+			if (is_bool($value)) {
+				$serialized .= $key . ':' . ($value ? 'true' : 'false') . ',';
+			} else {
+				$length = !empty($value && is_string($value)) ? strlen($value) : 0;
+
+				// don't wrap objects, arrays or functions in quotes
+				if ($length > 0
+					&& (('{' == $value{0} && '}' == $value{$length - 1}) ||
+						('[' == $value{0} && ']' == $value{$length - 1}) ||
+						preg_match('/^\(?function ?\(/', $value))) {
+
+					$serialized .= $key . ':' . $value . ',';
+				} else {
+					$serialized .= $key . ':"' . $value . '",';
+				}
+			}
+		}
+
+		// remove trailing spaces and commas and enclose in JSON { }
+		$serialized = '{' . trim($serialized, ' ,') . '}';
+		?>
+		<script type="text/javascript">
+			crellyslider_tinyMCEInit = <?php echo $serialized; ?>;
+		</script>
+		<?php
+	}
 }
 
 ?>

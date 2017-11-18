@@ -893,44 +893,25 @@
 
       textarea.attr('id', 'cs-element-editor-' + crellyslider_convertToWPEditor.static_counter);
 
-      var lan = crellyslider_locale.split('_');
-      lan = lan[0];
+		var settings = crellyslider_tinyMCEInit;
 
-      settings = {
-        selector : '#cs-element-editor-' + (crellyslider_convertToWPEditor.static_counter),
-        body_class : ('cs-element-editor-' + (crellyslider_convertToWPEditor.static_counter) + ' locale-' + crellyslider_locale).toLowerCase(),
+		settings.selector = '#cs-element-editor-' + (crellyslider_convertToWPEditor.static_counter);
+		settings.body_class = ('cs-element-editor-' + (crellyslider_convertToWPEditor.static_counter) + ' locale-' + crellyslider_locale).toLowerCase();
+		settings.setup = function(editor) {
+			editor.on("KeyUp ExecCommand ContextMenu Change", function(e) {
+				editor.save();
+				crellyslider_triggerTinyMCE(editor.id);
+			});
 
-        toolbar1 : "bold,italic,strikethrough,alignleft,aligncenter,alignright,link,unlink,underline,forecolor,backcolor ",
-        toolbar2 : "fontselect,fontsizeselect ",
-        toolbar3 : "",
-        toolbar4 : "",
-        height : 200,
-        forced_root_block : false,
-        wpautop : false,
-        fontsize_formats : "1px 2px 3px 4px 5px 6px 7px 8px 9px 10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px 23px 24px 25px 26px 27px 28px 29px 30px 31px 32px 33px 34px 35px 36px 37px 38px 39px 40px 41px 42px 43px 44px 45px 46px 47px 48px 49px 50px 51px 52px 53px 54px 55px 56px 57px 58px 59px 60px 61px 62px 63px 64px 65px 66px 67px 68px 69px 70px 71px 72px 73px 74px 75px 76px 77px 78px 79px 80px 81px 82px 83px 84px 85px 86px 87px 88px 89px 90px 91px 92px 93px 94px 95px 96px 97px 98px 99px 100px 101px 102px 103px 104px 105px 106px 107px 108px 109px 110px 111px 112px 113px 114px 115px 116px 117px 118px 119px 120px 121px 122px 123px 124px 125px 126px 127px 128px 129px 130px 131px 132px 133px 134px 135px 136px 137px 138px 139px 140px 141px 142px 143px 144px 145px 146px 147px 148px 149px 150px 151px 152px 153px 154px 155px 156px 157px 158px 159px 160px 161px 162px 163px 164px 165px 166px 167px 168px 169px 170px 171px 172px 173px 174px 175px 176px 177px 178px 179px 180px 181px 182px 183px 184px 185px 186px 187px 188px 189px 190px 191px 192px 193px 194px 195px 196px 197px 198px 199px 200px",
+			editor.on("init", function() {
+				// Set default CSS
+				this.getDoc().body.style.fontSize = "14px";
+				this.getDoc().body.style.fontFamily = "Verdana";
 
-        wp_lang_attr : crellyslider_locale,
-        content_css : "",
-        cache_suffix : "",
-        language : lan,
-        theme:"modern",skin:"lightgray",formats:{alignleft: [{selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", styles: {textAlign:"left", lineHeight:"inherit"}, inline: "div"},{selector: "img,table,dl.wp-caption", classes: "alignleft"}],aligncenter: [{selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", styles: {textAlign:"center", lineHeight:"inherit"}, inline: "div"},{selector: "img,table,dl.wp-caption", classes: "aligncenter"}],alignright: [{selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", styles: {textAlign:"right", lineHeight:"inherit"}, inline: "div"},{selector: "img,table,dl.wp-caption", classes: "alignright"}],strikethrough: {inline: "del"}},relative_urls:false,remove_script_host:false,convert_urls:false,browser_spellcheck:true,fix_list_elements:true,entities:"38,amp,60,lt,62,gt",entity_encoding:"raw",keep_styles:false,preview_styles:"font-family font-size font-weight font-style text-decoration text-transform",end_container_on_empty_block:true,wpeditimage_disable_captions:false,wpeditimage_html5_captions:true,plugins:"charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview,image",resize:"vertical",menubar:false,indent:true,tabfocus_elements:":prev,:next",
-
-        setup : function(editor) {
-          editor.on("KeyUp ExecCommand ContextMenu Change", function (e) {
-  					editor.save();
-  					crellyslider_triggerTinyMCE(editor.id);
-  				});
-
-  				editor.on("init", function() {
-            // Set default CSS
-            this.getDoc().body.style.fontSize = "14px";
-						this.getDoc().body.style.fontFamily = "Verdana";
-
-            // Insert switch button
-            textarea.parent().prepend('<div class="cs-switch-editor"><div onclick="tinyMCE.execCommand(\'mceToggleEditor\', false, \'' + editor.id + '\')" class="cs-button cs-is-default cs-tinymce">' + crellyslider_translations.switch_editor + '</div></div>');
-          });
-  			}
-      };
+				// Insert switch button
+				textarea.parent().prepend('<div class="cs-switch-editor"><div onclick="tinyMCE.execCommand(\'mceToggleEditor\', false, \'' + editor.id + '\')" class="cs-button cs-is-default cs-tinymce">' + crellyslider_translations.switch_editor + '</div></div>');
+			});
+		};
 
       if(typeof tinyMCE != 'undefined') {
         tinyMCE.init(settings);
