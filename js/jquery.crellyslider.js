@@ -463,9 +463,16 @@ var crellyslider_vimeo_api_ready = false;
 			element.data('font-size', parseFloat(element.css('font-size')));
 
 			if(element.css('line-height').slice(-2).toLowerCase() == 'px') {
+				// if pixel values are given, use those
 				element.data('line-height', parseFloat(element.css('line-height')));
 			}
+			else if(element.css('line-height') == 'normal') {
+				// if the browser returns 'normal' then use a default factor of 1.15 * font-size
+				// see: http://meyerweb.com/eric/thoughts/2008/05/06/line-height-abnormal/
+				element.data('line-height', getItemData(element, 'font-size') * 1.15);
+			}
 			else {
+				// otherwise assume that the returned value is a factor and multiply it with the font-size
 				element.data('line-height', parseFloat(element.css('line-height')) * getItemData(element, 'font-size'));
 			}
 
