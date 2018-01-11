@@ -90,6 +90,7 @@ class CrellySliderFrontend {
 					'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 					'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 					'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                    'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 					'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 					'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 					'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -117,6 +118,7 @@ class CrellySliderFrontend {
 							'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 							'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 							'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                            'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 							'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 							'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 							'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -144,6 +146,7 @@ class CrellySliderFrontend {
 							'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 							'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 							'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                            'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 							'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 							'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 							'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
@@ -167,6 +170,7 @@ class CrellySliderFrontend {
 						'data-ease-in="' . $element->data_easeIn . '"' . "\n" .
 						'data-ease-out="' . $element->data_easeOut . '"' . "\n" .
 						'data-in="' . $element->data_in . '"' . "\n" .
+                        'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 						'data-out="' . $element->data_out . '"' . "\n" .
 						'data-ignore-ease-out="' . $element->data_ignoreEaseOut . '"' . "\n" .
 						'data-top="' . $element->data_top . '"' . "\n" .
@@ -189,6 +193,7 @@ class CrellySliderFrontend {
 						'data-ease-in="' . esc_attr($element->data_easeIn) . '"' . "\n" .
 						'data-ease-out="' . esc_attr($element->data_easeOut) . '"' . "\n" .
 						'data-in="' . esc_attr($element->data_in) . '"' . "\n" .
+                        'data-ease-effect="' . esc_attr($element->data_easeEffect) . '"' . "\n" .
 						'data-out="' . esc_attr($element->data_out) . '"' . "\n" .
 						'data-ignore-ease-out="' . esc_attr($element->data_ignoreEaseOut) . '"' . "\n" .
 						'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
