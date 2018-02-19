@@ -61,6 +61,7 @@ class CrellySliderAdmin {
 
 			<div class="cs-message cs-message-ok" style="display: none;"><?php _e('Operation completed successfully.', 'crelly-slider'); ?></div>
 			<div class="cs-message cs-message-error" style="display: none;"><?php _e('Something went wrong.', 'crelly-slider'); ?></div>
+			<div class="cs-message cs-message-wait" style="display: none;"><?php _e('Please wait', 'crelly-slider'); ?></div>
 			<?php if(! $edit): ?>
 				<div class="cs-message cs-message-warning"><?php _e('When you\'ll click "Save Settings", you\'ll be able to add slides and elements.', 'crelly-slider'); ?></div>
 			<?php endif; ?>

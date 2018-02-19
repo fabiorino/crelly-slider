@@ -353,6 +353,12 @@
 	border-color: #f4a911;
 }
 
+.cs-admin .cs-message.cs-message-wait {
+	color: #444444;
+	background-color: #e6e6e6;
+	border-color: #525252;
+}
+
 #cs-slides {
 	display: none;
 }
