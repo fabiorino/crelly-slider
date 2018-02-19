@@ -519,117 +519,126 @@ function crellyslider_exportSlider_callback() {
 // Inport the slider from a json string
 add_action('wp_ajax_crellyslider_importSlider', 'crellyslider_importSlider_callback');
 function crellyslider_importSlider_callback() {
-	global $wpdb;
-
-	// Clear the temp folder
-	array_map('unlink', glob(CS_PATH . '/wordpress/temp/*'));
-
 	foreach($_FILES as $file) {
-		$output = true;
-		$real_output = true;
-
-		$zip = new ZipArchive();
-		if($zip->open($file['tmp_name']) !== TRUE) {
+		$real_output = crellyslider_importSlider($file['tmp_name']);
+		
+		if($real_output == false) {
 			echo false;
 			die();
 		}
 
-		$zip->extractTo(CS_PATH . '/wordpress/temp/');
-
-		$imported_array = json_decode(file_get_contents(CS_PATH . '/wordpress/temp/slider.json'));
-
-		$sliders = $imported_array->sliders;
-		foreach($sliders as $slider) {
-      // Prevent compatiblity issues with old .zip exported sliders (< 1.2.0)
-      if(! isset($slider->randomOrder)) {
-        $slider->randomOrder = 0;
-      }
-      if(! isset($slider->startFromSlide)) {
-        $slider->startFromSlide = 0;
-      }
-
-      $output = crellyslider_insertSliderSQL((array) $slider);
-		}
-
-		if($output === false) {
-			$real_output = false;
-		}
-		else {
-			$imported_slider_id = $wpdb->insert_id;
-
-			// Import slides
-			$slides = $imported_array->slides;
-			if(empty($slides)) {
-				$output = true;
-			}
-			else {
-				foreach($slides as $key => $slide) {
-					$slides[$key]->slider_parent = $imported_slider_id;
-
-					// Set background images
-					if($slides[$key]->background_type_image != 'undefined' && $slides[$key]->background_type_image != 'none') {
-						$url = CS_PATH . '/wordpress/temp/' . $slides[$key]->background_type_image;
-            $id = crellyslider_importImage($url);
-						$slides[$key]->background_type_image = $id;
-					}
-				}
-				$temp = crellyslider_wp_insert_rows($slides, $wpdb->prefix . 'crellyslider_slides');
-				if($temp === false) {
-					$output = false;
-				}
-			}
-
-			// Import elements
-			$elements = (array) $imported_array->elements;
-			if(empty($elements)) {
-				$output = true;
-			}
-			else {
-				foreach($elements as $key => $element) {
-					$elements[$key]->slider_parent = $imported_slider_id;
-
-					// Set images
-					if($elements[$key]->type == 'image') {
-						$url = CS_PATH . '/wordpress/temp/' . $elements[$key]->image_src;
-						$id = crellyslider_importImage($url);
-						$elements[$key]->image_src = $id;
-					}
-				}
-				$temp = crellyslider_wp_insert_rows($elements, $wpdb->prefix . 'crellyslider_elements');
-				if($temp === false) {
-					$output = false;
-				}
-
-				if($output === false) {
-					$real_output = false;
-				}
-			}
-		}
-
-		if($real_output === true) {
-			$real_output = array(
-				'response' => true,
-				'imported_slider_id' => $imported_slider_id,
-				'imported_slider_name' => $imported_array->sliders[0]->name,
-				'imported_slider_alias' => $imported_array->sliders[0]->alias,
-			);
-		}
-		else {
-			$real_output = array(
-				'response' => false,
-				'imported_slider_id' => false,
-				'imported_slider_name' => false,
-				'imported_slider_alias' => false,
-			);
-		}
-
-		// Returning
 		$real_output = json_encode($real_output);
 		if(is_array($real_output)) print_r($real_output);
 		else echo $real_output;
 
 		die();
 	}
+}
+
+function crellyslider_importSlider($filePath) {
+	global $wpdb;
+	
+	// Clear the temp folder
+	array_map('unlink', glob(CS_PATH . '/wordpress/temp/*'));
+	
+	$output = true;
+	$real_output = true;
+
+	$zip = new ZipArchive();
+	if($zip->open($filePath) !== TRUE) {
+		return false;
+	}
+
+	$zip->extractTo(CS_PATH . '/wordpress/temp/');
+
+	$imported_array = json_decode(file_get_contents(CS_PATH . '/wordpress/temp/slider.json'));
+
+	$sliders = $imported_array->sliders;
+	foreach($sliders as $slider) {
+		// Prevent compatiblity issues with old .zip exported sliders (< 1.2.0)
+		if(! isset($slider->randomOrder)) {
+			$slider->randomOrder = 0;
+		}
+		if(! isset($slider->startFromSlide)) {
+			$slider->startFromSlide = 0;
+		}
+
+		$output = crellyslider_insertSliderSQL((array) $slider);
+	}
+
+	if($output === false) {
+		$real_output = false;
+	}
+	else {
+		$imported_slider_id = $wpdb->insert_id;
+
+		// Import slides
+		$slides = $imported_array->slides;
+		if(empty($slides)) {
+			$output = true;
+		}
+		else {
+			foreach($slides as $key => $slide) {
+				$slides[$key]->slider_parent = $imported_slider_id;
+
+				// Set background images
+				if($slides[$key]->background_type_image != 'undefined' && $slides[$key]->background_type_image != 'none') {
+					$url = CS_PATH . '/wordpress/temp/' . $slides[$key]->background_type_image;
+					$id = crellyslider_importImage($url);
+					$slides[$key]->background_type_image = $id;
+				}
+			}
+			$temp = crellyslider_wp_insert_rows($slides, $wpdb->prefix . 'crellyslider_slides');
+			if($temp === false) {
+				$output = false;
+			}
+		}
+
+		// Import elements
+		$elements = (array) $imported_array->elements;
+		if(empty($elements)) {
+			$output = true;
+		}
+		else {
+			foreach($elements as $key => $element) {
+				$elements[$key]->slider_parent = $imported_slider_id;
+
+				// Set images
+				if($elements[$key]->type == 'image') {
+					$url = CS_PATH . '/wordpress/temp/' . $elements[$key]->image_src;
+					$id = crellyslider_importImage($url);
+					$elements[$key]->image_src = $id;
+				}
+			}
+			$temp = crellyslider_wp_insert_rows($elements, $wpdb->prefix . 'crellyslider_elements');
+			if($temp === false) {
+				$output = false;
+			}
+
+			if($output === false) {
+				$real_output = false;
+			}
+		}
+	}
+
+	if($real_output === true) {
+		$real_output = array(
+			'response' => true,
+			'imported_slider_id' => $imported_slider_id,
+			'imported_slider_name' => $imported_array->sliders[0]->name,
+			'imported_slider_alias' => $imported_array->sliders[0]->alias,
+		);
+	}
+	else {
+		$real_output = array(
+			'response' => false,
+			'imported_slider_id' => false,
+			'imported_slider_name' => false,
+			'imported_slider_alias' => false,
+		);
+	}
+
+	return $real_output;
 }
 
 // Imports an image to the WordPress media library. Returns the attachment ID
@@ -648,7 +657,7 @@ function crellyslider_importImage($local_url) {
   		'post_content' => '',
   		'post_status' => 'inherit'
   	);
-  	$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $parent_post_id );
+  	$attachment_id = wp_insert_attachment($attachment, $upload_file['file'], 0);
   	if (!is_wp_error($attachment_id)) {
   		require_once(ABSPATH . "wp-admin" . '/includes/image.php');
   		$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
