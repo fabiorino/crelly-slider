@@ -1768,6 +1768,8 @@
 			fd.append('file', file);
 			fd.append('action', 'crellyslider_importSlider');
 
+			crellyslider_showWait();
+
 			// Do the ajax call
 			jQuery.ajax({
 				type : 'POST',
