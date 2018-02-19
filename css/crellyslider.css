@@ -199,8 +199,13 @@
 
 .crellyslider > .cs-slides > .cs-slide > * {
 	position: absolute;
-    display: block;
+  display: block;
 	cursor: default;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-ms-transition: none;
+	-o-transition: none;
+	transition: none;
 }
 
 .crellyslider > .cs-slides > .cs-slide > a {
