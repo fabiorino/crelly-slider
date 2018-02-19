@@ -542,6 +542,7 @@
 	left: 0;
 	top: 0;
 	cursor: move;
+	font-size: 14px;
 }
 
 .crellyslider ul li * {

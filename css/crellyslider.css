@@ -206,6 +206,7 @@
 	-ms-transition: none;
 	-o-transition: none;
 	transition: none;
+	font-size: 14px;
 }
 
 .crellyslider > .cs-slides > .cs-slide > a {
