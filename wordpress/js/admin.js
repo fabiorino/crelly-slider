@@ -50,7 +50,7 @@
 		crellyslider_draggableElements();
 
 		function crellyslider_showSuccess() {
-			$('.cs-admin .cs-message.cs-message-wait').css('display', 'none');
+			$('.cs-admin .cs-message').css('display', 'none');
 
 			var target = $('.cs-admin .cs-message.cs-message-ok');
 			target.css({
@@ -69,7 +69,7 @@
 		}
 
 		function crellyslider_showError() {
-			$('.cs-admin .cs-message.cs-message-wait').css('display', 'none');
+			$('.cs-admin .cs-message').css('display', 'none');
 
 			var target = $('.cs-admin .cs-message.cs-message-error');
 			target.css({
@@ -88,6 +88,8 @@
 		}
 
 		function crellyslider_showWait() {
+			$('.cs-admin .cs-message').css('display', 'none');
+			
 			var target = $('.cs-admin .cs-message.cs-message-wait');
 
 			var untouchedMessage = target.text().split('.').join('');
