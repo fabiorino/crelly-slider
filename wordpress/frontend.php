@@ -46,7 +46,11 @@ class CrellySliderFrontend {
 		// Get the slider. Return if now() is not between from/to dates
 		$slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE NOW() BETWEEN fromDate AND toDate AND alias=%s', esc_sql($alias)));
 		if(! $slider) {
+<<<<<<< HEAD
 			return '';
+=======
+			return;
+>>>>>>> 70ceb63bafec6f88679f1facbb06d28361856db0
 		}
 
 		$slider_id = esc_sql($slider->id);
