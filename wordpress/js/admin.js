@@ -50,7 +50,7 @@
 		crellyslider_draggableElements();
 
 		function crellyslider_showSuccess() {
-			$('.cs-admin .cs-message .cs-message-working').css('display', 'none');
+			$('.cs-admin .cs-message.cs-message-wait').css('display', 'none');
 
 			var target = $('.cs-admin .cs-message.cs-message-ok');
 			target.css({
@@ -69,7 +69,7 @@
 		}
 
 		function crellyslider_showError() {
-			$('.cs-admin .cs-message .cs-message-working').css('display', 'none');
+			$('.cs-admin .cs-message.cs-message-wait').css('display', 'none');
 
 			var target = $('.cs-admin .cs-message.cs-message-error');
 			target.css({
@@ -85,6 +85,32 @@
 			}, 300, function() {
 				target.css('display', 'none');
 			});
+		}
+
+		function crellyslider_showWait() {
+			var target = $('.cs-admin .cs-message.cs-message-wait');
+
+			var untouchedMessage = target.text().split('.').join('');
+			target.text(untouchedMessage);
+			
+			target.css({
+				'display' : 'block',
+				'opacity' : 1,
+			});
+
+			if(typeof crellyslider_showWait.dotsTimer != 'undefined' ) {
+				clearInterval(crellyslider_showWait.dotsTimer);
+			}
+			var dots = 0;
+			crellyslider_showWait.dotsTimer = setInterval(function() {
+				if(dots == 3) {
+					dots = 0;
+					target.text(untouchedMessage);
+					return;
+				}
+				target.text(target.text() + '.');
+				dots++;
+			}, 300);
 		}
 
 		/*************/
@@ -1354,6 +1380,8 @@
 
 		// Sends an array with the new or current slider options
 		function crellyslider_saveSlider() {
+			crellyslider_showWait();
+			
 			var content = $('.cs-admin .cs-slider #cs-slider-settings');
 			var options = {
 				id : parseInt($('.cs-admin .cs-slider .cs-save-settings').data('id')),
@@ -1490,7 +1518,7 @@
 		}
 
 		// Sends an array with all the elements options of each slide
-		function crellyslider_saveElements() {
+		function crellyslider_saveElements() {			
 			var slides = $('.cs-admin .cs-slider #cs-slides .cs-slide');
 			var i = 0, j = 0;
 			var final_options = {};
@@ -1602,6 +1630,8 @@
 		}
 
 		function crellyslider_deleteSlider(content) {
+			crellyslider_showWait();
+			
 			// Get options
 			var options = {
 				id : parseInt(content.data('delete')),
@@ -1641,6 +1671,8 @@
 		}
 
 		function crellyslider_duplicateSlider(content) {
+			crellyslider_showWait();
+			
 			// Get options
 			var options = {
 				id : parseInt(content.data('duplicate')),
@@ -1685,6 +1717,8 @@
 		}
 
 		function crellyslider_exportSlider(content) {
+			crellyslider_showWait();
+			
 			// Get options
 			var options = {
 				id : parseInt(content.data('export')),
@@ -1726,6 +1760,8 @@
 
 			// Reset input file. Prevents conflicts
 			$('#cs-import-file').val('');
+
+			crellyslider_showWait();
 
 			// Form data (for file uploads)
 			var fd = new FormData();
