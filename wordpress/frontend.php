@@ -37,10 +37,16 @@ class CrellySliderFrontend {
 	public static function output($alias) {
 		global $wpdb;
 
-		$slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE alias = %s', esc_sql($alias)));
-
+		// Check if the slider exists
+		$slider = $wpdb->get_row($wpdb->prepare('SELECT id FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE alias = %s', esc_sql($alias)));
 		if(! $slider) {
 			return __('The slider hasn\'t been found', 'crelly-slider');
+		}
+
+		// Get the slider. Return if now() is not between from/to dates
+		$slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE NOW() BETWEEN fromDate AND toDate AND alias=%s', esc_sql($alias)));
+		if(! $slider) {
+			return;
 		}
 
 		$slider_id = esc_sql($slider->id);

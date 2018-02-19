@@ -40,6 +40,8 @@ class CrellySliderTables {
 		randomOrder INT DEFAULT 0,
 		startFromSlide INT DEFAULT 0,
 		callbacks TEXT CHARACTER SET utf8,
+		fromDate DATETIME DEFAULT '1000-01-01 00:00:00',
+		toDate DATETIME DEFAULT '9999-12-31 23:59:59',
 		UNIQUE KEY id (id)
 		);";
 

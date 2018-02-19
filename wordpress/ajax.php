@@ -118,6 +118,8 @@ function crellyslider_insertSliderSQL($options) {
 			'randomOrder' => $options['randomOrder'],
 			'startFromSlide' => $options['startFromSlide'],
 			'enableSwipe' => $options['enableSwipe'],
+			'fromDate' => $options['fromDate'],
+			'toDate' => $options['toDate'],
 		),
 		array(
 			'%s',
@@ -135,6 +137,8 @@ function crellyslider_insertSliderSQL($options) {
 			'%d',
 			'%d',
 			'%d',
+			'%s',
+			'%s',
 		)
 	);
 }
@@ -166,9 +170,11 @@ function crellyslider_editSlider_callback() {
 			'showProgressBar' => $options['showProgressBar'],
 			'pauseOnHover' => $options['pauseOnHover'],
 			'callbacks' => $options['callbacks'],
-      'randomOrder' => $options['randomOrder'],
-      'startFromSlide' => $options['startFromSlide'],
+      		'randomOrder' => $options['randomOrder'],
+      		'startFromSlide' => $options['startFromSlide'],
 			'enableSwipe' => $options['enableSwipe'],
+			'fromDate' => $options['fromDate'],
+			'toDate' => $options['toDate'],
 		),
 		array('id' => esc_sql($options['id'])),
 		array(
@@ -187,6 +193,8 @@ function crellyslider_editSlider_callback() {
 			'%d',
 			'%d',
 			'%d',
+			'%s',
+			'%s',
 		),
 		array('%d')
 	);
