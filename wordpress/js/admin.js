@@ -157,6 +157,7 @@
 		}
 
 		// Init from/to datepickers
+		jQuery.datetimepicker.setLocale(crellyslider_locale.substring(0, crellyslider_locale.indexOf('_'))); // If locale does not exists, datetimepicker defaults to English
 		$('.cs-slider-datepicker').datetimepicker({
 			format:'Y-m-d H:i',
 		});
