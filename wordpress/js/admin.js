@@ -128,6 +128,28 @@
 			return slider_alias;
 		}
 
+		// Init from/to datepickers
+		$('.cs-slider-datepicker').datetimepicker({
+			format:'Y-m-d H:i',
+		});
+
+		$('#cs-slider-displayImmediately').on('change', function() {
+			if(this.checked) {
+				$('#cs-slider-displayFromWrapper').hide();
+			}
+			else{
+				$('#cs-slider-displayFromWrapper').show();
+			}
+		});
+		$('#cs-slider-displayForever').on('change', function() {
+			if(this.checked) {
+				$('#cs-slider-displayToWrapper').hide();
+			}
+			else{
+				$('#cs-slider-displayToWrapper').show();
+			}
+		});
+
 		/************/
 		/** SLIDES **/
 		/************/
@@ -1349,6 +1371,8 @@
 				pauseOnHover : parseInt(content.find('#cs-slider-pauseOnHover').val()),
 				randomOrder : parseInt(content.find('#cs-slider-randomOrder').val()),
 				startFromSlide : parseInt(content.find('#cs-slider-startFromSlide').val()),
+				fromDate : content.find('#cs-slider-displayImmediately').prop('checked') || content.find('#cs-slider-fromDate').val() == '' ? '1000-01-01 00:00:00' : content.find('#cs-slider-fromDate').val(),
+				toDate : content.find('#cs-slider-displayForever').prop('checked') || content.find('#cs-slider-toDate').val() == '' ? '9999-12-31 23:59:59' : content.find('#cs-slider-toDate').val(),
 				callbacks : content.find('#cs-slider-callbacks').val(),
 			};
 

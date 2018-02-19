@@ -191,11 +191,16 @@ class CrellySliderAdmin {
 		wp_enqueue_script('jquery-ui-tabs');
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('jquery-ui-dialog');
+		wp_enqueue_script('jquery-ui-datepicker');		
 		wp_enqueue_style('wp-color-picker');
 		wp_enqueue_media();
 
+		wp_register_script('datetimepicker', CS_PLUGIN_URL . '/wordpress/js/jquery.datetimepicker.js', array('jquery'), "2.5.17", true);
+		wp_enqueue_script('datetimepicker');
+		wp_enqueue_style('datetimepicker', CS_PLUGIN_URL . '/wordpress/css/jquery.datetimepicker.css', array(), "2.5.17");
+
 		add_action('admin_print_footer_scripts', array( __CLASS__, 'printTinyMCEOptions'), 1);
-		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker'), CS_VERSION, true);
+		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
 
 		self::localization();
 

@@ -11,6 +11,14 @@
 	box-shadow: none;
 }
 
+.cs-admin input[name='cs-slide-background_type_color'][value='1'] {
+	margin-top: 8px;
+}
+
+.cs-admin .wp-picker-container {
+	display: inline-block;
+}
+
 .cs-admin .cs-style-list {
 	list-style-type: disc;
 	padding-left: 20px;
@@ -242,6 +250,10 @@
 .cs-admin .cs-table td {
 	border-top: 1px solid #e0e0e0;
 	border-right: 1px solid #e0e0e0;
+}
+
+.cs-admin .cs-table td input[type=checkbox] {
+	vertical-align: bottom;
 }
 
 .cs-admin .cs-table td:last-child {
