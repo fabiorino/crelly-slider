@@ -4,7 +4,7 @@ Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.9
 Tested up to: 4.9
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -53,6 +53,13 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.3.0 =
+* New feature: sliders can be scheduled (you can specify from when and how long they should be displayed for)
+* When a video is manually paused by the user, it won't resume automatically at the next slides loop 
+* For developers: TinyMCE settings are now hookable (credits to dlaxar https://github.com/fabiorino/crelly-slider/commits?author=dlaxar)
+* For developers: sliders can be imported via code
+* Other minor changes and bug fixes
 
 = 1.2.3 =
 * Bug fix: align left/center/right buttons not working
