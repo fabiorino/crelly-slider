@@ -6,12 +6,14 @@ class CrellySliderCommon {
 	public static function enqueues() {
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-core');
-		wp_enqueue_style('crellyslider', CS_PLUGIN_URL . '/css/crellyslider.css', array(), CS_VERSION);
+		
 		if(CS_DEBUG) {
 			wp_enqueue_script('jquery.crellyslider', CS_PLUGIN_URL . '/js/jquery.crellyslider.js', array(), CS_VERSION, false);
+			wp_enqueue_style('crellyslider', CS_PLUGIN_URL . '/css/crellyslider.css', array(), CS_VERSION);
 		}
 		else {
 			wp_enqueue_script('jquery.crellyslider.min', CS_PLUGIN_URL . '/js/jquery.crellyslider.min.js', array(), CS_VERSION, false);
+			wp_enqueue_style('crellyslider.min', CS_PLUGIN_URL . '/css/crellyslider.min.css', array(), CS_VERSION);
 		}
 	}
 
