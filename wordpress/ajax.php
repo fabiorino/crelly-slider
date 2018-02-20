@@ -516,7 +516,7 @@ function crellyslider_exportSlider_callback() {
 	die();
 }
 
-// Inport the slider from a json string
+// Imports a slider given a .zip in $_FILES
 add_action('wp_ajax_crellyslider_importSlider', 'crellyslider_importSlider_callback');
 function crellyslider_importSlider_callback() {
 	foreach($_FILES as $file) {
@@ -535,6 +535,7 @@ function crellyslider_importSlider_callback() {
 	}
 }
 
+// Imports a slider given a .zip file path
 function crellyslider_importSlider($filePath) {
 	global $wpdb;
 	
