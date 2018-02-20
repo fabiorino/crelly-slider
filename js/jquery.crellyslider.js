@@ -323,13 +323,23 @@ var crellyslider_vimeo_api_ready = false;
 								if(e.data === YT.PlayerState.ENDED && getItemData(element, 'loop')) {
 									player.playVideo();
 								}
+
+								if(can_pause) {
+									if(e.data === YT.PlayerState.PAUSED) {
+										youtube_videos[element.attr('id')].manually_paused = true;
+									}
+									if(e.data === YT.PlayerState.PLAYING) {
+										youtube_videos[element.attr('id')].manually_paused = false;
+									}
+								}						
 							},
 						},
 					});
 
 					temp = {
 						player : player,
-						played_once : false
+						played_once : false,
+						manually_paused : false,
 					};
 
 					youtube_videos[element.attr('id')] = temp;
@@ -372,6 +382,16 @@ var crellyslider_vimeo_api_ready = false;
 						player.addEvent('play', function() {
 							vimeo_videos[element.attr('id')].played_once = true;
 							vimeo_videos[element.attr('id')].ended = false;
+
+							if(can_pause) {
+								vimeo_videos[element.attr('id')].manually_paused = false;
+							}
+						});
+
+						player.addEvent('pause', function() {
+							if(can_pause) {
+								vimeo_videos[element.attr('id')].manually_paused = true;
+							}
 						});
 
 						if(getItemData(element, 'loop')) {
@@ -388,6 +408,7 @@ var crellyslider_vimeo_api_ready = false;
 						player : player,
 						played_once : false,
 						ended : false,
+						manually_paused : false,
 					};
 
 					vimeo_videos[element.attr('id')] = temp;
@@ -429,7 +450,8 @@ var crellyslider_vimeo_api_ready = false;
 			getSlides().each(function() {
 				var slide = $(this);
 
-				slide.find(ELEMENTS).each(function() {
+				// First, init everything which is not a video
+				slide.find(ELEMENTS).not('.cs-yt-iframe, .cs-vimeo-iframe').each(function() {
 					var element = $(this);
 
 					// Clone the element and get its real properties (avoids width and height = 0). Then replace the original element
@@ -448,6 +470,18 @@ var crellyslider_vimeo_api_ready = false;
 
 					clone.insertAfter(element);
 					element.remove();
+				});
+
+				// Then, let's manage videos differently: the elements cannot be cloned and replaced, or the (already initialized) players will be deatached from the DOM
+				slide.find('.cs-yt-iframe, .cs-vimeo-iframe').each(function() {
+					var element = $(this);
+
+					element.find('*').each(function() {
+						var element_content = $(this);
+						setElementData(element_content, true);
+					});
+
+					setElementData(element, false);
 				});
 
 				slide.css('display', 'none');
@@ -1375,8 +1409,8 @@ var crellyslider_vimeo_api_ready = false;
 				getYoutubePlayer(element).playVideo();
 			}
 
-			// If was paused
-			if(getYoutubePlayerState(element) == 2) {
+			// If was paused, but not manually
+			if(getYoutubePlayerState(element) == 2 && !youtube_videos[element.attr('id')].manually_paused) {
 				getYoutubePlayer(element).playVideo();
 			}
 
@@ -1419,7 +1453,7 @@ var crellyslider_vimeo_api_ready = false;
 			}
 
 			// If was paused
-			if(getVimeoPlayer(element).api('paused') && ! vimeo_videos[element.attr('id')].ended && vimeo_videos[element.attr('id')].played_once) {
+			if(getVimeoPlayer(element).api('paused') && ! vimeo_videos[element.attr('id')].ended && vimeo_videos[element.attr('id')].played_once && !vimeo_videos[element.attr('id')].manually_paused) {
 				getVimeoPlayer(element).api('play');
 			}
 		}
