@@ -384,7 +384,7 @@ class CrellySliderAdmin {
 			if (is_bool($value)) {
 				$serialized .= $key . ':' . ($value ? 'true' : 'false') . ',';
 			} else {
-				$length = !empty($value && is_string($value)) ? strlen($value) : 0;
+				$length = !empty($value) && is_string($value) ? strlen($value) : 0;
 
 				// don't wrap objects, arrays or functions in quotes
 				if ($length > 0
