@@ -451,7 +451,7 @@ var crellyslider_vimeo_api_ready = false;
 				var slide = $(this);
 
 				// First, init everything which is not a video
-				slide.find(ELEMENTS).not('.cs-yt-iframe, .cs-vimeo-iframe').each(function() {
+				slide.find(ELEMENTS).not('.cs-yt-iframe, .cs-vimeo-iframe, .cs-background-link').each(function() {
 					var element = $(this);
 
 					// Clone the element and get its real properties (avoids width and height = 0). Then replace the original element
