@@ -445,43 +445,20 @@ var crellyslider_vimeo_api_ready = false;
 			}
 		}
 
-		// Stores original slides, elements and elements contents values then hide all the slides and elements. "display: none" only if is an element, not an element content
+		// Stores original slides, elements and elements contents values then hides all the slides
 		function initProperties() {
 			getSlides().each(function() {
 				var slide = $(this);
 
-				// First, init everything which is not a video
-				slide.find(ELEMENTS).not('.cs-yt-iframe, .cs-vimeo-iframe, .cs-background-link').each(function() {
-					var element = $(this);
-
-					// Clone the element and get its real properties (avoids width and height = 0). Then replace the original element
-					var clone = element.clone();
-					clone.css('visibility', 'hidden');
-					$('body').append(clone);
-
-					clone.find('*').each(function() {
-						var element_content = $(this);
-						setElementData(element_content, true);
-					});
-
-					setElementData(clone, false);
-					clone.css('display', 'none');
-					clone.css('visibility', 'visible');
-
-					clone.insertAfter(element);
-					element.remove();
-				});
-
-				// Then, let's manage videos differently: the elements cannot be cloned and replaced, or the (already initialized) players will be deatached from the DOM
-				slide.find('.cs-yt-iframe, .cs-vimeo-iframe').each(function() {
+				slide.find(ELEMENTS).each(function() {
 					var element = $(this);
 
 					element.find('*').each(function() {
-						var element_content = $(this);
-						setElementData(element_content, true);
+						var element_content = $(this);						
+						setElementData(element_content);
 					});
 
-					setElementData(element, false);
+					setElementData(element);
 				});
 
 				slide.css('display', 'none');
@@ -490,7 +467,7 @@ var crellyslider_vimeo_api_ready = false;
 		}
 
 		// Initializes the element with original values
-		function setElementData(element, is_element_content) {
+		function setElementData(element) {
 			element.data('width', parseFloat(element.width()));
 			element.data('height', parseFloat(element.height()));
 			element.data('letter-spacing', parseFloat(element.css('letter-spacing')));
