@@ -4,7 +4,7 @@ Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.9
 Tested up to: 4.9
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -53,6 +53,10 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.3.3 =
+* Fixed responsiveness on small devices
+* Spanish, Serbian and Slovak translations moved to Polyglots. If you want to contribute to translate Crelly Slider in your language, check <a href="https://translate.wordpress.org/projects/wp-plugins/crelly-slider"> this page</a>
 
 = 1.3.2 =
 * Fixed slide link not working
