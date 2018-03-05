@@ -56,7 +56,7 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 
 = 1.3.3 =
 * Fixed responsiveness on small devices
-* Spanish, Serbian and Slovak translations moved to Polyglots. If you want to contribute to translate Crelly Slider in your language, check <a href="https://translate.wordpress.org/projects/wp-plugins/crelly-slider"> this page</a>
+* Spanish, Serbian and Slovak translations moved to Polyglots. If you want to contribute to translate Crelly Slider in your language, check out <a href="https://translate.wordpress.org/projects/wp-plugins/crelly-slider">this page</a>
 
 = 1.3.2 =
 * Fixed slide link not working
