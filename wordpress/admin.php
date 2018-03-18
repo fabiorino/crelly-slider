@@ -300,6 +300,12 @@ class CrellySliderAdmin {
 	 * @return array Default options for the tinyMCE editor
 	 */
 	private static function tinyMCEDefaultOptions() {
+		$fontSizes = '';
+		for($i = 1; $i <= 200; $i++) {
+			$fontSizes .= $i . 'px ';
+		}
+		$fontSizes = trim($fontSizes);
+		
 		return array(
 			'toolbar1' => 'bold,italic,strikethrough,alignleft,aligncenter,alignright,link,unlink,underline,forecolor,backcolor',
 			'toolbar2' => 'fontselect,fontsizeselect',
@@ -308,7 +314,7 @@ class CrellySliderAdmin {
 			'height' => 200,
 			'forced_root_block' => false,
 			'wpautop' => false,
-			'fontsize_formats' => implode(' ', array_map(function($x) { return $x . 'px'; }, range(1, 200))),
+			'fontsize_formats' => $fontSizes,
 			'wp_lang_attr' => get_locale(),
 			'content_css' => '',
 			'cache_suffix' => '',
