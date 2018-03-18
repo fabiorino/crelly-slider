@@ -7,7 +7,6 @@
  * Author: Fabio Rinaldi
  * Author URI: https://github.com/fabiorino
  * Text Domain: crelly-slider
- * Domain Path: /wordpress/languages
  * License: MIT
  */
 
@@ -31,9 +30,6 @@ require_once CS_PATH . 'wordpress/frontend.php';
 register_activation_hook(__FILE__, array('CrellySliderTables', 'setVersion'));
 register_activation_hook(__FILE__, array('CrellySliderTables', 'setTables'));
 register_uninstall_hook(__FILE__, array('CrellySliderTables', 'clearDatabase'));
-
-// Languages
-CrellySliderCommon::loadPluginTextDomain();
 
 // This is a variable that should be included first to prevent backend issues.
 if(is_admin()) {

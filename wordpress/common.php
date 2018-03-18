@@ -22,13 +22,6 @@ class CrellySliderCommon {
 		add_action('admin_enqueue_scripts', 'CrellySliderCommon::enqueues');
 	}
 
-	// Loads language file
-	public static function textDomain() {
-		$locale = apply_filters('plugin_locale', get_locale(), 'crelly-slider');
-		load_textdomain('crelly-slider', WP_LANG_DIR . '/crelly-slider/crelly-slider-' . $locale . '.mo');
-		load_plugin_textdomain('crelly-slider', false, dirname(plugin_basename(__FILE__)) . '/languages');
-	}
-
 	public static function loadPluginTextDomain() {
 		add_action('plugins_loaded', 'CrellySliderCommon::textDomain');
 	}
