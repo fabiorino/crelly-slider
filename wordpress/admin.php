@@ -305,6 +305,14 @@ class CrellySliderAdmin {
 			$fontSizes .= $i . 'px ';
 		}
 		$fontSizes = trim($fontSizes);
+
+		$language = explode('_', get_locale());
+		if($language == false || count($language) == 0) {
+			$language = 'en';
+		}
+		else {
+			$language = $language[0];
+		}
 		
 		return array(
 			'toolbar1' => 'bold,italic,strikethrough,alignleft,aligncenter,alignright,link,unlink,underline,forecolor,backcolor',
@@ -318,7 +326,7 @@ class CrellySliderAdmin {
 			'wp_lang_attr' => get_locale(),
 			'content_css' => '',
 			'cache_suffix' => '',
-			'language' => explode('_', get_locale())[0],
+			'language' => $language,
 			'theme' => 'modern',
 			'skin' => 'lightgray',
 			'formats' => '{' .
