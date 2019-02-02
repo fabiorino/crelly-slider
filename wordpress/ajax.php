@@ -1,24 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/************************/
-/** EXTERNAL RESOURCES **/
-/************************/
-
-// Alternative to file_get_contents. If CURL is not installed, file_get_contents is called
-// http://stackoverflow.com/questions/3979802/alternative-to-file-get-contents
-function crellyslider_url_get_contents ($Url) {
-    if (!function_exists('curl_init')){
-        return file_get_contents($Url);
-    }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $Url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    curl_close($ch);
-    return $output;
-}
-
 /********************/
 /** AJAX CALLBACKS **/
 /********************/
@@ -466,8 +448,13 @@ function crellyslider_exportSlider_callback() {
 			// Add images to zip and remove media directory URLs
 			if($slides[$key]['background_type_image'] != 'none' && $slides[$key]['background_type_image'] != 'undefined') {
 				$img = CrellySliderCommon::getURL($slides[$key]['background_type_image']);
-				$zip->addFromString(basename($img), crellyslider_url_get_contents($img));
-        $slides[$key]['background_type_image'] = basename($img);
+				$imgFile = download_url($img);
+				if(is_wp_error($imgFile)) {
+					echo false;
+					die();
+				}
+				$zip->addFile($imgFile, basename($img));
+        		$slides[$key]['background_type_image'] = basename($img);
 			}
 		}
 		$result['slides'] = $slides;
@@ -483,7 +470,12 @@ function crellyslider_exportSlider_callback() {
 			// Add images to zip and remove media directory URLs
 			if($elements[$key]['type'] == 'image') {
 				$img = CrellySliderCommon::getURL($elements[$key]['image_src']);
-				$zip->addFromString(basename($img), crellyslider_url_get_contents($img));
+				$imgFile = download_url($img);
+				if(is_wp_error($imgFile)) {
+					echo false;
+					die();
+				}
+				$zip->addFile($imgFile, basename($img));
 				$elements[$key]['image_src'] = basename($img);
 			}
 		}
