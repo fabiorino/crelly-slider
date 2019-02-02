@@ -189,7 +189,7 @@ function crellyslider_editSlider_callback() {
 	die();
 }
 
-// Edit slides. Receives an array with all the slides options. Delete al the old slides then recreate them
+// Edit slides. Receives an array with all the slides options. Delete al the old slides (performs a backup first) then recreate them
 add_action('wp_ajax_crellyslider_editSlides', 'crellyslider_editSlides_callback');
 function crellyslider_editSlides_callback() {
 	global $wpdb;
@@ -202,30 +202,44 @@ function crellyslider_editSlides_callback() {
 
 	$output = true;
 
-	// Remove all the old slides
-	$output = $wpdb->delete($wpdb->prefix . 'crellyslider_slides', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
-	if($output === false) {
-		echo json_encode(false);
+	// Get the latest slide ID. If we are able to save the new slides succesfully, we remove the old ones, otherwise we do the opposite
+	$latestID = $wpdb->get_results($wpdb->prepare('SELECT id FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d ORDER BY id DESC LIMIT 0, 1', esc_sql($options['slider_parent'])), ARRAY_A);
+	if(!empty($latestID)) {
+		$latestID = $latestID[0]['id'];
 	}
 	else {
-		// It's impossible to have 0 slides (jQuery checks it)
-		if(count($options['options']) == 0) {
-			echo json_encode(false);
-			return;
-		}
-
-		$output = crellyslider_wp_insert_rows($options['options'], $wpdb->prefix . 'crellyslider_slides');
-
-		// Returning
-		$output = json_encode($output);
-		if(is_array($output)) print_r($output);
-		else echo $output;
+		$latestID = null;
 	}
+
+	// It's impossible to have 0 slides (jQuery checks it)
+	if(count($options['options']) == 0) {
+		echo json_encode(false);
+		return;
+	}
+
+	$output = crellyslider_wp_insert_rows($options['options'], $wpdb->prefix . 'crellyslider_slides');
+	if($output) {
+		// Remove all the old slides
+		if($latestID != null) {
+			$output = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d AND id <= %d', esc_sql($options['slider_parent']), $latestID));
+		}
+	}
+	else {
+		// Remove all the new slides
+		if($latestID != null) {
+			$wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d AND id > %d', esc_sql($options['slider_parent']), $latestID));
+		}
+	}
+
+	// Returning
+	$output = json_encode($output);
+	if(is_array($output)) print_r($output);
+	else echo $output;
 
 	die();
 }
 
-// Edit elements. Receives an array with all the elements options. Delete al the old elements then recreate them
+// Edit elements. Receives an array with all the elements options. Delete al the old elements (performs a backup first) then recreate them
 add_action('wp_ajax_crellyslider_editElements', 'crellyslider_editElements_callback');
 function crellyslider_editElements_callback() {
 	global $wpdb;
@@ -238,27 +252,43 @@ function crellyslider_editElements_callback() {
 
 	$output = true;
 
-	// Remove all the old elements
-	$output = $wpdb->delete($wpdb->prefix . 'crellyslider_elements', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
-	if($output === false) {
-		echo json_encode(false);
+	// If no elements just delete the existing ones
+	if(empty(json_decode(stripslashes($options['options'])))) {
+		// Remove all the old elements
+		$output = $wpdb->delete($wpdb->prefix . 'crellyslider_elements', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
+		echo json_encode($output);
 	}
 	else {
-		// No elements
-		$quick_temp = json_decode(stripslashes($options['options']));
-		if(empty($quick_temp)) {
-			echo json_encode(true);
+		// Get the latest element ID. If we are able to save the new elements succesfully, we remove the old ones, otherwise we do the opposite
+		$latestID = $wpdb->get_results($wpdb->prepare('SELECT id FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND slide_parent = %d ORDER BY id DESC LIMIT 0, 1', esc_sql($options['slider_parent']), esc_sql($options['slide_parent'])), ARRAY_A);
+		if(!empty($latestID)) {
+			$latestID = $latestID[0]['id'];
 		}
 		else {
-			$options_array = json_decode(stripslashes($options['options']));
-
-			$output = crellyslider_wp_insert_rows($options_array, $wpdb->prefix . 'crellyslider_elements');
-
-			// Returning
-			$output = json_encode($output);
-			if(is_array($output)) print_r($output);
-			else echo $output;
+			$latestID = null;
 		}
+		
+		$options_array = json_decode(stripslashes($options['options']));
+
+		$output = crellyslider_wp_insert_rows($options_array, $wpdb->prefix . 'crellyslider_elements');
+
+		if($output) {
+			// Remove all the old elements
+			if($latestID != null) {
+				$output = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND slide_parent = %d AND id <= %d', esc_sql($options['slider_parent']), esc_sql($options['slide_parent']), $latestID));
+			}
+		}
+		else {
+			// Remove all the new elements
+			if($latestID != null) {
+				$wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND slide_parent = %d AND id > %d', esc_sql($options['slider_parent']), esc_sql($options['slide_parent']), $latestID));
+			}
+		}
+
+		// Returning
+		$output = json_encode($output);
+		if(is_array($output)) print_r($output);
+		else echo $output;
 	}
 
 	die();
