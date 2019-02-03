@@ -260,7 +260,7 @@ function crellyslider_editElements_callback() {
 	}
 	else {
 		// Get the latest element ID. If we are able to save the new elements succesfully, we remove the old ones, otherwise we do the opposite
-		$latestID = $wpdb->get_results($wpdb->prepare('SELECT id FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND slide_parent = %d ORDER BY id DESC LIMIT 0, 1', esc_sql($options['slider_parent']), esc_sql($options['slide_parent'])), ARRAY_A);
+		$latestID = $wpdb->get_results($wpdb->prepare('SELECT id FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d ORDER BY id DESC LIMIT 0, 1', esc_sql($options['slider_parent'])), ARRAY_A);
 		if(!empty($latestID)) {
 			$latestID = $latestID[0]['id'];
 		}
@@ -275,13 +275,13 @@ function crellyslider_editElements_callback() {
 		if($output) {
 			// Remove all the old elements
 			if($latestID != null) {
-				$output = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND slide_parent = %d AND id <= %d', esc_sql($options['slider_parent']), esc_sql($options['slide_parent']), $latestID));
+				$output = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND id <= %d', esc_sql($options['slider_parent']), $latestID));
 			}
 		}
 		else {
 			// Remove all the new elements
 			if($latestID != null) {
-				$wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND slide_parent = %d AND id > %d', esc_sql($options['slider_parent']), esc_sql($options['slide_parent']), $latestID));
+				$wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND id > %d', esc_sql($options['slider_parent']), $latestID));
 			}
 		}
 
