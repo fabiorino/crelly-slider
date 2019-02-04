@@ -313,6 +313,9 @@ var crellyslider_vimeo_api_ready = false;
 					var player = new YT.Player(element.attr('id'), {
 						events: {
 							'onReady' : function() {
+								if(getItemData(element, 'start-mute')) {
+									player.mute();
+								}
 								loaded_videos++;
 								if(loaded_videos == total_yt_videos) {
 									def.resolve();
@@ -375,6 +378,10 @@ var crellyslider_vimeo_api_ready = false;
 					var player = $f(element[0]);
 
 					player.addEvent('ready', function() {
+						if(getItemData(element, 'start-mute')) {
+							player.api('setVolume', 0);
+						}
+						
 						player.addEvent('finish', function() {
 							vimeo_videos[element.attr('id')].ended = true;
 						});
@@ -988,6 +995,16 @@ var crellyslider_vimeo_api_ready = false;
 						return false;
 					}
 					return settings.videoLoop;
+					break;
+
+				case 'start-mute' :
+					if(parseInt(item.data(data)) == 1) {
+						return true;
+					}
+					else if(parseInt(item.data(data)) == 0) {
+						return false;
+					}
+					return settings.videoStartMute;
 					break;
 
 				case 'top' :
@@ -2144,6 +2161,7 @@ var crellyslider_vimeo_api_ready = false;
 
 				videoAutoplay						: false,
 				videoLoop								: false,
+				videoStartMute						: false,
 
 				beforeStart							: function() {},
 				beforeSetResponsive			: function() {},

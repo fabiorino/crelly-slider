@@ -160,11 +160,12 @@ class CrellySliderFrontend {
 					break;
 
 					case 'youtube_video':
-						$output .= '<iframe frameborder="0" type="text/html" width="560" height="315"' . "\n" .
+						$output .= '<iframe allow="autoplay" frameborder="0" type="text/html" width="560" height="315"' . "\n" .
 						'class="cs-yt-iframe ' . esc_attr($element->custom_css_classes) . '"' . "\n" .
 						'src="' . esc_url('https://www.youtube.com/embed/' . $element->video_id . '?enablejsapi=1') . '"' . "\n" .
 						'data-autoplay="' . $element->video_autoplay . '"' . "\n" .
 						'data-loop="' . $element->video_loop . '"' . "\n" .
+						'data-start-mute="' . $element->video_start_mute . '"' . "\n" .
 						'style="' . "\n" .
 						'z-index: ' . $element->z_index . ';' . "\n" .
 						stripslashes($element->custom_css) . "\n" .
@@ -182,11 +183,12 @@ class CrellySliderFrontend {
 					break;
 
 					case 'vimeo_video':
-						$output .= '<iframe frameborder="0" width="560" height="315"' . "\n" .
+						$output .= '<iframe allow="autoplay" frameborder="0" width="560" height="315"' . "\n" .
 						'class="cs-vimeo-iframe ' . esc_attr($element->custom_css_classes) . '"' . "\n" .
 						'src="' . esc_url('https://player.vimeo.com/video/' . $element->video_id . '?api=1') . '"' . "\n" .
 						'data-autoplay="' . esc_attr($element->video_autoplay) . '"' . "\n" .
 						'data-loop="' . esc_attr($element->video_loop) . '"' . "\n" .
+						'data-start-mute="' . $element->video_start_mute . '"' . "\n" .
 						'style="' . "\n" .
 						'z-index: ' . esc_attr($element->z_index) . ';' . "\n" .
 						stripslashes($element->custom_css) . "\n" .

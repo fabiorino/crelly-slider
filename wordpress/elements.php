@@ -117,7 +117,7 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 							"
 							>
 								<div class="cs-avoid-interaction"></div>
-								<iframe style="<?php echo stripslashes($element->custom_css); ?>" class="cs-yt-iframe <?php echo stripslashes($element->custom_css_classes); ?>" type="text/html" width="560" height="315" src="<?php echo esc_url('http://www.youtube.com/embed/' . $element->video_id); ?>?enablejsapi=1" frameborder="0"></iframe>
+								<iframe allow="autoplay" style="<?php echo stripslashes($element->custom_css); ?>" class="cs-yt-iframe <?php echo stripslashes($element->custom_css_classes); ?>" type="text/html" width="560" height="315" src="<?php echo esc_url('http://www.youtube.com/embed/' . $element->video_id); ?>?enablejsapi=1" frameborder="0"></iframe>
 							</div>
 							<?php
 						break;
@@ -137,7 +137,7 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 							"
 							>
 								<div class="cs-avoid-interaction"></div>
-								<iframe style="<?php echo stripslashes($element->custom_css); ?>" class="cs-vimeo-iframe <?php echo stripslashes($element->custom_css_classes); ?>" src="<?php echo esc_url('https://player.vimeo.com/video/' . $element->video_id); ?>?api=1" width="560" height="315" frameborder="0" ></iframe>
+								<iframe allow="autoplay" style="<?php echo stripslashes($element->custom_css); ?>" class="cs-vimeo-iframe <?php echo stripslashes($element->custom_css_classes); ?>" src="<?php echo esc_url('https://player.vimeo.com/video/' . $element->video_id); ?>?api=1" width="560" height="315" frameborder="0" ></iframe>
 							</div>
 							<?php
 						break;
@@ -773,41 +773,55 @@ function crellyslider_printVideoElement($element) {
 				</td>
 			</tr>
 			<tr>
-				<td class="cs-name"><?php _e('Loop video', 'crelly-slider'); ?></td>
+				<td class="cs-name"><?php _e('Player settings', 'crelly-slider'); ?></td>
 				<td class="cs-content">
-					<?php
-					if($void) echo '<select class="cs-element-video_loop"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
-					else {
-						if($element->video_loop == 0) {
-							echo '<select class="cs-element-video_loop"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
-						}
+					<div class="cs-label-input">
+						<label><?php _e('Loop video', 'crelly-slider'); ?></label>
+						<?php
+						if($void) echo '<select class="cs-element-video_loop"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
 						else {
-							echo '<select class="cs-element-video_loop"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							if($element->video_loop == 0) {
+								echo '<select class="cs-element-video_loop"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							}
+							else {
+								echo '<select class="cs-element-video_loop"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							}
 						}
-					}
-					?>
+						?>
+					</div>
+
+					<div class="cs-label-input">
+						<label><?php _e('Autoplay', 'crelly-slider'); ?></label>
+						<?php
+						if($void) echo '<select class="cs-element-video_autoplay"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+						else {
+							if($element->video_autoplay == 0) {
+								echo '<select class="cs-element-video_autoplay"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							}
+							else {
+								echo '<select class="cs-element-video_autoplay"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							}
+						}
+						?>
+					</div>
+
+					<div class="cs-label-input">
+						<label><?php _e('Mute on start', 'crelly-slider'); ?></label>
+						<?php
+						if($void) echo '<select class="cs-element-video_start_mute"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+						else {
+							if($element->video_start_mute == 0) {
+								echo '<select class="cs-element-video_start_mute"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							}
+							else {
+								echo '<select class="cs-element-video_start_mute"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+							}
+						}
+						?>
+					</div>
 				</td>
 				<td class="cs-description">
-					<?php _e('The video will automatically restart from the beginning when it reaches the end.', 'crelly-slider'); ?>
-				</td>
-			</tr>
-			<tr>
-				<td class="cs-name"><?php _e('Autoplay', 'crelly-slider'); ?></td>
-				<td class="cs-content">
-					<?php
-					if($void) echo '<select class="cs-element-video_autoplay"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
-					else {
-						if($element->video_autoplay == 0) {
-							echo '<select class="cs-element-video_autoplay"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
-						}
-						else {
-							echo '<select class="cs-element-video_autoplay"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
-						}
-					}
-					?>
-				</td>
-				<td class="cs-description">
-					<?php _e('The video will automatically be played after the in animation.', 'crelly-slider'); ?>
+					<?php _e('Video player settings.', 'crelly-slider'); ?>
 				</td>
 			</tr>
 			<tr>
