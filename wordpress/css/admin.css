@@ -583,3 +583,9 @@
 .cs-admin .cs-slide .cs-elements .cs-text-element-settings .mce-toolbar {
 	display: block !important;
 }
+
+.cs-admin .cs-label-input label {
+	display: inline-block;
+	width: 110px;
+	cursor: default;
+}
