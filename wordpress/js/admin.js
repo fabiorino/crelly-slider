@@ -284,8 +284,8 @@
 
 			crellyslider_slidesColorPicker();
 
-      // Update "start from slide" in the slider settings
-      $('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').append('<option value="' + (slides_number - 1) + '">' + crellyslider_translations.slide + ' ' + slides_number + '</option>');
+      		// Update "start from slide" in the slider settings
+			$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').append('<option value="' + (slides_number - 1) + '">' + crellyslider_translations.slide + ' ' + slides_number + '</option>');
 		}
 
 		// Add new on click
@@ -295,6 +295,11 @@
 		// Also add a new slide if slides_number == 0
 		if(slides_number == 0) {
 			crellyslider_addSlide();
+			// Start from first slide by default, unless the user specifically picked random order
+			if(!$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide option[value=-1]').is('[selected]')) {
+				$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').val('0');
+				$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide option[value=0]').attr('selected', 'selected');
+			}
 		}
 		else {
 			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(0).find('a').click();
@@ -335,11 +340,12 @@
 				slide.find('.cs-slide-index').text(indx - 1);
 			}
 
-      // Update "start from slide" in the slider settings
-      $('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').children().last().remove();
-      if($('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').find('option:selected').length == 0) {
-        $('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').children().first().val('0');
-      }
+			// Update "start from slide" in the slider settings
+			if($('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').find('option:selected').val() >= slides_number) { console.log("sdfsd")
+				$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').val('0');
+				$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide option[value=0]').attr('selected', 'selected');
+			}
+			$('.cs-admin #cs-slider-settings .cs-slider-settings-list #cs-slider-startFromSlide').children().last().remove();
 		});
 
     // Duplicate

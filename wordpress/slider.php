@@ -269,22 +269,22 @@
 					<select id="cs-slider-startFromSlide">
 						<?php
 						if(! $edit) {
-							echo '<option selected value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
+							echo '<option value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
 							echo '<option selected value="0">' . __('Slide', 'crelly-slider') . ' 1</option>';
 						}
 						else {
-							if($edit && $slider->startFromSlide == -1) {
+							if($slider->startFromSlide == -1) {
 								echo '<option selected value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
 							}
 							else {
 								echo '<option value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
-							}
-							for($i = 0; $i < count($slides); $i++) {
-								echo '<option value="' . $i . '"';
-								if((!$edit && $i == 0) || ($edit && $slider->startFromSlide == $i)) {
-									echo ' selected';
+								for($i = 0; $i < count($slides); $i++) {
+									echo '<option value="' . $i . '"';
+									if($slider->startFromSlide == $i) {
+										echo ' selected';
+									}
+									echo '>' . __('Slide', 'crelly-slider') . ' ' . ($i + 1) . '</option>';
 								}
-								echo '>' . __('Slide', 'crelly-slider') . ' ' . ($i + 1) . '</option>';
 							}
 						}
 						?>
