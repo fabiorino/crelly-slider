@@ -825,6 +825,25 @@ function crellyslider_printVideoElement($element) {
 				</td>
 			</tr>
 			<tr>
+				<td class="cs-name"><?php _e('Pause while watching', 'crelly-slider'); ?></td>
+				<td class="cs-content">
+					<?php
+					if($void) echo '<select class="cs-element-video_pause_while_watching"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+					else {
+						if($element->video_pause_while_watching == 0) {
+							echo '<select class="cs-element-video_pause_while_watching"><option value="1">' . __('Yes', 'crelly-slider')  . '</option><option selected value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+						}
+						else {
+							echo '<select class="cs-element-video_pause_while_watching"><option selected value="1">' . __('Yes', 'crelly-slider')  . '</option><option value="0">' . __('No', 'crelly-slider')  . '</option></select>';
+						}
+					}
+					?>
+				</td>
+				<td class="cs-description">
+					<?php _e('Pause the current slide timer while the user is watching the video.', 'crelly-slider'); ?>
+				</td>
+			</tr>
+			<tr>
 				<td class="cs-name"><?php _e('Left', 'crelly-slider'); ?></td>
 				<td class="cs-content">
 					<?php

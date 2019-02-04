@@ -67,6 +67,7 @@ var crellyslider_vimeo_api_ready = false;
 
 		var paused = false;
 		var can_pause = false; // Also used as "can change slide"
+		var prevent_hover_interactions = 0; // Allow the user to trigger an action on mouse over. This is used to prevent the slider from resuming while watching a video
 		var executed_slide = false; // Will be true as soon as the current slide is executed
 		var first_play = true;
 
@@ -323,10 +324,6 @@ var crellyslider_vimeo_api_ready = false;
 							},
 
 							'onStateChange' : function(e) {
-								if(e.data === YT.PlayerState.ENDED && getItemData(element, 'loop')) {
-									player.playVideo();
-								}
-
 								if(can_pause) {
 									if(e.data === YT.PlayerState.PAUSED) {
 										youtube_videos[element.attr('id')].manually_paused = true;
@@ -334,7 +331,20 @@ var crellyslider_vimeo_api_ready = false;
 									if(e.data === YT.PlayerState.PLAYING) {
 										youtube_videos[element.attr('id')].manually_paused = false;
 									}
-								}						
+								}
+								
+								if(e.data === YT.PlayerState.PLAYING) {
+									if(getItemData(element, 'pause-while-watching')) {
+										prevent_hover_interactions = true;
+										pause();
+									}
+								}
+								else if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+									if(!watchingAndWait()) {
+										prevent_hover_interactions = false;
+										resume();
+									}
+								}
 							},
 						},
 					});
@@ -384,20 +394,38 @@ var crellyslider_vimeo_api_ready = false;
 						
 						player.addEvent('finish', function() {
 							vimeo_videos[element.attr('id')].ended = true;
+							vimeo_videos[element.attr('id')].playing = false;
+
+							if(!watchingAndWait()) {
+								prevent_hover_interactions = false;
+								resume();
+							}
 						});
 
 						player.addEvent('play', function() {
 							vimeo_videos[element.attr('id')].played_once = true;
 							vimeo_videos[element.attr('id')].ended = false;
+							vimeo_videos[element.attr('id')].playing = true;
 
 							if(can_pause) {
 								vimeo_videos[element.attr('id')].manually_paused = false;
+							}
+
+							if(getItemData(element, 'pause-while-watching')) {
+								prevent_hover_interactions = true;
+								pause();
 							}
 						});
 
 						player.addEvent('pause', function() {
 							if(can_pause) {
 								vimeo_videos[element.attr('id')].manually_paused = true;
+							}
+							vimeo_videos[element.attr('id')].playing = false;
+
+							if(!watchingAndWait()) {
+								prevent_hover_interactions = false;
+								resume();
 							}
 						});
 
@@ -416,6 +444,7 @@ var crellyslider_vimeo_api_ready = false;
 						played_once : false,
 						ended : false,
 						manually_paused : false,
+						playing : false,
 					};
 
 					vimeo_videos[element.attr('id')] = temp;
@@ -550,11 +579,15 @@ var crellyslider_vimeo_api_ready = false;
 			// Pause on hover
 			if(settings.pauseOnHover) {
 				SLIDER.find(CRELLY).find(SLIDES).hover(function() {
-					pause();
+					if(prevent_hover_interactions == 0) {
+						pause();
+					}
 				});
 
 				SLIDER.find(CRELLY).find(SLIDES).mouseleave(function() {
-					resume();
+					if(prevent_hover_interactions == 0) {
+						resume();
+					}
 				});
 			}
 		}
@@ -1005,6 +1038,16 @@ var crellyslider_vimeo_api_ready = false;
 						return false;
 					}
 					return settings.videoStartMute;
+					break;
+
+				case 'pause-while-watching' :
+					if(parseInt(item.data(data)) == 1) {
+						return true;
+					}
+					else if(parseInt(item.data(data)) == 0) {
+						return false;
+					}
+					return settings.videoPauseWhileWatching;
 					break;
 
 				case 'top' :
@@ -1466,6 +1509,49 @@ var crellyslider_vimeo_api_ready = false;
 		// Pauses the video
 		function pauseVimeoVideo(element) {
 			getVimeoPlayer(element).api('pause');
+		}
+
+		// Returns true if there is at least one video playing with "pauseWhileWatching" enabled
+		function watchingAndWait() {
+			var ret = false;
+			
+			getSlide(current_slide).find(ELEMENTS + '.cs-yt-iframe').each(function() {
+				if(ret) {
+					return;
+				}
+				
+				var element = $(this);
+
+				if(!getItemData(element, 'pause-while-watching')) {
+					return;
+				}
+
+				if(getYoutubePlayerState(element) == 1) {
+					ret = true;
+				}
+			});
+
+			if(ret) {
+				return true;
+			}
+			
+			getSlide(current_slide).find(ELEMENTS + '.cs-vimeo-iframe').each(function() {
+				if(ret) {
+					return;
+				}
+				
+				var element = $(this);
+
+				if(!getItemData(element, 'pause-while-watching')) {
+					return;
+				}
+
+				if(vimeo_videos[element.attr('id')].playing) {
+					ret = true;
+				}
+			});
+
+			return ret;
 		}
 
 		/****************/
@@ -2162,6 +2248,7 @@ var crellyslider_vimeo_api_ready = false;
 				videoAutoplay						: false,
 				videoLoop								: false,
 				videoStartMute						: false,
+				videoPauseWhileWatching				: true,
 
 				beforeStart							: function() {},
 				beforeSetResponsive			: function() {},

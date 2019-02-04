@@ -1225,6 +1225,7 @@
 						'data-autoplay' : parseInt(original_elements.eq(i).find('.cs-element-video_autoplay').val()),
 						'data-loop' : parseInt(original_elements.eq(i).find('.cs-element-video_loop').val()),
 						'data-start-mute' : parseInt(original_elements.eq(i).find('.cs-element-video_start_mute').val()),
+						'data-pause-while-watching' : parseInt(original_elements.eq(i).find('.cs-element-video_pause_while_watching').val()),
 					});
 					html_class = 'cs-yt-iframe';
 				}
@@ -1236,6 +1237,7 @@
 						'data-autoplay' : parseInt(original_elements.eq(i).find('.cs-element-video_autoplay').val()),
 						'data-loop' : parseInt(original_elements.eq(i).find('.cs-element-video_loop').val()),
 						'data-start-mute' : parseInt(original_elements.eq(i).find('.cs-element-video_start_mute').val()),
+						'data-pause-while-watching' : parseInt(original_elements.eq(i).find('.cs-element-video_pause_while_watching').val()),
 					});
 					html_class = 'cs-vimeo-iframe';
 				}
@@ -1594,6 +1596,7 @@
 						video_loop : element.hasClass('cs-video-element-settings') ? parseInt(element.find('.cs-element-video_loop').val()) : -1,
 						video_autoplay : element.hasClass('cs-video-element-settings') ? parseInt(element.find('.cs-element-video_autoplay').val()) : -1,
 						video_start_mute : element.hasClass('cs-video-element-settings') ? parseInt(element.find('.cs-element-video_start_mute').val()) : -1,
+						video_pause_while_watching : element.hasClass('cs-video-element-settings') ? parseInt(element.find('.cs-element-video_pause_while_watching').val()) : -1,
 					};
 
 					final_options['options'][j] = options;

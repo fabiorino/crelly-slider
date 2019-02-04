@@ -111,7 +111,8 @@ class CrellySliderTables {
 		video_id TEXT CHARACTER SET utf8,
 		video_loop INT,
 		video_autoplay INT,
-		video_start_mute INT,
+		video_start_mute INT DEFAULT 0,
+		video_pause_while_watching INT DEFAULT 0,
 		UNIQUE KEY id (id)
 		);";
 

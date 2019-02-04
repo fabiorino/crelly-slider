@@ -177,6 +177,7 @@ class CrellySliderFrontend {
 						'data-autoplay="' . $element->video_autoplay . '"' . "\n" .
 						'data-loop="' . $element->video_loop . '"' . "\n" .
 						'data-start-mute="' . $element->video_start_mute . '"' . "\n" .
+						'data-pause-while-watching="' . $element->video_pause_while_watching . '"' . "\n" .
 						'style="' . "\n" .
 						'z-index: ' . $element->z_index . ';' . "\n" .
 						stripslashes($element->custom_css) . "\n" .
@@ -200,6 +201,7 @@ class CrellySliderFrontend {
 						'data-autoplay="' . esc_attr($element->video_autoplay) . '"' . "\n" .
 						'data-loop="' . esc_attr($element->video_loop) . '"' . "\n" .
 						'data-start-mute="' . $element->video_start_mute . '"' . "\n" .
+						'data-pause-while-watching="' . $element->video_pause_while_watching . '"' . "\n" .
 						'style="' . "\n" .
 						'z-index: ' . esc_attr($element->z_index) . ';' . "\n" .
 						stripslashes($element->custom_css) . "\n" .
