@@ -43,6 +43,17 @@ class CrellySliderFrontend {
 			return __('The slider hasn\'t been found', 'crelly-slider');
 		}
 
+		// Generate a unique ID for each slider. This is needed because we might want to display the same slider on the same page more than once.
+		// The first slider of the page will have id="crellyslider-theSliderID". All the others will have id="crellyslider-theSliderID-aRandomString"
+		static $loadedSliders = array();
+		$uid = $slider->id;
+		if(in_array($slider->id, $loadedSliders)) {
+			$uid .= '-' . uniqid();
+		}
+		else {
+			array_push($loadedSliders, $slider->id);
+		}
+
 		// Get the slider. Return if now() is not between from/to dates
 		$slider = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . 'crellyslider_sliders WHERE NOW() BETWEEN fromDate AND toDate AND alias=%s', esc_sql($alias)));
 		if(! $slider) {
@@ -54,7 +65,7 @@ class CrellySliderFrontend {
 
 		$output = '';
 
-		$output .= '<div style="display: none;" class="crellyslider-slider crellyslider-slider-' . esc_attr($slider->layout) . ' crellyslider-slider-' . esc_attr($alias) . '" id="crellyslider-' . esc_attr($slider_id) . '">' . "\n";
+		$output .= '<div style="display: none;" class="crellyslider-slider crellyslider-slider-' . esc_attr($slider->layout) . ' crellyslider-slider-' . esc_attr($alias) . ' crellyslider-' . esc_attr($slider_id) . '" id="crellyslider-' . $uid . '">' . "\n";
 		$output .= '<ul>' . "\n";
 		foreach($slides as $slide) {
 			$background_type_image = $slide->background_type_image == 'undefined' || $slide->background_type_image == 'none' ? 'none;' : 'url(\'' . CrellySliderCommon::getURL($slide->background_type_image) . '\');';
@@ -219,7 +230,7 @@ class CrellySliderFrontend {
 		$output .= '<script type="text/javascript">' . "\n";
 		$output .= '(function($) {' . "\n";
 		$output .= '$(document).ready(function() {' . "\n";
-		$output .= '$("#crellyslider-' . $slider_id  . '").crellySlider({' . "\n";
+		$output .= '$("#crellyslider-' . $uid  . '").crellySlider({' . "\n";
 		$output .= 'layout: \'' . $slider->layout . '\',' . "\n";
 		$output .= 'responsive: ' . $slider->responsive . ',' . "\n";
 		$output .= 'startWidth: ' . $slider->startWidth . ',' . "\n";
