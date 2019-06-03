@@ -89,12 +89,12 @@
 
 		function crellyslider_showWait() {
 			$('.cs-admin .cs-message').css('display', 'none');
-			
+
 			var target = $('.cs-admin .cs-message.cs-message-wait');
 
 			var untouchedMessage = target.text().split('.').join('');
 			target.text(untouchedMessage);
-			
+
 			target.css({
 				'display' : 'block',
 				'opacity' : 1,
@@ -1384,7 +1384,7 @@
 		// Sends an array with the new or current slider options
 		function crellyslider_saveSlider() {
 			crellyslider_showWait();
-			
+
 			var content = $('.cs-admin .cs-slider #cs-slider-settings');
 			var options = {
 				id : parseInt($('.cs-admin .cs-slider .cs-save-settings').data('id')),
@@ -1407,6 +1407,14 @@
 				callbacks : content.find('#cs-slider-callbacks').val(),
 			};
 
+			var sliderNonce;
+			if(typeof(crellyslider_currentSliderNonce) != "undefined") {
+				sliderNonce = crellyslider_currentSliderNonce;
+			}
+			else {
+				sliderNonce = crellyslider_nonces.addSlider;
+			}
+
 			// Do the ajax call
 			jQuery.ajax({
 				type : 'POST',
@@ -1415,6 +1423,7 @@
 				data : {
 					// Is it saving or updating?
 					action: $('.cs-admin .cs-slider').hasClass('cs-add-slider') ? 'crellyslider_addSlider' : 'crellyslider_editSlider',
+				  security: sliderNonce,
 					datas : options,
 				},
 				success: function(response) {
@@ -1500,6 +1509,7 @@
 				url : ajaxurl,
 				data : {
 					action: 'crellyslider_editSlides',
+					security: crellyslider_currentSliderNonce,
 					datas : final_options,
 				},
 				success: function(response) {
@@ -1521,7 +1531,7 @@
 		}
 
 		// Sends an array with all the elements options of each slide
-		function crellyslider_saveElements() {			
+		function crellyslider_saveElements() {
 			var slides = $('.cs-admin .cs-slider #cs-slides .cs-slide');
 			var i = 0, j = 0;
 			var final_options = {};
@@ -1612,11 +1622,13 @@
 				url : ajaxurl,
 				data : {
 					action: 'crellyslider_editElements',
+					security: crellyslider_currentSliderNonce,
 					datas : final_options,
 				},
 				success: function(response) {
 					//console.log(response);
 					if(response !== false) {
+						crellyslider_currentSliderNonce = response;
 						crellyslider_showSuccess();
 					}
 					else {
@@ -1634,7 +1646,7 @@
 
 		function crellyslider_deleteSlider(content) {
 			crellyslider_showWait();
-			
+
 			// Get options
 			var options = {
 				id : parseInt(content.data('delete')),
@@ -1647,6 +1659,7 @@
 				url : ajaxurl,
 				data : {
 					action: 'crellyslider_deleteSlider',
+					security: crellyslider_nonces.deleteSlider,
 					datas : options,
 				},
 				success: function(response) {
@@ -1675,7 +1688,7 @@
 
 		function crellyslider_duplicateSlider(content) {
 			crellyslider_showWait();
-			
+
 			// Get options
 			var options = {
 				id : parseInt(content.data('duplicate')),
@@ -1688,6 +1701,7 @@
 				url : ajaxurl,
 				data : {
 					action: 'crellyslider_duplicateSlider',
+					security: crellyslider_nonces.duplicateSlider,
 					datas : options,
 				},
 				success: function(response) {
@@ -1721,7 +1735,7 @@
 
 		function crellyslider_exportSlider(content) {
 			crellyslider_showWait();
-			
+
 			// Get options
 			var options = {
 				id : parseInt(content.data('export')),
@@ -1734,6 +1748,7 @@
 				url : ajaxurl,
 				data : {
 					action: 'crellyslider_exportSlider',
+					security: crellyslider_nonces.exportSlider,
 					datas : options,
 				},
 				success: function(response) {
@@ -1770,6 +1785,7 @@
 			var fd = new FormData();
 			fd.append('file', file);
 			fd.append('action', 'crellyslider_importSlider');
+			fd.append('security', crellyslider_nonces.importSlider);
 
 			// Do the ajax call
 			jQuery.ajax({

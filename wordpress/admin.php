@@ -11,7 +11,7 @@ class CrellySliderAdmin {
 	}
 
 	public static function pluginMenus() {
-		add_menu_page('Crelly Slider', 'Crelly Slider', 'manage_options', 'crellyslider', 'CrellySliderAdmin::displayPage', 'div');
+		add_menu_page('Crelly Slider', 'Crelly Slider', CS_MIN_CAPABILITY, 'crellyslider', 'CrellySliderAdmin::displayPage', 'div');
 	}
 
 	// Go to the correct page
@@ -137,6 +137,16 @@ class CrellySliderAdmin {
 		<div class="cs-slider <?php echo $edit ? 'cs-edit-slider' : 'cs-add-slider' ?>">
 			<div class="cs-tabs cs-tabs-fade cs-tabs-switch-interface">
 				<?php if($edit): ?>
+					<script type="text/javascript">
+						<?php
+						$currentSliderNonce = CrellySliderHelpers::getNonce($id);
+						if(! $currentSliderNonce) {
+							die('Could not get nonce for current slider');
+						}
+						?>
+						var crellyslider_currentSliderNonce = "<?php echo $currentSliderNonce; ?>";
+					</script>
+
 					<ul>
 
 						<li>
@@ -192,7 +202,7 @@ class CrellySliderAdmin {
 		wp_enqueue_script('jquery-ui-tabs');
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('jquery-ui-dialog');
-		wp_enqueue_script('jquery-ui-datepicker');		
+		wp_enqueue_script('jquery-ui-datepicker');
 		wp_enqueue_style('wp-color-picker');
 		wp_enqueue_media();
 
@@ -203,6 +213,8 @@ class CrellySliderAdmin {
 		add_action('admin_print_footer_scripts', array( __CLASS__, 'printTinyMCEOptions'), 1);
 		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
 
+		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
+		self::createNonces();
 		self::localization();
 
 		wp_enqueue_style('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/css/admin.css', array(), CS_VERSION);
@@ -287,6 +299,18 @@ class CrellySliderAdmin {
 		wp_localize_script('crellyslider-admin', 'crellyslider_translations', $crellyslider_translations);
 	}
 
+	public static function createNonces() {
+		$nonces = array(
+			'addSlider' => wp_create_nonce('crellyslider_add-slider'),
+			'deleteSlider' => wp_create_nonce('crellyslider_delete-slider'),
+			'duplicateSlider' => wp_create_nonce('crellyslider_duplicate-slider'),
+			'exportSlider' => wp_create_nonce('crellyslider_export-slider'),
+			'importSlider' => wp_create_nonce('crellyslider_import-slider'),
+		);
+
+		wp_localize_script('crellyslider-admin', 'crellyslider_nonces', $nonces);
+	}
+
 	/**
 	 * Invokes the filter for the tinyMCE init options
 	 */
@@ -313,7 +337,7 @@ class CrellySliderAdmin {
 		else {
 			$language = $language[0];
 		}
-		
+
 		return array(
 			'toolbar1' => 'bold,italic,strikethrough,alignleft,aligncenter,alignright,link,unlink,underline,forecolor,backcolor',
 			'toolbar2' => 'fontselect,fontsizeselect',

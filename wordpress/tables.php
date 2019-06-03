@@ -17,6 +17,21 @@ class CrellySliderTables {
 		self::setSlidersTable();
 		self::setSlidesTable();
 		self::setElementsTable();
+		self::setNoncesTable();
+	}
+
+	public static function setNoncesTable() {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'crellyslider_nonces';
+
+		$sql = "CREATE TABLE $table_name (
+		slider_id mediumint(9) NOT NULL,
+		nonce varchar(100) DEFAULT '' NOT NULL,
+		UNIQUE KEY slider_id (slider_id)
+		);";
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
 	}
 
 	public static function setSlidersTable() {
@@ -125,6 +140,7 @@ class CrellySliderTables {
 		self::dropTable($wpdb->prefix . 'crellyslider_sliders');
 		self::dropTable($wpdb->prefix . 'crellyslider_slides');
 		self::dropTable($wpdb->prefix . 'crellyslider_elements');
+		self::dropTable($wpdb->prefix . 'crellyslider_nonces');
 	}
 
 	public static function dropTable($table_name) {
