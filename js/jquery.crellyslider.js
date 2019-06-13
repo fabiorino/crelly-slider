@@ -2,7 +2,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: https://wordpress.org/plugins/crelly-slider/
  * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Fabio Rinaldi
  * Author URI: https://github.com/fabiorino
  * License: MIT
@@ -332,7 +332,7 @@ var crellyslider_vimeo_api_ready = false;
 										youtube_videos[element.attr('id')].manually_paused = false;
 									}
 								}
-								
+
 								if(e.data === YT.PlayerState.PLAYING) {
 									if(getItemData(element, 'pause-while-watching')) {
 										prevent_hover_interactions = true;
@@ -391,7 +391,7 @@ var crellyslider_vimeo_api_ready = false;
 						if(getItemData(element, 'start-mute')) {
 							player.api('setVolume', 0);
 						}
-						
+
 						player.addEvent('finish', function() {
 							vimeo_videos[element.attr('id')].ended = true;
 							vimeo_videos[element.attr('id')].playing = false;
@@ -490,7 +490,7 @@ var crellyslider_vimeo_api_ready = false;
 					var element = $(this);
 
 					element.find('*').each(function() {
-						var element_content = $(this);						
+						var element_content = $(this);
 						setElementData(element_content);
 					});
 
@@ -1514,12 +1514,12 @@ var crellyslider_vimeo_api_ready = false;
 		// Returns true if there is at least one video playing with "pauseWhileWatching" enabled
 		function watchingAndWait() {
 			var ret = false;
-			
+
 			getSlide(current_slide).find(ELEMENTS + '.cs-yt-iframe').each(function() {
 				if(ret) {
 					return;
 				}
-				
+
 				var element = $(this);
 
 				if(!getItemData(element, 'pause-while-watching')) {
@@ -1534,12 +1534,12 @@ var crellyslider_vimeo_api_ready = false;
 			if(ret) {
 				return true;
 			}
-			
+
 			getSlide(current_slide).find(ELEMENTS + '.cs-vimeo-iframe').each(function() {
 				if(ret) {
 					return;
 				}
-				
+
 				var element = $(this);
 
 				if(!getItemData(element, 'pause-while-watching')) {

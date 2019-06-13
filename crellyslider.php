@@ -3,7 +3,7 @@
  * Plugin Name: Crelly Slider
  * Plugin URI: https://wordpress.org/plugins/crelly-slider/
  * Description: A free responsive slider that supports layers. Add texts, images, videos and beautify them with transitions and animations.
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Fabio Rinaldi
  * Author URI: https://github.com/fabiorino
  * Text Domain: crelly-slider
@@ -18,7 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 define('CS_DEBUG', true);
 
-define('CS_VERSION', '1.3.4');
+define('CS_VERSION', '1.3.5');
+define('CS_MIN_CAPABILITY', 'manage_options');
 define('CS_PATH', plugin_dir_path(__FILE__));
 define('CS_PLUGIN_URL', plugins_url() . '/crelly-slider');
 

@@ -1,6 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+require_once CS_PATH . 'wordpress/helpers.php';
+
 /********************/
 /** AJAX CALLBACKS **/
 /********************/
@@ -66,6 +68,13 @@ function crellyslider_wp_insert_rows($row_arrays = array(), $wp_table_name) {
 // Add slider
 add_action('wp_ajax_crellyslider_addSlider', 'crellyslider_addSlider_callback');
 function crellyslider_addSlider_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+	if(! check_ajax_referer('crellyslider_add-slider', 'security', false)) {
+		die('Could not verify nonce');
+	}
+
 	global $wpdb;
 	$options = $_POST['datas'];
 
@@ -85,9 +94,9 @@ function crellyslider_insertSliderSQL($options) {
 	return $wpdb->insert(
 		$wpdb->prefix . 'crellyslider_sliders',
 		array(
-			'name' => $options['name'],
-			'alias' => $options['alias'],
-			'layout' => $options['layout'],
+			'name' => sanitize_text_field($options['name']),
+			'alias' => sanitize_text_field($options['alias']),
+			'layout' => sanitize_key($options['layout']),
 			'responsive' => $options['responsive'],
 			'startWidth' => $options['startWidth'],
 			'startHeight' => $options['startHeight'],
@@ -100,8 +109,8 @@ function crellyslider_insertSliderSQL($options) {
 			'randomOrder' => $options['randomOrder'],
 			'startFromSlide' => $options['startFromSlide'],
 			'enableSwipe' => $options['enableSwipe'],
-			'fromDate' => $options['fromDate'],
-			'toDate' => $options['toDate'],
+			'fromDate' => sanitize_text_field($options['fromDate']),
+			'toDate' => sanitize_text_field($options['toDate']),
 		),
 		array(
 			'%s',
@@ -128,6 +137,10 @@ function crellyslider_insertSliderSQL($options) {
 // Edit slider
 add_action('wp_ajax_crellyslider_editSlider', 'crellyslider_editSlider_callback');
 function crellyslider_editSlider_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+
 	global $wpdb;
 	$options = $_POST['datas'];
 	$table_name = $wpdb->prefix . 'crellyslider_sliders';
@@ -137,12 +150,16 @@ function crellyslider_editSlider_callback() {
 		return;
 	}
 
+	if(! isset($_POST['security']) || ! CrellySliderHelpers::verifyNonce(esc_sql($options['id']), esc_sql($_POST['security']))) {
+		die('Could not verify nonce');
+	}
+
 	$output = $wpdb->update(
 		$table_name,
 		array(
-			'name' => $options['name'],
-			'alias' => $options['alias'],
-			'layout' => $options['layout'],
+			'name' => sanitize_text_field($options['name']),
+			'alias' => sanitize_text_field($options['alias']),
+			'layout' => sanitize_key($options['layout']),
 			'responsive' => $options['responsive'],
 			'startWidth' => $options['startWidth'],
 			'startHeight' => $options['startHeight'],
@@ -155,8 +172,8 @@ function crellyslider_editSlider_callback() {
       		'randomOrder' => $options['randomOrder'],
       		'startFromSlide' => $options['startFromSlide'],
 			'enableSwipe' => $options['enableSwipe'],
-			'fromDate' => $options['fromDate'],
-			'toDate' => $options['toDate'],
+			'fromDate' => sanitize_text_field($options['fromDate']),
+			'toDate' => sanitize_text_field($options['toDate']),
 		),
 		array('id' => esc_sql($options['id'])),
 		array(
@@ -192,6 +209,10 @@ function crellyslider_editSlider_callback() {
 // Edit slides. Receives an array with all the slides options. Delete al the old slides (performs a backup first) then recreate them
 add_action('wp_ajax_crellyslider_editSlides', 'crellyslider_editSlides_callback');
 function crellyslider_editSlides_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+
 	global $wpdb;
 	$options = $_POST['datas'];
 
@@ -200,7 +221,9 @@ function crellyslider_editSlides_callback() {
 		return;
 	}
 
-	$output = true;
+	if(! isset($_POST['security']) || ! CrellySliderHelpers::verifyNonce(esc_sql($options['slider_parent']), esc_sql($_POST['security']))) {
+		die('Could not verify nonce');
+	}
 
 	// Get the latest slide ID. If we are able to save the new slides succesfully, we remove the old ones, otherwise we do the opposite
 	$latestID = $wpdb->get_results($wpdb->prepare('SELECT id FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d ORDER BY id DESC LIMIT 0, 1', esc_sql($options['slider_parent'])), ARRAY_A);
@@ -217,7 +240,13 @@ function crellyslider_editSlides_callback() {
 		return;
 	}
 
-	$output = crellyslider_wp_insert_rows($options['options'], $wpdb->prefix . 'crellyslider_slides');
+	$options_array = array();
+	for($i = 0; $i < count($options['options']); $i++) {
+		$options_array[$i] = (object)($options['options'][$i]);
+	}
+
+	$output = crellyslider_insertSlidesSQL($options_array);
+
 	if($output) {
 		// Remove all the old slides
 		if($latestID != null) {
@@ -239,9 +268,31 @@ function crellyslider_editSlides_callback() {
 	die();
 }
 
+function crellyslider_insertSlidesSQL($options) {
+	global $wpdb;
+
+	// Sanitize input
+	for($i = 0; $i < count($options); $i++) {
+		$options[$i]->background_type_image = sanitize_text_field($options[$i]->background_type_image);
+		$options[$i]->background_type_color = sanitize_text_field($options[$i]->background_type_color);
+		$options[$i]->background_repeat = sanitize_text_field($options[$i]->background_repeat);
+		$options[$i]->background_propriety_size = sanitize_text_field($options[$i]->background_propriety_size);
+		$options[$i]->data_in = sanitize_text_field($options[$i]->data_in);
+		$options[$i]->data_out = sanitize_text_field($options[$i]->data_out);
+		$options[$i]->link = sanitize_text_field($options[$i]->link);
+		$options[$i]->custom_css = sanitize_textarea_field($options[$i]->custom_css);
+	}
+
+	return crellyslider_wp_insert_rows($options, $wpdb->prefix . 'crellyslider_slides');
+}
+
 // Edit elements. Receives an array with all the elements options. Delete al the old elements (performs a backup first) then recreate them
 add_action('wp_ajax_crellyslider_editElements', 'crellyslider_editElements_callback');
 function crellyslider_editElements_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+
 	global $wpdb;
 	$options = $_POST['datas'];
 
@@ -250,13 +301,24 @@ function crellyslider_editElements_callback() {
 		return;
 	}
 
+	if(! isset($_POST['security']) || ! CrellySliderHelpers::verifyNonce(esc_sql($options['slider_parent']), esc_sql($_POST['security']))) {
+		die('Could not verify nonce');
+	}
+
 	$output = true;
 
 	// If no elements just delete the existing ones
 	if(empty(json_decode(stripslashes($options['options'])))) {
 		// Remove all the old elements
 		$output = $wpdb->delete($wpdb->prefix . 'crellyslider_elements', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
-		echo json_encode($output);
+		if(! $output) {
+			echo json_encode(false);
+		}
+		// Generate new nonce and return it
+		else {
+			$newNonce = CrellySliderHelpers::setNonce(esc_sql($options['slider_parent']));
+			echo json_encode($newNonce);
+		}
 	}
 	else {
 		// Get the latest element ID. If we are able to save the new elements succesfully, we remove the old ones, otherwise we do the opposite
@@ -267,16 +329,21 @@ function crellyslider_editElements_callback() {
 		else {
 			$latestID = null;
 		}
-		
+
 		$options_array = json_decode(stripslashes($options['options']));
 
-		$output = crellyslider_wp_insert_rows($options_array, $wpdb->prefix . 'crellyslider_elements');
+		$output = crellyslider_insertElementsSQL($options_array);
 
 		if($output) {
 			// Remove all the old elements
 			if($latestID != null) {
 				$output = $wpdb->query($wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'crellyslider_elements WHERE slider_parent = %d AND id <= %d', esc_sql($options['slider_parent']), $latestID));
 			}
+
+			// Generate new nonce and return it
+			$newNonce = CrellySliderHelpers::setNonce(esc_sql($options['slider_parent']));
+			echo json_encode($newNonce);
+			die();
 		}
 		else {
 			// Remove all the new elements
@@ -294,9 +361,33 @@ function crellyslider_editElements_callback() {
 	die();
 }
 
+function crellyslider_insertElementsSQL($options) {
+	global $wpdb;
+
+	// Sanitize input
+	for($i = 0; $i < count($options); $i++) {
+		$options[$i]->image_src = sanitize_text_field($options[$i]->image_src);
+		$options[$i]->image_alt = sanitize_text_field($options[$i]->image_alt);
+		$options[$i]->data_in = sanitize_text_field($options[$i]->data_in);
+		$options[$i]->data_out = sanitize_text_field($options[$i]->data_out);
+		$options[$i]->custom_css_classes = sanitize_text_field($options[$i]->custom_css_classes);
+		$options[$i]->link = sanitize_text_field($options[$i]->link);
+		$options[$i]->video_id = sanitize_text_field($options[$i]->video_id);
+	}
+
+	return crellyslider_wp_insert_rows($options, $wpdb->prefix . 'crellyslider_elements');
+}
+
 // Delete slider and its content
 add_action('wp_ajax_crellyslider_deleteSlider', 'crellyslider_deleteSlider_callback');
 function crellyslider_deleteSlider_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+	if(! check_ajax_referer('crellyslider_delete-slider', 'security', false)) {
+		die('Could not verify nonce');
+	}
+
 	global $wpdb;
 	$options = $_POST['datas'];
 
@@ -328,6 +419,11 @@ function crellyslider_deleteSlider_callback() {
 		$real_output = false;
 	}
 
+	$output = CrellySliderHelpers::removeNonce(esc_sql($options['id']));
+	if($output === false) {
+		$real_output = false;
+	}
+
 	// Returning
 	$real_output = json_encode($real_output);
 	if(is_array($real_output)) print_r($real_output);
@@ -339,6 +435,13 @@ function crellyslider_deleteSlider_callback() {
 // Duplicate slider and its content
 add_action('wp_ajax_crellyslider_duplicateSlider', 'crellyslider_duplicateSlider_callback');
 function crellyslider_duplicateSlider_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+	if(! check_ajax_referer('crellyslider_duplicate-slider', 'security', false)) {
+		die('Could not verify nonce');
+	}
+
 	global $wpdb;
 	$options = $_POST['datas'];
 
@@ -433,10 +536,14 @@ function crellyslider_duplicateSlider_callback() {
 // Exports the slider in .zip
 add_action('wp_ajax_crellyslider_exportSlider', 'crellyslider_exportSlider_callback');
 function crellyslider_exportSlider_callback() {
-	global $wpdb;
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+	if(! check_ajax_referer('crellyslider_export-slider', 'security', false)) {
+		die('Could not verify nonce');
+	}
 
-	// Clear the temp folder
-	array_map('unlink', glob(CS_PATH . '/wordpress/temp/*'));
+	global $wpdb;
 
 	$options = $_POST['datas'];
 
@@ -444,6 +551,11 @@ function crellyslider_exportSlider_callback() {
 		echo json_encode(false);
 		return;
 	}
+
+	// Make dir with random name
+	$dirName = uniqid();
+	$tmpDir = CS_PATH . '/wordpress/temp/' . $dirName;
+	mkdir($tmpDir);
 
 	$real_output = true;
 
@@ -463,8 +575,9 @@ function crellyslider_exportSlider_callback() {
 
 	$zip = new ZipArchive();
 	$filename = 'crellyslider-' . $sliders[0]['alias'] . '.zip';
-	if($zip->open(CS_PATH . '/wordpress/temp/' . $filename, ZipArchive::CREATE) !== TRUE) {
+	if($zip->open($tmpDir . '/' . $filename, ZipArchive::CREATE) !== TRUE) {
 		echo false;
+		CrellySliderHelpers::delTree($tmpDir);
 		die();
 	}
 
@@ -520,7 +633,7 @@ function crellyslider_exportSlider_callback() {
 	if($real_output === true) {
 		$real_output = array(
 			'response' => true,
-			'url' => CS_PLUGIN_URL . '/wordpress/temp/' . $filename,
+			'url' => CS_PLUGIN_URL . "/wordpress/temp/$dirName/$filename",
 		);
 	}
 	else {
@@ -541,9 +654,16 @@ function crellyslider_exportSlider_callback() {
 // Imports a slider given a .zip in $_FILES
 add_action('wp_ajax_crellyslider_importSlider', 'crellyslider_importSlider_callback');
 function crellyslider_importSlider_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
+	if (! isset($_POST['security']) || ! wp_verify_nonce($_POST['security'], 'crellyslider_import-slider')) {
+		die('Could not verify nonce');
+	}
+
 	foreach($_FILES as $file) {
 		$real_output = crellyslider_importSlider($file['tmp_name']);
-		
+
 		if($real_output == false) {
 			echo false;
 			die();
@@ -560,10 +680,12 @@ function crellyslider_importSlider_callback() {
 // Imports a slider given a .zip file path
 function crellyslider_importSlider($filePath) {
 	global $wpdb;
-	
-	// Clear the temp folder
-	array_map('unlink', glob(CS_PATH . '/wordpress/temp/*'));
-	
+
+	// Make dir with random name
+	$dirName = uniqid();
+	$tmpDir = CS_PATH . '/wordpress/temp/' . $dirName;
+	mkdir($tmpDir);
+
 	$output = true;
 	$real_output = true;
 
@@ -572,9 +694,51 @@ function crellyslider_importSlider($filePath) {
 		return false;
 	}
 
-	$zip->extractTo(CS_PATH . '/wordpress/temp/');
+	// The zip archive should only contain a json file and images.
+	$safeFiles = array(
+		'slider.json'
+	);
+	$safeExtensions = array(
+		// List of common images extensions stolen from https://github.com/dyne/file-extension-list/blob/master/data/image
+		'3dm',
+		'3ds',
+		'max',
+		'bmp',
+		'dds',
+		'gif',
+		'jpg',
+		'jpeg',
+		'png',
+		'psd',
+		'xcf',
+		'tga',
+		'thm',
+		'tif',
+		'tiff',
+		'yuv',
+		'ai',
+		'eps',
+		'ps',
+		'svg',
+		'dwg',
+		'dxf',
+		'gpx',
+		'kml',
+		'kmz',
+	);
+    for($i = 0; ! empty($zip->statIndex($i)['name']); $i++) {
+		$fileName = $zip->statIndex($i)['name'];
+		$ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
-	$imported_array = json_decode(file_get_contents(CS_PATH . '/wordpress/temp/slider.json'));
+		if(! in_array($fileName, $safeFiles) && ! in_array($ext, $safeExtensions)) {
+			CrellySliderHelpers::delTree($tmpDir);
+			die('Attempting to extract an unsupported file: ' . $fileName);
+		}
+    }
+
+	$zip->extractTo($tmpDir);
+
+	$imported_array = json_decode(file_get_contents($tmpDir . '/slider.json'));
 
 	$sliders = $imported_array->sliders;
 	foreach($sliders as $slider) {
@@ -606,19 +770,19 @@ function crellyslider_importSlider($filePath) {
 
 				// Set background images
 				if($slides[$key]->background_type_image != 'undefined' && $slides[$key]->background_type_image != 'none') {
-					$url = CS_PATH . '/wordpress/temp/' . $slides[$key]->background_type_image;
+					$url = $tmpDir . '/' . $slides[$key]->background_type_image;
 					$id = crellyslider_importImage($url);
 					$slides[$key]->background_type_image = $id;
 				}
 			}
-			$temp = crellyslider_wp_insert_rows($slides, $wpdb->prefix . 'crellyslider_slides');
+			$temp = crellyslider_insertSlidesSQL((array) $slides);
 			if($temp === false) {
 				$output = false;
 			}
 		}
 
 		// Import elements
-		$elements = (array) $imported_array->elements;
+		$elements = isset($imported_array->elements) ? (array) $imported_array->elements : array();
 		if(empty($elements)) {
 			$output = true;
 		}
@@ -628,12 +792,12 @@ function crellyslider_importSlider($filePath) {
 
 				// Set images
 				if($elements[$key]->type == 'image') {
-					$url = CS_PATH . '/wordpress/temp/' . $elements[$key]->image_src;
+					$url = $tmpDir . '/' . $elements[$key]->image_src;
 					$id = crellyslider_importImage($url);
 					$elements[$key]->image_src = $id;
 				}
 			}
-			$temp = crellyslider_wp_insert_rows($elements, $wpdb->prefix . 'crellyslider_elements');
+			$temp = crellyslider_insertElementsSQL((array) $elements);
 			if($temp === false) {
 				$output = false;
 			}
@@ -660,6 +824,8 @@ function crellyslider_importSlider($filePath) {
 			'imported_slider_alias' => false,
 		);
 	}
+
+	CrellySliderHelpers::delTree($tmpDir);
 
 	return $real_output;
 }

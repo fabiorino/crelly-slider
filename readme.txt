@@ -3,8 +3,8 @@ Contributors: fabiorino
 Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.9
-Tested up to: 5.1
-Stable tag: 1.3.4
+Tested up to: 5.2
+Stable tag: 1.3.5
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -54,6 +54,11 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 
 == Changelog ==
 
+= 1.3.5 =
+* Security patch
+* Improved import/export slider functions. They should now be compatible with web hosting services that block file_get_contents
+* Minor changes and bux fixes
+
 = 1.3.4 =
 * French translation moved to Polyglots. If you want to contribute to translate Crelly Slider in your language, check out <a href="https://translate.wordpress.org/projects/wp-plugins/crelly-slider">this page</a>
 * Fixed error with old PHP versions
@@ -70,7 +75,7 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 
 = 1.3.0 =
 * New feature: sliders can be scheduled (you can specify from when and how long they should be displayed for)
-* When a video is manually paused by the user, it won't resume automatically at the next slides loop 
+* When a video is manually paused by the user, it won't resume automatically at the next slides loop
 * For developers: TinyMCE settings are now hookable (credits to dlaxar https://github.com/fabiorino/crelly-slider/commits?author=dlaxar)
 * For developers: sliders can be imported via code
 * Other minor changes and bug fixes
