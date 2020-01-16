@@ -55,7 +55,7 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 == Changelog ==
 
 = 1.3.6 =
-* Fixed PHP warning "Cannot modify header information - headers already sent" as reported <a href="https://wordpress.org/support/topic/incompatibility-with-athemes-sydney-pros-customizer/#post-12333547">here</a>
+* Fixed PHP warning "Cannot modify header information - headers already sent" as reported <a href="https://wordpress.org/support/topic/incompatibility-with-athemes-sydney-pros-customizer">here</a>
 
 = 1.3.5 =
 * Security patch
