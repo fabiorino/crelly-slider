@@ -3,8 +3,8 @@ Contributors: fabiorino
 Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: animations, layers, texts, images, videos
 Requires at least: 3.9
-Tested up to: 5.2
-Stable tag: 1.3.5
+Tested up to: 5.3
+Stable tag: 1.3.6
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -53,6 +53,9 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.3.6 =
+* Fixed PHP warning "Cannot modify header information - headers already sent" as reported <a href="https://wordpress.org/support/topic/incompatibility-with-athemes-sydney-pros-customizer/#post-12333547">here</a>
 
 = 1.3.5 =
 * Security patch

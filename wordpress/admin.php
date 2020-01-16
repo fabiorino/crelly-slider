@@ -182,44 +182,12 @@ class CrellySliderAdmin {
 		<?php
 	}
 
-	// Avoid incompatibility issues
-	public static function isAdminJs() {
+	public static function rawHeadAssets() {
 		?>
 		<script type="text/javascript">
-			var crellyslider_is_wordpress_admin = true;
 			var crellyslider_locale = '<?php echo get_locale(); ?>';
 		</script>
 		<?php
-	}
-
-	public static function setIsAdminJs() {
-		add_action('admin_enqueue_scripts', 'CrellySliderAdmin::isAdminJs');
-	}
-
-	// Include CSS and JavaScript
-	public static function enqueues() {
-		wp_enqueue_script('jquery-ui-draggable');
-		wp_enqueue_script('jquery-ui-tabs');
-		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('jquery-ui-dialog');
-		wp_enqueue_script('jquery-ui-datepicker');
-		wp_enqueue_style('wp-color-picker');
-		wp_enqueue_media();
-
-		wp_register_script('datetimepicker', CS_PLUGIN_URL . '/wordpress/js/jquery.datetimepicker.js', array('jquery'), "2.5.17", true);
-		wp_enqueue_script('datetimepicker');
-		wp_enqueue_style('datetimepicker', CS_PLUGIN_URL . '/wordpress/css/jquery.datetimepicker.css', array(), "2.5.17");
-
-		add_action('admin_print_footer_scripts', array( __CLASS__, 'printTinyMCEOptions'), 1);
-		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
-
-		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
-		self::createNonces();
-		self::localization();
-
-		wp_enqueue_style('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/css/admin.css', array(), CS_VERSION);
-		wp_enqueue_script('crellyslider-admin');
-
 		$wp_version = get_bloginfo('version');
 		$menu_icon_url = CS_PLUGIN_URL . '/wordpress/images/menu-icon.png';
 		if($wp_version < 3.8) {
@@ -277,7 +245,33 @@ class CrellySliderAdmin {
 		}
 	}
 
-	public static function setEnqueues() {
+	// Include CSS and JavaScript
+	public static function enqueues() {
+		wp_enqueue_script('jquery-ui-draggable');
+		wp_enqueue_script('jquery-ui-tabs');
+		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('jquery-ui-dialog');
+		wp_enqueue_script('jquery-ui-datepicker');
+		wp_enqueue_style('wp-color-picker');
+		wp_enqueue_media();
+
+		wp_register_script('datetimepicker', CS_PLUGIN_URL . '/wordpress/js/jquery.datetimepicker.js', array('jquery'), "2.5.17", true);
+		wp_enqueue_script('datetimepicker');
+		wp_enqueue_style('datetimepicker', CS_PLUGIN_URL . '/wordpress/css/jquery.datetimepicker.css', array(), "2.5.17");
+
+		add_action('admin_print_footer_scripts', array( __CLASS__, 'printTinyMCEOptions'), 1);
+		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
+
+		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
+		self::createNonces();
+		self::localization();
+
+		wp_enqueue_style('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/css/admin.css', array(), CS_VERSION);
+		wp_enqueue_script('crellyslider-admin');
+	}
+
+	public static function loadAssets() {
+		add_action('admin_head', 'CrellySliderAdmin::rawHeadAssets');
 		add_action('admin_enqueue_scripts', 'CrellySliderAdmin::enqueues');
 	}
 
