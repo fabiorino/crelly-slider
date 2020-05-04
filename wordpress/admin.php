@@ -420,8 +420,8 @@ class CrellySliderAdmin {
 
 				// don't wrap objects, arrays or functions in quotes
 				if ($length > 0
-					&& (('{' == $value{0} && '}' == $value{$length - 1}) ||
-						('[' == $value{0} && ']' == $value{$length - 1}) ||
+					&& (('{' == $value[0] && '}' == $value[$length - 1]) ||
+						('[' == $value[0] && ']' == $value[$length - 1]) ||
 						preg_match('/^\(?function ?\(/', $value))) {
 
 					$serialized .= $key . ':' . $value . ',';
