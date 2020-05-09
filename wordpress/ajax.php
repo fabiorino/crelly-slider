@@ -311,7 +311,7 @@ function crellyslider_editElements_callback() {
 	if(empty(json_decode(stripslashes($options['options'])))) {
 		// Remove all the old elements
 		$output = $wpdb->delete($wpdb->prefix . 'crellyslider_elements', array('slider_parent' => esc_sql($options['slider_parent'])), array('%d'));
-		if(! $output) {
+		if($output === false) {
 			echo json_encode(false);
 		}
 		// Generate new nonce and return it
