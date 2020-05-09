@@ -273,11 +273,15 @@
 							echo '<option selected value="0">' . __('Slide', 'crelly-slider') . ' 1</option>';
 						}
 						else {
+							// The first option is the "Random slide" link
 							if($slider->startFromSlide == -1) {
 								echo '<option selected value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
 							}
 							else {
 								echo '<option value="-1">' . __('Random slide', 'crelly-slider') . '</option>';
+							}
+							// Then, add all the other slide links
+							if(is_array($slides)) {
 								for($i = 0; $i < count($slides); $i++) {
 									echo '<option value="' . $i . '"';
 									if($slider->startFromSlide == $i) {
@@ -296,22 +300,22 @@
 			</tr>
 			<tr>
 			<td class="cs-name"><?php _e('Display slider from/to', 'crelly-slider'); ?></td>
-				<td class="cs-content">					
+				<td class="cs-content">
 					<?php
 					$minDate = '1000-01-01 00:00:00';
 					$maxDate = '9999-12-31 23:59:59';
 
-					if(!$edit || ($edit && $slider->fromDate == $minDate)) echo '<input checked id="cs-slider-displayImmediately" type="checkbox">' . __('Display from now', 'crelly-slider');					
-					else echo '<input id="cs-slider-displayImmediately" type="checkbox">' . __('Display from now', 'crelly-slider');					
+					if(!$edit || ($edit && $slider->fromDate == $minDate)) echo '<input checked id="cs-slider-displayImmediately" type="checkbox">' . __('Display from now', 'crelly-slider');
+					else echo '<input id="cs-slider-displayImmediately" type="checkbox">' . __('Display from now', 'crelly-slider');
 
 					if(!$edit || ($edit && $slider->fromDate == $minDate)) echo '<div style="display: none;" id="cs-slider-displayFromWrapper">';
 					else echo '<div id="cs-slider-displayFromWrapper">';
-					
+
 					echo '<br />';
 					_e('Display from', 'crelly-slider');
 					echo ':<br />';
 					if(!$edit || ($edit && $slider->fromDate == $minDate)) echo '<input class="cs-slider-datepicker" id="cs-slider-fromDate" type="text" />';
-					else echo '<input class="cs-slider-datepicker" id="cs-slider-fromDate" type="text" value="' . sanitize_text_field($slider->fromDate) .'" />';		
+					else echo '<input class="cs-slider-datepicker" id="cs-slider-fromDate" type="text" value="' . sanitize_text_field($slider->fromDate) .'" />';
 
 					echo '</div>';
 					?>
@@ -320,17 +324,17 @@
 					<br />
 
 					<?php
-					if(!$edit || ($edit && $slider->toDate == $maxDate)) echo '<input checked id="cs-slider-displayForever" type="checkbox">' . __('Display forever', 'crelly-slider');					
-					else echo '<input id="cs-slider-displayForever" type="checkbox">' . __('Display forever', 'crelly-slider');					
+					if(!$edit || ($edit && $slider->toDate == $maxDate)) echo '<input checked id="cs-slider-displayForever" type="checkbox">' . __('Display forever', 'crelly-slider');
+					else echo '<input id="cs-slider-displayForever" type="checkbox">' . __('Display forever', 'crelly-slider');
 
 					if(!$edit || ($edit && $slider->toDate == $maxDate)) echo '<div style="display: none;" id="cs-slider-displayToWrapper">';
 					else echo '<div id="cs-slider-displayToWrapper">';
-					
+
 					echo '<br />';
 					_e('Display to', 'crelly-slider');
 					echo ':<br />';
 					if(!$edit || ($edit && $slider->toDate == $maxDate)) echo '<input class="cs-slider-datepicker" id="cs-slider-toDate" type="text" />';
-					else echo '<input class="cs-slider-datepicker" id="cs-slider-toDate" type="text" value="' . sanitize_text_field($slider->toDate) .'" />';		
+					else echo '<input class="cs-slider-datepicker" id="cs-slider-toDate" type="text" value="' . sanitize_text_field($slider->toDate) .'" />';
 
 					echo '</div>';
 					?>
