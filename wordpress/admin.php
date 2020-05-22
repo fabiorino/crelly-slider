@@ -268,6 +268,11 @@ class CrellySliderAdmin {
 
 		wp_enqueue_style('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/css/admin.css', array(), CS_VERSION);
 		wp_enqueue_script('crellyslider-admin');
+
+		// Add Gutenberg block
+		if(function_exists('register_block_type')) {
+			wp_enqueue_script('crellyslider-gutenberg', CS_PLUGIN_URL . '/wordpress/js/gutenberg.js', array('wp-blocks', 'wp-element'), CS_VERSION, true);
+		}
 	}
 
 	public static function loadAssets() {
@@ -289,6 +294,7 @@ class CrellySliderAdmin {
 			'remove_slide' => __('Delete slide', 'crelly-slider'),
 			'exit_without_saving' => __('All unsaved changes will be lost. Are you sure you want to leave this page?', 'crelly-slider'),
 			'switch_editor' => __('Switch editor', 'crelly-slider'),
+			'select_slider' => __('Select slider', 'crelly-slider'),
 		);
 		wp_localize_script('crellyslider-admin', 'crellyslider_translations', $crellyslider_translations);
 	}
@@ -300,6 +306,7 @@ class CrellySliderAdmin {
 			'duplicateSlider' => wp_create_nonce('crellyslider_duplicate-slider'),
 			'exportSlider' => wp_create_nonce('crellyslider_export-slider'),
 			'importSlider' => wp_create_nonce('crellyslider_import-slider'),
+			'listSlidersForGutenberg' => wp_create_nonce('crellyslider_list-sliders-for-gutenberg'),
 		);
 
 		wp_localize_script('crellyslider-admin', 'crellyslider_nonces', $nonces);

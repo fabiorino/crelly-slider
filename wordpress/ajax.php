@@ -65,6 +65,59 @@ function crellyslider_wp_insert_rows($row_arrays = array(), $wp_table_name) {
 
 }
 
+add_action('wp_ajax_crellyslider_listSlidersForGutenberg', 'crellyslider_listSlidersForGutenberg_callback');
+function crellyslider_listSlidersForGutenberg_callback() {
+	if(! check_ajax_referer('crellyslider_list-sliders-for-gutenberg', 'security', false)) {
+		die('Could not verify nonce');
+	}
+
+	class SliderForGutenbergBlock {
+		public $id;
+		public $name;
+		public $alias;
+		public $backgroundImage;
+		public $backgroundColor;
+		public $backgroundRepeat;
+	}
+
+	$slidersForGutenberg = array();
+	global $wpdb;
+	$sliders = $wpdb->get_results('SELECT id, alias, name FROM ' . $wpdb->prefix . 'crellyslider_sliders');
+	if($sliders->last_error) {
+		echo json_encode(false);
+		die();
+	}
+	foreach($sliders as $slider) {
+		$sliderForGutenberg = new SliderForGutenbergBlock();
+		$sliderID = $slider->id;
+		$sliderForGutenberg->id = $sliderID;
+		$sliderForGutenberg->name =  $slider->name;
+		$sliderForGutenberg->alias =  $slider->alias;
+		$slide = $wpdb->get_results($wpdb->prepare(
+			'SELECT background_type_image, background_type_color, background_repeat FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d AND position = 0 AND draft = 0', $sliderID
+		));
+		if($slide->last_error) {
+			echo json_encode(false);
+			die();
+		}
+		if($slide) {
+			$slide = $slide[0];
+			if($slide->background_type_image != 'undefined' && $slide->background_type_image != 'none') {
+				$sliderForGutenberg->backgroundImage = CrellySliderCommon::getURL($slide->background_type_image);
+			}
+			$sliderForGutenberg->backgroundColor = esc_attr($slide->background_type_color);
+			$sliderForGutenberg->backgroundRepeat = esc_attr($slide->background_repeat);
+		}
+		$slidersForGutenberg[$slider->alias] = $sliderForGutenberg;
+	}
+	if(! $slidersForGutenberg) {
+		echo json_encode(null);
+		die();
+	}
+	echo json_encode($slidersForGutenberg);
+	die();
+}
+
 // Add slider
 add_action('wp_ajax_crellyslider_addSlider', 'crellyslider_addSlider_callback');
 function crellyslider_addSlider_callback() {
