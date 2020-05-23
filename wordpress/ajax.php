@@ -83,7 +83,7 @@ function crellyslider_listSlidersForGutenberg_callback() {
 	$slidersForGutenberg = array();
 	global $wpdb;
 	$sliders = $wpdb->get_results('SELECT id, alias, name FROM ' . $wpdb->prefix . 'crellyslider_sliders');
-	if($sliders->last_error) {
+	if($wpdb->last_error) {
 		echo json_encode(false);
 		die();
 	}
@@ -96,7 +96,7 @@ function crellyslider_listSlidersForGutenberg_callback() {
 		$slide = $wpdb->get_results($wpdb->prepare(
 			'SELECT background_type_image, background_type_color, background_repeat FROM ' . $wpdb->prefix . 'crellyslider_slides WHERE slider_parent = %d AND position = 0 AND draft = 0', $sliderID
 		));
-		if($slide->last_error) {
+		if($wpdb->last_error) {
 			echo json_encode(false);
 			die();
 		}
