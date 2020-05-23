@@ -61,7 +61,7 @@ wp.blocks.registerBlockType('crelly-slider/slider', {
                 {
                     className: props.className + " cs-gutenberg",
                     dangerouslySetInnerHTML: {
-                        __html: 'No sliders found. Do you want to&nbsp;<a href="admin.php?page=crellyslider&view=add">create one</a>?'
+                        __html: crellyslider_translations.no_sliders_found
                     }
                 }
             );
@@ -163,7 +163,7 @@ wp.blocks.registerBlockType('crelly-slider/slider', {
         var attributes = props.attributes;
         var alias = attributes.sliderAlias;
         if(alias == null) {
-            return 'No sliders selected. Edit this page and select a slider in the Crelly Slider editor block.';
+            return crellyslider_translations.no_sliders_selected;
         }
         return '[crellyslider alias="' + alias + '"]';
     },

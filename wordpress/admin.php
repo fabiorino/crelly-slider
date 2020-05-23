@@ -295,6 +295,8 @@ class CrellySliderAdmin {
 			'exit_without_saving' => __('All unsaved changes will be lost. Are you sure you want to leave this page?', 'crelly-slider'),
 			'switch_editor' => __('Switch editor', 'crelly-slider'),
 			'select_slider' => __('Select slider', 'crelly-slider'),
+			'no_sliders_found' => __('No sliders found. Do you want to&nbsp;<a href="admin.php?page=crellyslider&view=add">create one</a>?', 'crelly-slider'),
+			'no_sliders_selected' => __('No sliders selected. Edit this page and select a slider in the Crelly Slider editor block.', 'crelly-slider'),
 		);
 		wp_localize_script('crellyslider-admin', 'crellyslider_translations', $crellyslider_translations);
 	}
