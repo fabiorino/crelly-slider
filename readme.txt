@@ -1,7 +1,7 @@
 === Crelly Slider ===
 Contributors: fabiorino
 Donate link: http://crellyslider.altervista.org/contribute-and-support/
-Tags: animations, layers, texts, images, videos
+Tags: slider, layers, animations, transitions, texts, images, videos
 Requires at least: 4.6
 Tested up to: 5.4
 Stable tag: 1.4.2
