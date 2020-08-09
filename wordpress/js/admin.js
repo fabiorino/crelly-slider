@@ -230,7 +230,7 @@
 		$('.cs-slide-tabs .cs-sortable li').disableSelection();
 
 		// Show the slide when clicking on the link
-		$('.cs-admin #cs-slides .cs-slide-tabs > ul > li > a').live('click', function() {
+		$('.cs-admin #cs-slides').on('click', '.cs-slide-tabs > ul > li > a', function() {
       crellyslider_deselectElements();
 
       // Do only if is not click add new
@@ -306,7 +306,7 @@
 		}
 
 		// Delete
-		$('.cs-admin #cs-slides .cs-slide-tabs > ul > li .cs-close').live('click', function() {
+		$('.cs-admin #cs-slides').on('click', '.cs-slide-tabs > ul > li .cs-close', function() {
 			if($('.cs-admin #cs-slides .cs-slide-tabs > ul > li').length <= 2) {
 				alert(crellyslider_translations.slide_delete_just_one);
 				return;
@@ -349,7 +349,7 @@
 		});
 
     // Duplicate
-    $('.cs-admin #cs-slides .cs-slide-tabs > ul > li .cs-duplicate').live('click', function() {
+    $('.cs-admin #cs-slides').on('click', '.cs-slide-tabs > ul > li .cs-duplicate', function() {
     	var slide_index = $(this).parent().index();
       var slide = $('.cs-admin #cs-slides .cs-slides-list .cs-slide').eq(slide_index);
 
