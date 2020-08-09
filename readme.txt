@@ -3,7 +3,7 @@ Contributors: fabiorino
 Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: slider, layers, animations, transitions, texts, images, videos
 Requires at least: 4.6
-Tested up to: 5.4
+Tested up to: 5.5
 Stable tag: 1.4.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
