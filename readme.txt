@@ -3,8 +3,8 @@ Contributors: fabiorino
 Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: slider, layers, animations, transitions, texts, images, videos
 Requires at least: 4.6
-Tested up to: 5.5
-Stable tag: 1.4.3
+Tested up to: 5.6
+Stable tag: 1.4.4
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -53,6 +53,10 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.4.4 =
+* Fixed JavaScript fatal error in WordPress 5.6.
+* Removed deprecated JavaScript code.
 
 = 1.4.3 =
 * Fixed compatibility issue with WordPress 5.5 due to the use of a deprecated jQuery function.

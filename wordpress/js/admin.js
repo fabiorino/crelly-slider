@@ -29,7 +29,7 @@
 /*************/
 
 (function($) {
-	$(window).load(function() {
+	$(window).on('load', function() {
 
 		// Simulate keyup. Useful when textboxes change value
 		function crellyslider_keyup(element) {
@@ -37,11 +37,11 @@
 		}
 
 		// Slider settings and slide tabs
-		$('#cs-show-slider-settings').click(function() {
+		$('#cs-show-slider-settings').on('click', function() {
 			$('#cs-slider-settings').fadeIn();
 			$('#cs-slides').hide();
 		});
-		$('#cs-show-slides').click(function() {
+		$('#cs-show-slides').on('click', function() {
 			$('#cs-slides').fadeIn();
 			$('#cs-slider-settings').hide();
 		});
@@ -273,7 +273,7 @@
 
 			// Open the tab just created
 			var tab_index = add_btn.parent().index() - 1;
-			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(tab_index).find('a').click();
+			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(tab_index).find('a').trigger('click');
 
 			// Active class
 			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').removeClass('active');
@@ -289,7 +289,7 @@
 		}
 
 		// Add new on click
-		$('.cs-admin #cs-slides .cs-add-new').click(function() {
+		$('.cs-admin #cs-slides .cs-add-new').on('click', function() {
 			crellyslider_addSlide();
 		});
 		// Also add a new slide if slides_number == 0
@@ -302,7 +302,7 @@
 			}
 		}
 		else {
-			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(0).find('a').click();
+			$('.cs-admin #cs-slides .cs-slide-tabs > ul > li').eq(0).find('a').trigger('click');
 		}
 
 		// Delete
@@ -559,7 +559,7 @@
 		});
 
 		// Background presets
-		$('.cs-slide-background-image-fullwidth-preset').click(function() {
+		$('.cs-admin').on('click', '.cs-slide-background-image-fullwidth-preset', function() {
 			var text = $(this);
 			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
 			var settings = text.closest('.cs-slide');
@@ -577,7 +577,7 @@
 			crellyslider_keyup(settings.find('.cs-slide-background_propriety_size'));
 		});
 
-		$('.cs-slide-background-image-pattern-preset').click(function() {
+		$('.cs-admin').on('click', '.cs-slide-background-image-pattern-preset', function() {
 			var text = $(this);
 			var area = text.closest('.cs-slide').find('.cs-elements .cs-slide-editing-area');
 			var settings = text.closest('.cs-slide');
@@ -1325,7 +1325,7 @@
 			});
 
 			// Warning: click on background links
-			$('.cs-slide-live-preview-area a').click(function(event) {
+			$('.cs-slide-live-preview-area a').on('click', function(event) {
 				if($(this).prop('target') != '_blank') {
 					var confirm = window.confirm(crellyslider_translations.exit_without_saving);
 					if(! confirm) {
@@ -1348,7 +1348,7 @@
 		/****************/
 
 		// Save or update the new slider in the database
-		$('.cs-admin .cs-slider .cs-save-settings').click(function() {
+		$('.cs-admin .cs-slider .cs-save-settings').on('click', function() {
 			$('.cs-admin #cs-slides .cs-live-preview').each(function() {
 				var btn = $(this);
 				var slide_parent = btn.closest('.cs-slide');
