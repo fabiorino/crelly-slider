@@ -196,11 +196,11 @@ class CrellySliderAdmin {
 				#adminmenu .toplevel_page_crellyslider div.wp-menu-image {
 					background-image: url('<?php echo $menu_icon_url; ?>');
 					background-repeat: no-repeat;
-					background-position: -20px center;
+					background-position: -25px center;
 				}
 
 				#adminmenu .toplevel_page_crellyslider:hover div.wp-menu-image {
-					background-position: -20px center;
+					background-position: -25px center;
 				}
 
 				#adminmenu .toplevel_page_crellyslider.current div.wp-menu-image {
@@ -225,7 +225,7 @@ class CrellySliderAdmin {
 				}
 
 				#adminmenu .toplevel_page_crellyslider:hover div.wp-menu-image {
-					background-position: -20px center;
+					background-position: -25px center;
 					opacity: 1;
 					filter: alpha(opacity=100);
 				}
