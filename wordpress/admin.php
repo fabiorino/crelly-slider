@@ -263,7 +263,9 @@ class CrellySliderAdmin {
 		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
 
 		wp_register_script('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/js/admin.js', array('wp-color-picker', 'datetimepicker'), CS_VERSION, true);
-		self::createNonces();
+		if(current_user_can(CS_MIN_CAPABILITY)) {
+			self::createNonces();
+		}
 		self::localization();
 
 		wp_enqueue_style('crellyslider-admin', CS_PLUGIN_URL . '/wordpress/css/admin.css', array(), CS_VERSION);

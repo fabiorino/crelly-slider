@@ -4,7 +4,7 @@ Donate link: http://crellyslider.altervista.org/contribute-and-support/
 Tags: slider, layers, animations, transitions, texts, images, videos
 Requires at least: 4.6
 Tested up to: 5.8
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -53,6 +53,10 @@ You can find the documentation <a href="http://crellyslider.altervista.org/docum
 4. Slides and elements options (in this case, a text element)
 
 == Changelog ==
+
+= 1.4.6 =
+* Fixed security issue.
+* Fixed PHP warning.
 
 = 1.4.5 =
 * Changed icon in admin sidebar to match WP 5.8 style.

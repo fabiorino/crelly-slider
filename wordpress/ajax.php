@@ -67,6 +67,9 @@ function crellyslider_wp_insert_rows($wp_table_name, $row_arrays = array()) {
 
 add_action('wp_ajax_crellyslider_listSlidersForGutenberg', 'crellyslider_listSlidersForGutenberg_callback');
 function crellyslider_listSlidersForGutenberg_callback() {
+	if(! current_user_can(CS_MIN_CAPABILITY)) {
+		die('User must be able to ' . CS_MIN_CAPABILITY . ' to execute this function');
+	}
 	if(! check_ajax_referer('crellyslider_list-sliders-for-gutenberg', 'security', false)) {
 		die('Could not verify nonce');
 	}
