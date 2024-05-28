@@ -9,7 +9,7 @@ require_once CS_PATH . 'wordpress/helpers.php';
 
 // Inserts an array into the database
 // https://github.com/mirzazeyrek/wp-multiple-insert
-function crellyslider_wp_insert_rows($row_arrays = array(), $wp_table_name) {
+function crellyslider_wp_insert_rows($wp_table_name, $row_arrays = array()) {
 	global $wpdb;
 	$wp_table_name = esc_sql($wp_table_name);
 	// Setup arrays for Actual Values, and Placeholders
@@ -336,7 +336,7 @@ function crellyslider_insertSlidesSQL($options) {
 		$options[$i]->custom_css = sanitize_textarea_field($options[$i]->custom_css);
 	}
 
-	return crellyslider_wp_insert_rows($options, $wpdb->prefix . 'crellyslider_slides');
+	return crellyslider_wp_insert_rows($wpdb->prefix . 'crellyslider_slides', $options);
 }
 
 // Edit elements. Receives an array with all the elements options. Delete al the old elements (performs a backup first) then recreate them
@@ -428,7 +428,7 @@ function crellyslider_insertElementsSQL($options) {
 		$options[$i]->video_id = sanitize_text_field($options[$i]->video_id);
 	}
 
-	return crellyslider_wp_insert_rows($options, $wpdb->prefix . 'crellyslider_elements');
+	return crellyslider_wp_insert_rows($wpdb->prefix . 'crellyslider_elements', $options);
 }
 
 // Delete slider and its content
@@ -534,7 +534,7 @@ function crellyslider_duplicateSlider_callback() {
 				unset($slides[$key]['id']);
 				$slides[$key]['slider_parent'] = $cloned_slider_id;
 			}
-			$temp = crellyslider_wp_insert_rows($slides, $wpdb->prefix . 'crellyslider_slides');
+			$temp = crellyslider_wp_insert_rows($wpdb->prefix . 'crellyslider_slides', $slides);
 			if($temp === false) {
 				$output = false;
 			}
@@ -550,7 +550,7 @@ function crellyslider_duplicateSlider_callback() {
 				unset($elements[$key]['id']);
 				$elements[$key]['slider_parent'] = $cloned_slider_id;
 			}
-			$temp = crellyslider_wp_insert_rows($elements, $wpdb->prefix . 'crellyslider_elements');
+			$temp = crellyslider_wp_insert_rows($wpdb->prefix . 'crellyslider_elements', $elements);
 			if($temp === false) {
 				$output = false;
 			}
