@@ -14,10 +14,14 @@ class CrellySliderTables {
 
 	// Creates or updates all the tables
 	public static function setTables() {
-		self::setSlidersTable();
-		self::setSlidesTable();
-		self::setElementsTable();
-		self::setNoncesTable();
+		$cs_version = get_option( 'cs_version' );
+		// only update tables if version changed
+		if ( $cs_version != CS_VERSION ) {
+			self::setSlidersTable();
+			self::setSlidesTable();
+			self::setElementsTable();
+			self::setNoncesTable();
+		}
 	}
 
 	public static function setNoncesTable() {
