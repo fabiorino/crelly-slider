@@ -13,7 +13,7 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 				echo 'data-background-image-src="' . stripslashes($slide->background_type_image) . '"';
 			}
 
-			$background_url = CrellySliderCommon::getURL(stripslashes($slide->background_type_image));
+			$background_url = esc_url(CrellySliderCommon::getURL(stripslashes($slide->background_type_image)));
 
 			?>
 			style="
@@ -36,7 +36,7 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 
 						$link_output = '<a' . "\n" .
 						'class="cs-element cs-' . esc_attr($element->type) . '-element"' . "\n" .
-						'href="' . stripslashes($element->link) . '"' . "\n" .
+						'href="' . esc_url($element->link) . '"' . "\n" .
 						$target . "\n" .
 						'style="' .
 						'z-index: ' . esc_attr($element->z_index) . ';' . "\n" .
@@ -78,7 +78,7 @@ function crellyslider_printElements($edit, $slider, $slide, $elements) {
 						case 'image':
 							?>
 							<img
-							src="<?php echo CrellySliderCommon::getURL(stripslashes($element->image_src)); ?>"
+							src="<?php echo esc_url(CrellySliderCommon::getURL(stripslashes($element->image_src))); ?>"
 							alt="<?php echo esc_attr($element->image_alt); ?>"
 							style="
 							<?php
@@ -416,7 +416,7 @@ function crellyslider_printTextElement($element) {
 				<td class="cs-content">
 					<?php
 					if($void) echo '<input class="cs-element-link" type="text" value="" />';
-					else echo '<input class="cs-element-link" type="text" value="' . stripslashes($element->link) .'" />';
+					else echo '<input class="cs-element-link" type="text" value="' . esc_url($element->link) .'" />';
 					?>
 					<br />
 					<?php
@@ -666,7 +666,7 @@ function crellyslider_printImageElement($element) {
 				<td class="cs-content">
 					<?php
 					if($void) echo '<input class="cs-element-link" type="text" value="" />';
-					else echo '<input class="cs-element-link" type="text" value="' . stripslashes($element->link) .'" />';
+					else echo '<input class="cs-element-link" type="text" value="' . esc_url($element->link) .'" />';
 					?>
 					<br />
 					<?php

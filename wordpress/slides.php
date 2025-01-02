@@ -286,7 +286,7 @@ function crellyslider_printSlide($slider, $slide, $edit) {
 				<td class="cs-content">
 					<?php
 					if($void) echo '<input class="cs-background-link" type="text" value="" />';
-					else echo '<input class="cs-background-link" type="text" value="' . stripslashes($slide->link) .'" />';
+					else echo '<input class="cs-background-link" type="text" value="' . esc_url($slide->link) .'" />';
 					?>
 					<br />
 					<?php

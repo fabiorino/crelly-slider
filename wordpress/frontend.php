@@ -88,10 +88,10 @@ class CrellySliderFrontend {
 
 			if($slide->link != '') {
 				if($slide->link_new_tab) {
-					$output .= '<a class="cs-background-link" target="_blank" href="' . stripslashes($slide->link) . '"></a>';
+					$output .= '<a class="cs-background-link" target="_blank" href="' . esc_url($slide->link) . '"></a>';
 				}
 				else {
-					$output .= '<a class="cs-background-link" href="' . stripslashes($slide->link) . '"></a>';
+					$output .= '<a class="cs-background-link" href="' . esc_url($slide->link) . '"></a>';
 				}
 			}
 
@@ -112,7 +112,7 @@ class CrellySliderFrontend {
 					'data-top="' . esc_attr($element->data_top) . '"' . "\n" .
 					'data-left="' . esc_attr($element->data_left) . '"' . "\n" .
 					'data-time="' . esc_attr($element->data_time) . '"' . "\n" .
-					'href="' . stripslashes($element->link) . '"' . "\n" .
+					'href="' . esc_url($element->link) . '"' . "\n" .
 					$target . "\n" .
 					'style="' .
 					'z-index: ' . $element->z_index . ';' . "\n" .
